@@ -138,7 +138,7 @@
 .\" ======================================================================
 .\"
 .IX Title "OPENSSL 1"
-.TH OPENSSL 1 "OpenSSL 0.9.6" "2002-10-02" "OpenSSL"
+.TH OPENSSL 1 "OpenSSL 0.9.6" "2002-10-02" "OpenSSL 0.9.6"
 .UC
 .SH "NAZWA"
 openssl \- narzêdzia wiersza poleceñ do biblioteki OpenSSL 
