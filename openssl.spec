@@ -186,9 +186,8 @@ RC4, RSA и SSL. Включает статические библиотеки для разработки
 %patch5 -p1
 
 %build
-for f in ` grep -r "%{_prefix}/local/bin/perl" . | cut -d":" -f1`; do
-%{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' $f
-done
+%{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
+	`grep -r "%{_prefix}/local/bin/perl" . | cut -d":" -f1`
 
 touch Makefile.*
 
@@ -196,11 +195,12 @@ touch Makefile.*
 
 OPTFLAGS="%{rpmcflags}"
 export OPTFLAGS
+%ifarch %{ix86}
 %ifarch i386 i486
 ./Configure --openssldir=%{_var}/lib/%{name} linux-elf shared 386
-%endif
-%ifarch i586 i686 athlon pentium3
+%else
 ./Configure --openssldir=%{_var}/lib/%{name} linux-elf shared
+%endif
 %endif
 %ifarch amd64
 ./Configure --openssldir=%{_var}/lib/%{name} linux-x86_64 shared
