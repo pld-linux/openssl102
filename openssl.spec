@@ -96,12 +96,6 @@ Development part of OpenSSL library.
 %description devel -l pl
 Czê¶æ bibiloteki OpenSSL przeznaczona dla programistów.
 
-%package devel-embed
-Summary:	Development part of OpenSSL Toolkit embedded libraries
-Summary(pl):	Czê¶æ bibiloteki OpenSSL przeznaczona dla aplikacji wbudowanych
-Group:		Development/Libraries
-Requires:	%{name} = %{version}
-
 %package static
 Summary:	Static OpenSSL libraries
 Summary(pl):	Statyczne wersje bibliotek z OpenSSL
