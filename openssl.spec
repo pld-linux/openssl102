@@ -8,7 +8,7 @@ Summary(pt_BR):	Uma biblioteca C que fornece vАrios algoritmos e protocolos crip
 Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
-Version:	0.9.7b
+Version:	0.9.7c
 Release:	1
 License:	Apache-style License
 Group:		Libraries
