@@ -201,7 +201,7 @@ export OPTFLAGS
 %ifarch i586 i686 athlon
 ./Configure --openssldir=%{_var}/lib/%{name} linux-elf shared
 %endif
-%ifarch x86_64
+%ifarch x86_64 amd64
 ./Configure --openssldir=%{_var}/lib/%{name} linux-x86_64 shared
 %endif
 %ifarch ppc
@@ -278,12 +278,18 @@ done
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
-	$RPM_BUILD_ROOT{%{_mandir}/{pl/man1,man{1,3,5,7}},%{_datadir}/ssl}
+	$RPM_BUILD_ROOT{%{_mandir}/{pl/man1,man{1,3,5,7}},%{_datadir}/ssl} \
+	$RPM_BUILD_ROOT%{_pkgconfigdir}
 
 %{__make} install \
 	INSTALLTOP=%{_prefix} \
 	INSTALL_PREFIX=$RPM_BUILD_ROOT \
 	MANDIR=%{_mandir}
+
+if [ "%{_prefix}/lib/pkgconfig" != "%{_pkgconfigdir}" ] ; then
+	mv $RPM_BUILD_ROOT%{_prefix}/lib/pkgconfig/* \
+		$RPM_BUILD_ROOT%{_pkgconfigdir}
+fi
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/ssl/ca-bundle.crt
 install libcrypto.a libssl.a $RPM_BUILD_ROOT%{_libdir}
