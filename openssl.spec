@@ -13,7 +13,7 @@ Release:	1
 License:	Apache-style License
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	fae4bec090fa78e20f09d76d55b6ccff
+# Source0-md5:	c54fb36218adaaaba01ef733cd88c8ec
 Source1:	%{name}-ca-bundle.crt
 Source2:	%{name}.1.pl
 Patch0:		%{name}-alpha-ccc.patch
@@ -209,8 +209,13 @@ export OPTFLAGS
 ./Configure --openssldir=%{_var}/lib/%{name} threads linux-sparcv8 shared
 %endif
 
-%{__make} CC="%{__cc}" INSTALLTOP=%{_prefix}
-%{__make} rehash CC="%{__cc}" INSTALLTOP=%{_prefix}
+%{__make} \
+	CC="%{__cc}" \
+	INSTALLTOP=%{_prefix}
+
+%{__make} rehash \
+	CC="%{__cc}" \
+	INSTALLTOP=%{_prefix}
 
 # Conv PODs to man pages. "openssl_" prefix is added to each manpage
 # to avoid potential conflicts with others packages.
