@@ -66,7 +66,7 @@ Group(fr):	Utilitaires
 Requires:	%{name} = %{version}
 
 %description tools-perl
-OpenSSL Toolkit tools written in Perl
+OpenSSL Toolkit tools written in Perl.
 
 %package devel
 Summary:	Development part of OpenSSL Toolkit libraries
@@ -170,9 +170,8 @@ done
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
 install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
-	   $RPM_BUILD_ROOT%{_mandir}/{man1,man3,man5,man7}
+	   $RPM_BUILD_ROOT%{_mandir}/man{1,3,5,7}
 
 %{__make} install \
 	INSTALLTOP=%{_prefix} \
@@ -199,19 +198,16 @@ mv $RPM_BUILD_ROOT%{_bindir}/c_rehash $RPM_BUILD_ROOT%{_libdir}/%{name}
 strip $RPM_BUILD_ROOT%{_bindir}/* || :
 strip --strip-unneeded $RPM_BUILD_ROOT%{_libdir}/lib*.so.*.*
 
-gzip -9nf doc/apps/*.?
-gzip -9nf doc/ssl/*.?
-gzip -9nf doc/crypto/*.?
-
 find $RPM_BUILD_ROOT%{_mandir} -type f | xargs rm -f
-install doc/apps/*.1.gz $RPM_BUILD_ROOT%{_mandir}/man1
-install doc/apps/*.5.gz $RPM_BUILD_ROOT%{_mandir}/man5
-install doc/ssl/*.3.gz doc/crypto/*.3.gz $RPM_BUILD_ROOT%{_mandir}/man3
-install doc/crypto/*.7.gz $RPM_BUILD_ROOT%{_mandir}/man7
+install doc/apps/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
+install doc/apps/*.5 $RPM_BUILD_ROOT%{_mandir}/man5
+install doc/ssl/*.3 doc/crypto/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
+install doc/crypto/*.7 $RPM_BUILD_ROOT%{_mandir}/man7
 
-gzip -9nf {CHANGES,CHANGES.SSLeay,LICENSE,NEWS,README,doc/*.txt}
+gzip -9nf {CHANGES,CHANGES.SSLeay,LICENSE,NEWS,README,doc/*.txt} \
+	$RPM_BUILD_ROOT%{_mandir}/man?/*
 
-%post -p /sbin/ldconfig
+%post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
 %clean
@@ -241,49 +237,49 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/c_issuer
 %attr(755,root,root) %{_libdir}/%{name}/c_name
 
-%{_mandir}/man1/openssl.1.gz
-%{_mandir}/man1/openssl_asn1parse.1.gz
-%{_mandir}/man1/openssl_ca.1.gz
-%{_mandir}/man1/openssl_ciphers.1.gz
-%{_mandir}/man1/openssl_crl.1.gz
-%{_mandir}/man1/openssl_crl2pkcs7.1.gz
-%{_mandir}/man1/openssl_dgst.1.gz
-%{_mandir}/man1/openssl_dhparam.1.gz
-%{_mandir}/man1/openssl_dsa.1.gz
-%{_mandir}/man1/openssl_dsaparam.1.gz
-%{_mandir}/man1/openssl_enc.1.gz
-%{_mandir}/man1/openssl_gendsa.1.gz
-%{_mandir}/man1/openssl_genrsa.1.gz
-%{_mandir}/man1/openssl_nseq.1.gz
-%{_mandir}/man1/openssl_passwd.1.gz
-%{_mandir}/man1/openssl_pkcs12.1.gz
-%{_mandir}/man1/openssl_pkcs7.1.gz
-%{_mandir}/man1/openssl_pkcs8.1.gz
-%{_mandir}/man1/openssl_rand.1.gz
-%{_mandir}/man1/openssl_req.1.gz
-%{_mandir}/man1/openssl_rsa.1.gz
-%{_mandir}/man1/openssl_s_client.1.gz
-%{_mandir}/man1/openssl_s_server.1.gz
-%{_mandir}/man1/openssl_sess_id.1.gz
-%{_mandir}/man1/openssl_smime.1.gz
-%{_mandir}/man1/openssl_speed.1.gz
-%{_mandir}/man1/openssl_spkac.1.gz
-%{_mandir}/man1/openssl_verify.1.gz
-%{_mandir}/man1/openssl_version.1.gz
-%{_mandir}/man1/openssl_x509.1.gz
-%{_mandir}/man5/*.5.gz
+%{_mandir}/man1/openssl.1*
+%{_mandir}/man1/openssl_asn1parse.1*
+%{_mandir}/man1/openssl_ca.1*
+%{_mandir}/man1/openssl_ciphers.1*
+%{_mandir}/man1/openssl_crl.1*
+%{_mandir}/man1/openssl_crl2pkcs7.1*
+%{_mandir}/man1/openssl_dgst.1*
+%{_mandir}/man1/openssl_dhparam.1*
+%{_mandir}/man1/openssl_dsa.1*
+%{_mandir}/man1/openssl_dsaparam.1*
+%{_mandir}/man1/openssl_enc.1*
+%{_mandir}/man1/openssl_gendsa.1*
+%{_mandir}/man1/openssl_genrsa.1*
+%{_mandir}/man1/openssl_nseq.1*
+%{_mandir}/man1/openssl_passwd.1*
+%{_mandir}/man1/openssl_pkcs12.1*
+%{_mandir}/man1/openssl_pkcs7.1*
+%{_mandir}/man1/openssl_pkcs8.1*
+%{_mandir}/man1/openssl_rand.1*
+%{_mandir}/man1/openssl_req.1*
+%{_mandir}/man1/openssl_rsa.1*
+%{_mandir}/man1/openssl_s_client.1*
+%{_mandir}/man1/openssl_s_server.1*
+%{_mandir}/man1/openssl_sess_id.1*
+%{_mandir}/man1/openssl_smime.1*
+%{_mandir}/man1/openssl_speed.1*
+%{_mandir}/man1/openssl_spkac.1*
+%{_mandir}/man1/openssl_verify.1*
+%{_mandir}/man1/openssl_version.1*
+%{_mandir}/man1/openssl_x509.1*
+%{_mandir}/man5/*.5*
 
 %files tools-perl
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/CA.pl
 %attr(755,root,root) %{_libdir}/%{name}/der_chop
-%{_mandir}/man1/openssl_CA.pl.1.gz
+%{_mandir}/man1/openssl_CA.pl.1*
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_includedir}/%{name}
-%{_mandir}/man3/*.3.gz
+%{_mandir}/man3/*.3*
 
 %files static
 %defattr(644,root,root,755)
