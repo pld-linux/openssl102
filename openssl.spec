@@ -9,12 +9,13 @@ Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.6g
-Release:	1
+Release:	2
 License:	Apache-style License
 Vendor:		The OpenSSL Project
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
 Source1:	%{name}-ca-bundle.crt
+Source2:	%{name}.1.pl
 Patch0:		%{name}-alpha-ccc.patch
 # patch1 is only for 0.9.6a version. This version isn't binary
 # compatibile with 0.9.6 but have this same soname.
@@ -267,7 +268,7 @@ done
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
-	$RPM_BUILD_ROOT{%{_mandir}/man{1,3,5,7},%{_datadir}/ssl}
+	$RPM_BUILD_ROOT{%{_mandir}/{pl/man1,man{1,3,5,7}},%{_datadir}/ssl}
 
 %{__make} install \
 	INSTALLTOP=%{_prefix} \
@@ -293,6 +294,7 @@ install doc/apps/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
 install doc/apps/*.5 $RPM_BUILD_ROOT%{_mandir}/man5
 install doc/ssl/*.3 doc/crypto/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
 install doc/crypto/*.7 $RPM_BUILD_ROOT%{_mandir}/man7
+install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -358,6 +360,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/openssl_version.1*
 %{_mandir}/man1/openssl_x509.1*
 %{_mandir}/man5/*.5*
+%lang(pl) %{_mandir}/pl/man1/openssl.1*
 
 %files tools-perl
 %defattr(644,root,root,755)
