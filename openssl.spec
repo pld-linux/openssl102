@@ -10,11 +10,11 @@ Group(de):	Libraries
 Group(fr):	Librairies
 Group(pl):	Biblioteki
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-Patch0:		%{name}-perl.patch
-Patch1:		%{name}-alpha-ccc.patch
+Patch0:		%{name}-alpha-ccc.patch
 Vendor:		The OpenSSL Project
 License:	Apache-style License
 BuildRequires:	perl
+BuildRequires:	textutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	SSLeay
 Obsoletes:	SSLeay-devel
@@ -105,9 +105,12 @@ Statyczne wersje bibliotek z OpenSSL.
 %prep
 %setup -q 
 %patch0 -p1
-%patch1 -p1
 
 %build
+for f in ` grep -r "/usr/local/bin/perl" . | cut -d":" -f1`; do
+	perl -pi -e 's#/usr/local/bin/perl#%{_bindir}/perl#g' $f
+done
+
 for i in Configure Makefile.org ; do
         perl -pi -e 's#-m486##g' $i
 	perl -pi -e 's#-O3 -fomit-frame-pointer#%{optflags}#g' $i
