@@ -51,8 +51,8 @@ Summary:	Development part of OpenSSL library
 Summary(fr):	Librairies statiques, headers et utilitaires pour communication SSL (Secure Sockets Layer)
 Summary(de):	Secure Sockets Layer Kommunikationslibrary: statische libraries+header                           
 Summary(pl):	Czê¶æ bibiloteki OpenSSL przeznaczona dla programistów
-Group:		Development/Library
-Group(pl):	Programownie/Biblioteki
+Group:		Development/Libraries
+Group(pl):	Programowanie/Biblioteki
 Requires:	%{name} = %{version}
 
 %description devel
@@ -64,7 +64,7 @@ Czê¶æ bibiloteki OpenSSL przeznaczona dla programistów.
 %package static
 Summary:	Static OpenSSL library
 Summary(pl):	Statyczna wersja biblioteki OpenSSL
-Group:		Development/Library
+Group:		Development/Libraries
 Group(pl):	Programowanie/Biblioteki
 Requires:	%{name}-devel = %{version}
 
