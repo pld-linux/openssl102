@@ -1,5 +1,6 @@
 Summary: 	Library and toolkit for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary & Utilities
+Summary(fr):	Utilitaires et librairies de communication SSL (Secure Sockets Layer)
 Name: 		openssl
 Version: 	0.9.4
 Release: 	2
