@@ -8,21 +8,19 @@ Summary(pt_BR):	Uma biblioteca C que fornece vАrios algoritmos e protocolos crip
 Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
-Version:	0.9.7c
-Release:	4
+Version:	0.9.7d
+Release:	1
 License:	Apache-style License
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	c54fb36218adaaaba01ef733cd88c8ec
+# Source0-md5:	1b49e90fc8a75c3a507c0a624529aca5
 Source1:	%{name}-ca-bundle.crt
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Patch0:		%{name}-alpha-ccc.patch
 Patch1:		%{name}-optflags.patch
 Patch2:		%{name}-globalCA.diff
-Patch3:		%{name}-parallel_make.patch
-Patch4:		%{name}-include.patch
-Patch5:         %{name}-makefile.patch
+Patch3:		%{name}-include.patch
 URL:		http://www.openssl.org/
 BuildRequires:	perl-devel >= 5.6.1
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -181,8 +179,6 @@ RC4, RSA и SSL. Включает статические библиотеки для разработки
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %build
 %{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
@@ -372,6 +368,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/openssl_rsautl.1*
 %{_mandir}/man1/openssl_s_client.1*
 %{_mandir}/man1/openssl_s_server.1*
+%{_mandir}/man1/openssl_s_time.1*
 %{_mandir}/man1/openssl_sess_id.1*
 %{_mandir}/man1/openssl_smime.1*
 %{_mandir}/man1/openssl_speed.1*
