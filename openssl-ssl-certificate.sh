@@ -19,7 +19,7 @@ echo
 echo enter your ServerName at the Common Name prompt
 echo
 echo If you want your certificate to expire after x days call this programm 
-echo with "-days x" 
+echo with "-days x". Default: 30 days
 
 # use special .cnf, because with normal one no valid selfsigned
 # certificate is created
