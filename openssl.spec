@@ -1,4 +1,5 @@
 %include	/usr/lib/rpm/macros.perl
+%define		_beta	beta6
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
 Summary(es):	Biblioteca C que suministra algoritmos y protocolos criptogrАficos
@@ -8,21 +9,17 @@ Summary(pt_BR):	Uma biblioteca C que fornece vАrios algoritmos e protocolos crip
 Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
-Version:	0.9.6h
-Release:	1
+Version:	0.9.7
+Release:	0.%{_beta}.1
 License:	Apache-style License
 Vendor:		The OpenSSL Project
 Group:		Libraries
-Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}-%{_beta}.tar.gz
 Source1:	%{name}-ca-bundle.crt
 Source2:	%{name}.1.pl
 Patch0:		%{name}-alpha-ccc.patch
-# patch1 is only for 0.9.6a version. This version isn't binary
-# compatibile with 0.9.6 but have this same soname.
-Patch1:		%{name}-soname.patch
-Patch2:		%{name}-optflags.patch
-Patch3:		%{name}-nocrypt.patch
-Patch4:		%{name}-globalCA.diff
+Patch1:		%{name}-optflags.patch
+Patch2:		%{name}-globalCA.diff
 BuildRequires:	perl-devel >= 5.6.1
 BuildRequires:	textutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -176,12 +173,10 @@ RC4, RSA и SSL. Включает статические библиотеки для разработки
 б╕бл╕отеки для розробки програм з використанням SSL.
 
 %prep
-%setup -q
+%setup -q -n %{name}-%{version}-%{_beta}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
-%patch4 -p1
 
 %build
 for f in ` grep -r "%{_prefix}/local/bin/perl" . | cut -d":" -f1`; do
