@@ -96,9 +96,9 @@ perl util/perlpath.pl %{_bindir}
 
 ./config --openssldir=%{openssldir}
 
-make OPT_FLAGS="$RPM_OPT_FLAGS" linux-shared
-make INSTALLTOP=%{_prefix} OPT_FLAGS="$RPM_OPT_FLAGS"
-make rehash
+%{__make} OPT_FLAGS="$RPM_OPT_FLAGS" linux-shared
+%{__make} INSTALLTOP=%{_prefix} OPT_FLAGS="$RPM_OPT_FLAGS"
+%{__make} rehash
 #cd perl
 #perl Makefile.PL
 #make
@@ -108,7 +108,7 @@ rm -rf $RPM_BUILD_ROOT
 
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_pkglibdir}}
 
-make install \
+%{__make} install \
 	INSTALLTOP=%{_prefix} \
 	INSTALL_PREFIX=$RPM_BUILD_ROOT
 
