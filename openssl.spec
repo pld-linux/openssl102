@@ -9,13 +9,14 @@ Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.7c
-Release:	2
+Release:	3
 License:	Apache-style License
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
 # Source0-md5:	c54fb36218adaaaba01ef733cd88c8ec
 Source1:	%{name}-ca-bundle.crt
 Source2:	%{name}.1.pl
+Source3:	%{name}-ssl-certificate.sh
 Patch0:		%{name}-alpha-ccc.patch
 Patch1:		%{name}-optflags.patch
 Patch2:		%{name}-globalCA.diff
@@ -312,6 +313,7 @@ install doc/apps/*.5 $RPM_BUILD_ROOT%{_mandir}/man5
 install doc/ssl/*.3 doc/crypto/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
 install doc/crypto/*.7 $RPM_BUILD_ROOT%{_mandir}/man7
 install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
+install %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -338,6 +340,7 @@ rm -rf $RPM_BUILD_ROOT
 %verify(not md5 size mtime) %config(noreplace) %{_datadir}/ssl/ca-bundle.crt
 
 %attr(755,root,root) %{_bindir}/%{name}
+%attr(754,root,root) %{_bindir}/ssl-certificate
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/CA.sh
 %attr(755,root,root) %{_libdir}/%{name}/c_hash
