@@ -270,7 +270,7 @@ done
 #cd perl
 #%%{__perl} Makefile.PL \
 #	INSTALLDIRS=vendor
-#make
+#%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -326,7 +326,7 @@ rm -rf $RPM_BUILD_ROOT
 %verify(not md5 size mtime) %config(noreplace) %{_sysconfdir}/%{name}/openssl.cnf
 %verify(not md5 size mtime) %config(noreplace) %{_var}/lib/%{name}/openssl.cnf
 %dir %{_datadir}/ssl
-%verify(not md5 size mtime) %config(noreplace)%{_datadir}/ssl/ca-bundle.crt
+%verify(not md5 size mtime) %config(noreplace) %{_datadir}/ssl/ca-bundle.crt
 
 %attr(755,root,root) %{_bindir}/%{name}
 %dir %{_libdir}/%{name}
