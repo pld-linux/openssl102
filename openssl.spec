@@ -108,6 +108,7 @@ Statyczne wersje bibliotek z OpenSSL.
 %prep
 %setup -q 
 %patch0 -p1
+%patch1 -p1
 
 %build
 for f in ` grep -r "/usr/local/bin/perl" . | cut -d":" -f1`; do
