@@ -14,6 +14,9 @@ Group(de):	Libraries
 Group(es):	Bibliotecas
 Group(fr):	Librairies
 Group(pl):	Biblioteki
+Group(pt_BR):	Bibliotecas
+Group(ru):	Библиотеки
+Group(uk):	Б╕бл╕отеки
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
 Patch0:		%{name}-alpha-ccc.patch
 # patch1 is only for 0.9.6a version. This version isn't binary
@@ -81,7 +84,6 @@ The OpenSSL Toolkit cmdline tool openssl and utility scripts.
 Summary:	OpenSSL utilities written in Perl
 Group:		Applications/Communications
 Group(de):	Applikationen/Kommunikation
-Group(fr):	Utilitaires
 Group(pl):	Aplikacje/Komunikacja
 Requires:	%{name} = %{version}
 
