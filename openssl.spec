@@ -157,9 +157,3 @@ rm -rf $RPM_BUILD_ROOT
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
-
-%changelog
-* Wed Apr 14 1999 Artur Frysiak <wiget@pld.org.pl>
-  [0.9.2c-2]
-- rewrite for PLD
-TODO: make shared libs and perl subpackage
