@@ -148,10 +148,6 @@ export OPTFLAGS
 ./Configure --openssldir=%{_var}/lib/%{name} threads linux-sparcv8 shared
 %endif
 
-done
-%{__make} clean
-%endif
-
 %{__make}
 %{__make} rehash
 
