@@ -258,7 +258,7 @@ for dir in ssl crypto; do
 done
 
 #cd perl
-#%{__perl} Makefile.PL \
+#%%{__perl} Makefile.PL \
 #	INSTALLDIRS=vendor
 #make
 
