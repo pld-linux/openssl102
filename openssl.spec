@@ -382,7 +382,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_includedir}/%{name}
-%{_libdir}/pkgconfig/openssl.pc
+%{_pkgconfigdir}/openssl.pc
 %{_mandir}/man3/openssl*.3*
 %{_mandir}/man7/*.7*
 
