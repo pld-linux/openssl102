@@ -9,7 +9,7 @@ Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.7a
-Release:	1
+Release:	2
 License:	Apache-style License
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -20,6 +20,7 @@ Patch1:		%{name}-optflags.patch
 Patch2:		%{name}-globalCA.diff
 Patch3:		%{name}-parallel_make.patch
 Patch4:		%{name}-sec3.patch
+Patch5:		%{name}-security2.patch
 URL:		http://www.openssl.org/
 BuildRequires:	perl-devel >= 5.6.1
 BuildRequires:	textutils
@@ -180,6 +181,7 @@ RC4, RSA и SSL. Включает статические библиотеки для разработки
 %patch2 -p1
 %patch3 -p1
 %patch4 -p0
+%patch5 -p0
 
 %build
 for f in ` grep -r "%{_prefix}/local/bin/perl" . | cut -d":" -f1`; do
