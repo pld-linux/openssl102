@@ -4,7 +4,7 @@ Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
 Summary(fr):	Utilitaires de communication SSL (Secure Sockets Layer)
 Name:		openssl
 Version:	0.9.6b
-Release:	3
+Release:	4
 License:	Apache-style License
 Vendor:		The OpenSSL Project
 Group:		Libraries
@@ -18,6 +18,7 @@ Patch0:		%{name}-alpha-ccc.patch
 # compatibile with 0.9.6 but have this same soname.
 Patch1:		%{name}-soname.patch
 Patch2:		%{name}-optflags.patch
+Patch3:		%{name}-nocrypt.patch
 BuildRequires:	perl-devel >= 5.6.1
 BuildRequires:	textutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -112,6 +113,7 @@ Statyczne wersje bibliotek z OpenSSL.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 for f in ` grep -r "/usr/local/bin/perl" . | cut -d":" -f1`; do
