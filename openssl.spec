@@ -8,8 +8,8 @@ Summary(pt_BR):	Uma biblioteca C que fornece vАrios algoritmos e protocolos crip
 Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
-Version:	0.9.6c
-Release:	4
+Version:	0.9.6g
+Release:	1
 License:	Apache-style License
 Vendor:		The OpenSSL Project
 Group:		Libraries
@@ -22,7 +22,6 @@ Patch1:		%{name}-soname.patch
 Patch2:		%{name}-optflags.patch
 Patch3:		%{name}-nocrypt.patch
 Patch4:		%{name}-globalCA.diff
-Patch5:		%{name}-0.9.6c-security.patch
 BuildRequires:	perl-devel >= 5.6.1
 BuildRequires:	textutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -182,7 +181,6 @@ RC4, RSA и SSL. Включает статические библиотеки для разработки
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p0
 
 %build
 for f in ` grep -r "%{_prefix}/local/bin/perl" . | cut -d":" -f1`; do
@@ -296,18 +294,17 @@ install doc/apps/*.5 $RPM_BUILD_ROOT%{_mandir}/man5
 install doc/ssl/*.3 doc/crypto/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
 install doc/crypto/*.7 $RPM_BUILD_ROOT%{_mandir}/man7
 
-gzip -9nf CHANGES CHANGES.SSLeay LICENSE NEWS README doc/*.txt
+%clean
+rm -rf $RPM_BUILD_ROOT
 
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
-%clean
-rm -rf $RPM_BUILD_ROOT
-
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
-%doc *.gz doc/*.txt.gz doc/openssl_button.gif doc/openssl_button.html
+%doc CHANGES CHANGES.SSLeay LICENSE NEWS README doc/*.txt
+%doc doc/openssl_button.gif doc/openssl_button.html
 
 %files tools
 %defattr(644,root,root,755)
@@ -350,6 +347,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/openssl_rand.1*
 %{_mandir}/man1/openssl_req.1*
 %{_mandir}/man1/openssl_rsa.1*
+%{_mandir}/man1/openssl_rsautl.1*
 %{_mandir}/man1/openssl_s_client.1*
 %{_mandir}/man1/openssl_s_server.1*
 %{_mandir}/man1/openssl_sess_id.1*
@@ -373,6 +371,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_includedir}/%{name}
 %{_mandir}/man3/*.3*
+%{_mandir}/man7/*.7*
 
 %files static
 %defattr(644,root,root,755)
