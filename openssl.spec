@@ -111,6 +111,7 @@ Statyczne wersje bibliotek z OpenSSL.
 for i in Configure Makefile.org ; do
         perl -pi -e 's#-m486##g' $i
 	perl -pi -e 's#-O3 -fomit-frame-pointer#%{optflags}#g' $i
+	perl -pi -e 's#-mcpu=ultrasparc#%{optflags}#g' $i
 done
 touch Makefile.*
 
