@@ -123,7 +123,7 @@ perl util/perlpath.pl %{_bindir}/perl
 ./Configure --openssldir=%{_var}/lib/%{name} linux-ppc shared
 %endif
 %ifarch alpha
-./Configure --openssldir=%{_var}/lib/%{name} linux-alpha shared
+./Configure --openssldir=%{_var}/lib/%{name} linux-alpha-gcc shared
 %endif
 
 %{__make} OPT_FLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g} -DSSL_ALLOW_DH"
