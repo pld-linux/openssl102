@@ -1,0 +1,11 @@
+--- openssl-0.9.6a/Makefile.ssl.soname	Mon May  7 16:06:18 2001
++++ openssl-0.9.6a/Makefile.ssl	Mon May  7 16:06:59 2001
+@@ -10,7 +10,7 @@
+ SHLIB_VERSION_NUMBER=0.9.6
+ SHLIB_VERSION_HISTORY=
+ SHLIB_MAJOR=0
+-SHLIB_MINOR=9.6
++SHLIB_MINOR=9.6.1
+ SHLIB_EXT=.so.$(SHLIB_MAJOR).$(SHLIB_MINOR)
+ PLATFORM=linux-elf
+ OPTIONS=--openssldir=/var/lib/openssl shared
