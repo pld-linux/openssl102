@@ -46,7 +46,7 @@ for i in ` echo Configure Makefile.org Makefile.ssl `; do
 done
 
 perl util/perlpath.pl /usr/bin
-perl util/ssldir.pl /var/lib/ssl
+perl util/ssldir.pl /var/state/ssl
 
 ./config
 make INSTALLTOP=/usr OPT_FLAGS="$RPM_OPT_FLAGS"
@@ -55,7 +55,7 @@ make rehash
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT/{etc,usr/include/ssl,var/lib/ssl/{certs,private}}
+install -d $RPM_BUILD_ROOT/{etc,usr/include/ssl,var/state/ssl/{certs,private}}
 
 make INSTALLTOP=$RPM_BUILD_ROOT/usr install
 
@@ -86,7 +86,7 @@ gzip -9fn CHANGES CHANGES.SSLeay LICENSE NEWS README \
 %verify(not md5 size mtime) %config(noreplace) /usr/lib/openssl.cnf
 /usr/lib/lib*.a
 /usr/include/ssl/*.h
-/var/lib/ssl
+/var/state/ssl
 
 %changelog
 * Wed Apr 14 1999 Artur Frysiak <wiget@pld.org.pl>
