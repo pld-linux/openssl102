@@ -11,6 +11,9 @@ Group(fr):	Librairies
 Group(pl):	Biblioteki
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
 Patch0:		%{name}-alpha-ccc.patch
+# patch1 is only for 0.9.6a version. This version isn't binary
+# compatibile with 0.9.6 but have this same soname.
+Patch1:		%{name}-soname.patch
 Vendor:		The OpenSSL Project
 License:	Apache-style License
 BuildRequires:	perl
