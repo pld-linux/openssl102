@@ -4,13 +4,14 @@ Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
 Summary(fr):	Utilitaires de communication SSL (Secure Sockets Layer)
 Name:		openssl
 Version:	0.9.6
-Release:	2
+Release:	3
 Group:		Libraries
 Group(de):	Libraries
 Group(fr):	Librairies
 Group(pl):	Biblioteki
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
 Patch0:		%{name}-perl.patch
+Patch1:		%{name}-alpha-ccc.patch
 Vendor:		The OpenSSL Project
 License:	Apache-style License
 BuildRequires:	perl
@@ -103,7 +104,8 @@ Statyczne wersje bibliotek z OpenSSL.
 
 %prep
 %setup -q 
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
 for i in Configure Makefile.org ; do
@@ -123,12 +125,15 @@ perl util/perlpath.pl %{_bindir}/perl
 ./Configure --openssldir=%{_var}/lib/%{name} linux-ppc shared
 %endif
 %ifarch alpha
-./Configure --openssldir=%{_var}/lib/%{name} linux-alpha-gcc shared
+./Configure --openssldir=%{_var}/lib/%{name} threads linux-alpha+bwx-ccc-generic
 %endif
 
 %{__make} OPT_FLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g} -DSSL_ALLOW_DH"
 %{__make} INSTALLTOP=%{_prefix} \
 	OPT_FLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g}"
+%ifarch alpha
+%{__make} linux-shared
+%endif
 %{__make} rehash
 
 # Conv PODs to man pages. "openssl_" prefix is added to each manpage 
