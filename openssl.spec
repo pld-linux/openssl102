@@ -45,7 +45,7 @@ for i in ` echo Configure Makefile.org Makefile.ssl `; do
         mv $i.work $i
 done
 
-perl util/perlpath.pl /usr/bin
+perl util/perlpath.pl %{_bindir}
 perl util/ssldir.pl /var/state/ssl
 
 ./config
@@ -70,7 +70,7 @@ gzip -9fn CHANGES CHANGES.SSLeay LICENSE NEWS README \
 	doc/*.pod doc/*.txt
 
 %post
-/usr/bin/c_rehash certs
+%{_bindir}/c_rehash certs
 
 %clean
 #rm -rf $RPM_BUILD_ROOT
@@ -81,7 +81,7 @@ gzip -9fn CHANGES CHANGES.SSLeay LICENSE NEWS README \
 %doc doc/*.pod.gz doc/*.txt.gz
 %doc doc/openssl_button.gif doc/openssl_button.html
 
-%attr(755,root,root) /usr/bin/*
+%attr(755,root,root) %{_bindir}/*
 %verify(not md5 size mtime) %config(noreplace) /etc/openssl.cnf
 %verify(not md5 size mtime) %config(noreplace) %{_libdir}/openssl.cnf
 %{_libdir}/lib*.a
