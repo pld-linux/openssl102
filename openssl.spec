@@ -4,7 +4,9 @@ Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
 Summary(fr):	Utilitaires de communication SSL (Secure Sockets Layer)
 Name:		openssl
 Version:	0.9.6a
-Release:	1
+Release:	3
+License:	Apache-style License
+Vendor:		The OpenSSL Project
 Group:		Libraries
 Group(de):	Libraries
 Group(fr):	Librairies
@@ -14,9 +16,8 @@ Patch0:		%{name}-alpha-ccc.patch
 # patch1 is only for 0.9.6a version. This version isn't binary
 # compatibile with 0.9.6 but have this same soname.
 Patch1:		%{name}-soname.patch
-Vendor:		The OpenSSL Project
-License:	Apache-style License
-BuildRequires:	perl
+Patch2:		%{name}-optflags.patch
+BuildRequires:	perl-devel >= 5.6.1
 BuildRequires:	textutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	SSLeay
@@ -109,21 +110,19 @@ Statyczne wersje bibliotek z OpenSSL.
 %setup -q 
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 for f in ` grep -r "/usr/local/bin/perl" . | cut -d":" -f1`; do
 	perl -pi -e 's#/usr/local/bin/perl#%{_bindir}/perl#g' $f
 done
 
-for i in Configure Makefile.org ; do
-        perl -pi -e 's#-m486##g' $i
-	perl -pi -e 's#-O3 -fomit-frame-pointer#%{optflags}#g' $i
-	perl -pi -e 's#-mcpu=ultrasparc#%{optflags}#g' $i
-done
 touch Makefile.*
 
 perl util/perlpath.pl %{_bindir}/perl
 
+OPTFLAGS="%{rpmcflags}"
+export OPTFLAGS
 %ifarch i386 i486
 ./Configure --openssldir=%{_var}/lib/%{name} linux-elf shared 386
 %endif
@@ -134,15 +133,13 @@ perl util/perlpath.pl %{_bindir}/perl
 ./Configure --openssldir=%{_var}/lib/%{name} linux-ppc shared
 %endif
 %ifarch alpha
-./Configure --openssldir=%{_var}/lib/%{name} threads linux-alpha+bwx-gcc
+./Configure --openssldir=%{_var}/lib/%{name} threads linux-alpha+bwx-gcc shared
+%endif
+%ifarch sparc
+./Configure --openssldir=%{_var}/lib/%{name} threads linux-sparcv8 shared
 %endif
 
-%{__make} OPT_FLAGS="%{rpmcflags} -DSSL_ALLOW_DH"
-%{__make} INSTALLTOP=%{_prefix} \
-	OPT_FLAGS="%{rpmcflags}"
-%ifarch alpha
-%{__make} linux-shared
-%endif
+%{__make}
 %{__make} rehash
 
 # Conv PODs to man pages. "openssl_" prefix is added to each manpage 
@@ -210,10 +207,6 @@ install libRSAglue.a libcrypto.a libssl.a 	$RPM_BUILD_ROOT%{_libdir}
 install lib*.so.*.* 	$RPM_BUILD_ROOT%{_libdir}
 ln -sf libcrypto.so.*.* $RPM_BUILD_ROOT%{_libdir}/libcrypto.so
 ln -sf libssl.so.*.* $RPM_BUILD_ROOT%{_libdir}/libssl.so
-
-#cd perl
-#make install DESTDIR=$RPM_BUILD_ROOT
-#cd ..
 
 mv -f $RPM_BUILD_ROOT%{_var}/lib/%{name}/openssl.cnf $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
 ln -s ../../../%{_sysconfdir}/%{name}/openssl.cnf \
