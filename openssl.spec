@@ -10,6 +10,7 @@ Patch0:		openssl-sslcrypto.patch
 Patch1:		openssl-perl.patch
 Vendor: 	The OpenSSL Project
 License: 	Apache-style License
+BuildRequires:	symlinks
 BuildRequires:	perl
 BuildRoot:	/tmp/%{name}-%{version}-root
 Obsoletes:	SSLeay
