@@ -1,5 +1,3 @@
-# conditional build:
-# _without_embed - don't build uClibc version
 %include	/usr/lib/rpm/macros.perl
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
@@ -7,7 +5,7 @@ Summary(pl):	Biblioteki OpenSSL (SSL v2/v3)
 Summary(fr):	Utilitaires de communication SSL (Secure Sockets Layer)
 Name:		openssl
 Version:	0.9.6b
-Release:	6
+Release:	7
 License:	Apache-style License
 Vendor:		The OpenSSL Project
 Group:		Libraries
@@ -20,20 +18,11 @@ Patch2:		%{name}-optflags.patch
 Patch3:		%{name}-nocrypt.patch
 BuildRequires:	perl-devel >= 5.6.1
 BuildRequires:	textutils
-%if %{!?_without_embed:1}%{?_without_embed:0}
-BuildRequires:	uClibc-devel
-BuildRequires:	uClibc-static
-%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	SSLeay
 Obsoletes:	SSLeay-devel
 Obsoletes:	SSLeay-perl
 Obsoletes:	libopenssl0
-
-%define embed_path	/usr/lib/embed
-%define embed_cc	%{_arch}-uclibc-cc
-%define embed_cflags	%{rpmcflags} -Os
-%define uclibc_prefix	/usr/%{_arch}-linux-uclibc
 
 %description
 The OpenSSL Project is a collaborative effort to develop a robust,
@@ -113,13 +102,6 @@ Summary(pl):	Czê¶æ bibiloteki OpenSSL przeznaczona dla aplikacji wbudowanych
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
 
-%description devel-embed
-Development part of OpenSSL library for embedded applications.
-
-%description devel-embed -l pl
-Czê¶æ bibiloteki OpenSSL przeznaczona dla programistów aplikacji
-wbudowanych.
-
 %package static
 Summary:	Static OpenSSL libraries
 Summary(pl):	Statyczne wersje bibliotek z OpenSSL
@@ -166,11 +148,6 @@ export OPTFLAGS
 ./Configure --openssldir=%{_var}/lib/%{name} threads linux-sparcv8 shared
 %endif
 
-%if %{!?_without_embed:1}%{?_without_embed:0}
-%{__make} CC=%{embed_cc}
-%{__make} rehash CC=%{embed_cc}
-for f in RSAglue crypto ssl ; do
-	mv -f lib$f.a lib$f.a-embed
 done
 %{__make} clean
 %endif
@@ -259,15 +236,6 @@ install doc/apps/*.5 $RPM_BUILD_ROOT%{_mandir}/man5
 install doc/ssl/*.3 doc/crypto/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
 install doc/crypto/*.7 $RPM_BUILD_ROOT%{_mandir}/man7
 
-%if %{!?_without_embed:1}%{?_without_embed:0}
-install -d $RPM_BUILD_ROOT%{uclibc_prefix}/{include,lib}
-for f in RSAglue crypto ssl ; do
-	install lib$f.a-embed $RPM_BUILD_ROOT%{uclibc_prefix}/lib/lib$f.a
-done
-cp -a $RPM_BUILD_ROOT%{_includedir}/%{name} \
-	$RPM_BUILD_ROOT%{uclibc_prefix}/include
-%endif
-
 gzip -9nf CHANGES CHANGES.SSLeay LICENSE NEWS README doc/*.txt
 
 %post   -p /sbin/ldconfig
@@ -343,13 +311,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_includedir}/%{name}
 %{_mandir}/man3/*.3*
-
-%if %{!?_without_embed:1}%{?_without_embed:0}
-%files devel-embed
-%defattr(644,root,root,755)
-%{uclibc_prefix}/lib/*
-%{uclibc_prefix}/include/%{name}
-%endif
 
 %files static
 %defattr(644,root,root,755)
