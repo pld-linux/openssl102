@@ -200,14 +200,17 @@ export OPTFLAGS
 ./Configure --openssldir=%{_var}/lib/%{name} linux-elf shared
 %endif
 %endif
+%ifarch alpha
+./Configure --openssldir=%{_var}/lib/%{name} threads linux-alpha+bwx-gcc shared
+%endif
 %ifarch amd64
 ./Configure --openssldir=%{_var}/lib/%{name} linux-x86_64 shared
 %endif
+%ifarch ia64
+./Configure --openssldir=%{_var}/lib/%{name} linux-ia64 shared
+%endif
 %ifarch ppc
 ./Configure --openssldir=%{_var}/lib/%{name} linux-ppc shared
-%endif
-%ifarch alpha
-./Configure --openssldir=%{_var}/lib/%{name} threads linux-alpha+bwx-gcc shared
 %endif
 %ifarch sparc
 ./Configure --openssldir=%{_var}/lib/%{name} threads linux-sparcv8 shared
