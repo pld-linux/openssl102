@@ -8,12 +8,12 @@ Summary(pt_BR):	Uma biblioteca C que fornece vАrios algoritmos e protocolos crip
 Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
-Version:	0.9.7e
-Release:	3
+Version:	0.9.7f
+Release:	1
 License:	Apache-style License
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	a8777164bca38d84e5eb2b1535223474
+# Source0-md5:	b2d37d7eb8a5a5040d834105d5ae1a50
 Source1:	%{name}-ca-bundle.crt
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
@@ -376,6 +376,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/openssl_dsa.1*
 %{_mandir}/man1/openssl_dsaparam.1*
 %{_mandir}/man1/openssl_enc.1*
+%{_mandir}/man1/openssl_errstr.1*
 %{_mandir}/man1/openssl_gendsa.1*
 %{_mandir}/man1/openssl_genrsa.1*
 %{_mandir}/man1/openssl_nseq.1*
@@ -404,7 +405,6 @@ rm -rf $RPM_BUILD_ROOT
 %files tools-perl
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/CA.pl
-%attr(755,root,root) %{_libdir}/%{name}/der_chop
 %attr(755,root,root) %{_libdir}/%{name}/c_rehash
 %{_mandir}/man1/openssl_CA.pl.1*
 
