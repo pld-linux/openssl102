@@ -10,7 +10,7 @@ Patch1:		openssl-perl.patch
 Patch2:		openssl-shlib.patch
 Vendor: 	The OpenSSL Project
 License: 	Apache-style License
-Packager: 	PLD Bug tracking <pld@pld.org.pl>
+BuildPrereq:	perl
 BuildRoot:	/tmp/%{name}-%{version}-root
 Obsoletes:	SSLeay
 Obsoletes:	SSLeay-devel
