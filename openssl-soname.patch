@@ -5,7 +5,7 @@
   */
  #define SHLIB_VERSION_HISTORY ""
 -#define SHLIB_VERSION_NUMBER "0.9.6"
-+#define SHLIB_VERSION_NUMBER "0.9.6.2"
++#define SHLIB_VERSION_NUMBER "0.9.6.1"
  
  
  #endif /* HEADER_OPENSSLV_H */
