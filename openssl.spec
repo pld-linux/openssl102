@@ -13,6 +13,7 @@ Release:	0.2
 License:	Apache-style License
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
+# Source0-md5: fae4bec090fa78e20f09d76d55b6ccff
 Source1:	%{name}-ca-bundle.crt
 Source2:	%{name}.1.pl
 Patch0:		%{name}-alpha-ccc.patch
