@@ -15,6 +15,8 @@ License:	Apache-style License
 BuildRequires:	symlinks
 BuildRequires:	perl
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+Prereq:		fileutils
+Prereq:		sed
 Obsoletes:	SSLeay
 Obsoletes:	SSLeay-devel
 Obsoletes:	SSLeay-perl
