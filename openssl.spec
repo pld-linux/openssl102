@@ -212,6 +212,12 @@ export OPTFLAGS
 %ifarch sparc
 ./Configure --openssldir=%{_var}/lib/%{name} threads linux-sparcv8 shared
 %endif
+%ifarch sparcv9
+./Configure --openssldir=%{_var}/lib/%{name} threads linux-sparcv9 shared
+%endif
+%ifarch sparc64
+./Configure --openssldir=%{_var}/lib/%{name} threads linux64-sparcv9 shared
+%endif
 
 %{__make} \
 	CC="%{__cc}" \
