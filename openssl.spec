@@ -181,6 +181,10 @@ RC4, RSA и SSL. Включает статические библиотеки для разработки
 %patch2 -p1
 %patch3 -p1
 
+# conflicts with i386-only DES implementation
+# (missing #ifdef OPENSSL_FIPS  ...  #endif)
+:> fips/des/asm/fips-dx86-elf.s
+
 %build
 %{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
 	`grep -l -r "%{_prefix}/local/bin/perl" *`
@@ -192,7 +196,8 @@ touch Makefile.*
 OPTFLAGS="%{rpmcflags}"
 export OPTFLAGS
 %ifarch %{ix86}
-%ifarch i386 i486
+%ifarch i386
+# allow running on 80386 (default code uses bswapl available on i486+)
 ./Configure --openssldir=%{_var}/lib/%{name} linux-elf shared 386
 %else
 ./Configure --openssldir=%{_var}/lib/%{name} linux-elf shared
