@@ -16,7 +16,7 @@
 +"linux-sparcv9","gcc:$ENV{OPTFLAGS} -DB_ENDIAN -DTERMIO -Wall -Wa,-Av8plus -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_UNROLL BF_PTR:asm/sparcv8plus.o:::asm/md5-sparcv8plus.o::::::dlfcn:linux-shared:-fPIC",
  # GCC 3.1 is a requirement
 -"linux64-sparcv9","gcc:-m64 -mcpu=ultrasparc -DB_ENDIAN -DTERMIO -O3 -fomit-frame-pointer -Wall::-D_REENTRANT:ULTRASPARC:-ldl:SIXTY_FOUR_BIT_LONG RC4_CHAR RC4_CHUNK DES_UNROLL BF_PTR::::asm/md5-sparcv9.o::::::dlfcn:linux-shared:-fPIC:-m64:.so.\$(SHLIB_MAJOR).\$(SHLIB_MINOR)",
-+"linux64-sparcv9","sparc64-linux-gcc:-m64 $ENV{OPTFLAGS} -DB_ENDIAN -DTERMIO -Wall -DBN_DIV2W::-D_REENTRANT:ULTRASPARC:-ldl:BN_LLONG RC4_CHAR RC4_CHUNK DES_UNROLL BF_PTR::::asm/md5-sparcv9.o:::::::linux-shared:-fPIC",
++"linux64-sparcv9","gcc:-m64 $ENV{OPTFLAGS} -DDSO_DLFCN -DHAVE_DLFCN_H -DB_ENDIAN -DTERMIO -fomit-frame-pointer -Wall::-D_REENTRANT:ULTRASPARC:-ldl:SIXTY_FOUR_BIT_LONG RC4_CHAR RC4_CHUNK DES_UNROLL BF_PTR::::asm/md5-sparcv9.o::::::dlfcn:linux-shared:-fPIC:-m64",
  
  # Sunos configs, assuming sparc for the gcc one.
  ##"sunos-cc", "cc:-O4 -DNOPROTO -DNOCONST::(unknown):SUNOS::DES_UNROLL:::",
