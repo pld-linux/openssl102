@@ -1,11 +1,11 @@
---- openssl-0.9.6b/crypto/des/fcrypt.c.wiget	Tue Nov 20 17:37:32 2001
-+++ openssl-0.9.6b/crypto/des/fcrypt.c	Tue Nov 20 17:41:40 2001
+--- openssl-0.9.6d/crypto/des/fcrypt.c.wiget	Tue Nov 20 17:37:32 2001
++++ openssl-0.9.6d/crypto/des/fcrypt.c	Tue Nov 20 17:41:40 2001
 @@ -61,7 +61,7 @@
  void fcrypt_body(DES_LONG *out,des_key_schedule ks,
  	DES_LONG Eswap0, DES_LONG Eswap1);
  
--#if !defined(PERL5) && !defined(__FreeBSD__) && !defined(NeXT)
-+#if !defined(PERL5) && !defined(__FreeBSD__) && !defined(NeXT) && !defined(__GLIBC__)
+-#if !defined(PERL5) && !defined(__FreeBSD__) && !defined(NeXT) && !defined(_DARWIN)
++#if !defined(PERL5) && !defined(__FreeBSD__) && !defined(NeXT) && !defined(_DARWIN) && !defined(__GLIBC__)
  char *crypt(const char *buf, const char *salt)
  	{
  	return(des_crypt(buf, salt));
@@ -26,8 +26,8 @@
  		  des_cblock *iv);
  char *des_fcrypt(const char *buf,const char *salt, char *ret);
  char *des_crypt(const char *buf,const char *salt);
--#if !defined(PERL5) && !defined(__FreeBSD__) && !defined(NeXT)
-+#if !defined(PERL5) && !defined(__FreeBSD__) && !defined(NeXT) && !defined(__GLIBC__)
+-#if !defined(PERL5) && !defined(__FreeBSD__) && !defined(NeXT) && !defined(_UWIN)
++#if !defined(PERL5) && !defined(__FreeBSD__) && !defined(NeXT) && !defined(_UWIN) && !defined(__GLIBC__)
  char *crypt(const char *buf,const char *salt);
  #endif
  void des_ofb_encrypt(const unsigned char *in,unsigned char *out,int numbits,
