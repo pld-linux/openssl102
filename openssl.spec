@@ -181,12 +181,12 @@ RC4, RSA и SSL. Включает статические библиотеки для разработки
 
 %build
 for f in ` grep -r "%{_prefix}/local/bin/perl" . | cut -d":" -f1`; do
-perl -pi -e 's#%{_prefix}/local/bin/perl#%{_bindir}/perl#g' $f
+%{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' $f
 done
 
 touch Makefile.*
 
-perl util/perlpath.pl %{_bindir}/perl
+%{__perl} util/perlpath.pl %{__perl}
 
 OPTFLAGS="%{rpmcflags}"
 export OPTFLAGS
@@ -215,7 +215,7 @@ center="OpenSSL 0.9.7"
 rel="OpenSSL 0.9.7"
 
 cd doc/apps || exit 1
-perl -pi -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
+%{__perl} -pi -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
 
 for pod in *.pod; do
 	if [ $pod != "openssl.pod" ]; then
@@ -244,7 +244,7 @@ for dir in ssl crypto; do
 		rel="OpenSSL cryptographic library"
 	fi
 
-	perl -p -i -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
+	%{__perl} -pi -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
 
 	for pod in *.pod; do
 		sec=`[ "$pod" = "des_modes.pod" ] && echo 7 || echo 3`;
@@ -258,7 +258,8 @@ for dir in ssl crypto; do
 done
 
 #cd perl
-#perl Makefile.PL
+#%{__perl} Makefile.PL \
+#	INSTALLDIRS=vendor
 #make
 
 %install
