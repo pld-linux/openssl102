@@ -1,7 +1,7 @@
 Summary: 	Library and toolkit for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary & Utilities
 Name: 		openssl
-Version: 	0.9.3a
+Version: 	0.9.4
 Release: 	1
 Group: 		Libraries
 Group(pl):	Biblioteki
@@ -49,8 +49,8 @@ DES, RC4, RSA et SSL.
 
 %package devel
 Summary:	Development part of OpenSSL library
-Summary(fr):	Librairies statiques, headers et utilitaires pour communication SSL (Secure Sockets Layer)
 Summary(de):	Secure Sockets Layer Kommunikationslibrary: statische libraries+header                           
+Summary(fr):	Librairies statiques, headers et utilitaires pour communication SSL (Secure Sockets Layer)
 Summary(pl):	Czê¶æ bibiloteki OpenSSL przeznaczona dla programistów
 Group:		Development/Libraries
 Group(pl):	Programowanie/Biblioteki
