@@ -140,8 +140,8 @@ Statyczne wersje bibliotek z OpenSSL.
 %patch3 -p1
 
 %build
-for f in ` grep -r "/usr/local/bin/perl" . | cut -d":" -f1`; do
-	perl -pi -e 's#/usr/local/bin/perl#%{_bindir}/perl#g' $f
+for f in ` grep -r "%{_prefix}/local/bin/perl" . | cut -d":" -f1`; do
+perl -pi -e 's#%{_prefix}/local/bin/perl#%{_bindir}/perl#g' $f
 done
 
 touch Makefile.*
