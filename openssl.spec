@@ -199,7 +199,7 @@ export OPTFLAGS
 %ifarch i386 i486
 ./Configure --openssldir=%{_var}/lib/%{name} linux-elf shared 386
 %endif
-%ifarch i586 i686 athlon
+%ifarch i586 i686 athlon pentium3
 ./Configure --openssldir=%{_var}/lib/%{name} linux-elf shared
 %endif
 %ifarch amd64
