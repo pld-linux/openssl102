@@ -1,10 +1,10 @@
 %include	/usr/lib/rpm/macros.perl
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
-Summary(es):	Biblioteca C que suministra algoritmos y protocolos criptogrАficos.
+Summary(es):	Biblioteca C que suministra algoritmos y protocolos criptogrАficos
 Summary(fr):	Utilitaires de communication SSL (Secure Sockets Layer)
 Summary(pl):	Biblioteki OpenSSL (SSL v2/v3)
-Summary(pt_BR):	Uma biblioteca C que fornece vАrios algoritmos e protocolos criptogrАficos.
+Summary(pt_BR):	Uma biblioteca C que fornece vАrios algoritmos e protocolos criptogrАficos
 Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
