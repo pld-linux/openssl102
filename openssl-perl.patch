@@ -1,17 +1,23 @@
-diff -urN openssl-0.9.3a/apps/CA.pl openssl-0.9.3a.new/apps/CA.pl
---- openssl-0.9.4/apps/CA.pl	Thu May 20 04:09:46 1999
-+++ openssl-0.9.4.new/apps/CA.pl	Wed Jul 21 13:04:11 1999
+--- openssl-0.9.5/apps/CA.pl.wiget	Mon Feb 28 15:30:31 2000
++++ openssl-0.9.5/apps/CA.pl	Fri Mar  3 10:09:56 2000
 @@ -1,4 +1,4 @@
--#!/usr/local/bin/perl
+-#!/sw/bin/perl
 +#!/usr/bin/perl
  #
  # CA - wrapper around ca to make it easier to use ... basically ca requires
  #      some setup stuff to be done before you can use it and this makes
-diff -urN openssl-0.9.3a/apps/der_chop openssl-0.9.3a.new/apps/der_chop
---- openssl-0.9.4/apps/der_chop	Sat May 29 16:17:16 1999
-+++ openssl-0.9.4.new/apps/der_chop	Wed Jul 21 13:05:07 1999
+--- openssl-0.9.5/apps/der_chop.wiget	Mon Feb 28 15:30:31 2000
++++ openssl-0.9.5/apps/der_chop	Fri Mar  3 10:10:38 2000
 @@ -1,4 +1,4 @@
--#!/usr/local/bin/perl5
+-#!/sw/bin/perl
++#!/usr/bin/perl
+ #
+ # der_chop ... this is one total hack that Eric is really not proud of
+ #              so don't look at it and don't ask for support
+--- openssl-0.9.5/apps/der_chop.in.wiget	Wed May 26 00:31:49 1999
++++ openssl-0.9.5/apps/der_chop.in	Fri Mar  3 10:10:29 2000
+@@ -1,4 +1,4 @@
+-#!/usr/local/bin/perl
 +#!/usr/bin/perl
  #
  # der_chop ... this is one total hack that Eric is really not proud of

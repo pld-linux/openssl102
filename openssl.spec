@@ -1,9 +1,10 @@
+%include	/usr/lib/rpm/macros.perl
 Summary: 	Library and toolkit for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary & Utilities
 Summary(fr):	Utilitaires et librairies de communication SSL (Secure Sockets Layer)
 Name: 		openssl
-Version: 	0.9.4
-Release: 	2
+Version: 	0.9.5
+Release: 	1
 Group: 		Libraries
 Group(pl):	Biblioteki
 Source: 	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -77,25 +78,24 @@ Statyczna wersja biblioteki OpenSSL.
 
 %prep
 %setup -q 
-%patch -p1
+%patch -p1 
 
 %build
-for i in ` echo Configure Makefile.org `; do
-        sed -e 's#-m486##g' \
-		-e 's#-O3 -fomit-frame-pointer#%{optflags}#g' \
-		<$i >$i.work
-        mv $i.work $i
+for i in Configure Makefile.org ; do
+        perl -pi -e 's#-m486##g' $i
+	perl -pi -e 's#-O3 -fomit-frame-pointer#%{optflags}#g' $i
 done
 
 perl util/perlpath.pl %{_bindir}
-
-ln -s crypto sslcrypto
 
 ./config --openssldir=%{openssldir}
 
 make OPT_FLAGS="$RPM_OPT_FLAGS" linux-shared
 make INSTALLTOP=%{_prefix} OPT_FLAGS="$RPM_OPT_FLAGS"
 make rehash
+#cd perl
+#perl Makefile.PL
+#make
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -110,6 +110,9 @@ install libRSAglue.a 	$RPM_BUILD_ROOT%{_libdir}
 install lib*.so.*.* 	$RPM_BUILD_ROOT%{_libdir}
 cp -d 	lib*.so		$RPM_BUILD_ROOT%{_libdir}
 
+#cd perl
+#make install DESTDIR=$RPM_BUILD_ROOT
+#cd ..
 
 mv $RPM_BUILD_ROOT%{openssldir}/openssl.cnf $RPM_BUILD_ROOT%{_sysconfdir}
 ln -s %{_sysconfdir}/openssl.cnf \
@@ -123,7 +126,7 @@ strip $RPM_BUILD_ROOT%{_bindir}/* || :
 strip --strip-unneeded $RPM_BUILD_ROOT%{_libdir}/lib*.so.*.* || :
 
 gzip -9fn CHANGES CHANGES.SSLeay LICENSE NEWS README \
-	doc/*.pod doc/*.txt
+	doc/*.txt doc/*/*pod
 
 %post
 %{_bindir}/c_rehash certs
@@ -137,7 +140,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc {CHANGES,CHANGES.SSLeay,LICENSE,NEWS,README}.gz
-%doc doc/*.pod.gz doc/*.txt.gz
+%doc doc/*.txt.gz doc/apps 
 %doc doc/openssl_button.gif doc/openssl_button.html
 
 %attr(755,root,root) %{_bindir}/*
@@ -151,6 +154,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
+%doc doc/ssl doc/crypto
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_pkgincludedir}
 
