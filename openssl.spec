@@ -25,7 +25,6 @@ Patch4:		%{name}-include.patch
 Patch5:         %{name}-makefile.patch
 URL:		http://www.openssl.org/
 BuildRequires:	perl-devel >= 5.6.1
-BuildRequires:	textutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	SSLeay
 Obsoletes:	SSLeay-devel
@@ -87,7 +86,7 @@ RC4, RSA и SSL.
 Summary:	OpenSSL command line tool and utilities
 Summary(pl):	Zestaw narzЙdzi i skryptСw
 Group:		Applications/Communications
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description tools
 The OpenSSL Toolkit cmdline tool openssl and utility scripts.
@@ -99,7 +98,7 @@ Zestaw narzЙdzi i skryptСw wywoЁywanych z linii poleceЯ.
 Summary:	OpenSSL utilities written in Perl
 Summary(pl):	NarzЙdzia OpenSSL napisane w perlu
 Group:		Applications/Communications
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 
 %description tools-perl
 OpenSSL Toolkit tools written in Perl.
@@ -117,7 +116,7 @@ Summary(pt_BR):	Bibliotecas e arquivos de inclusЦo para desenvolvimento OpenSSL
 Summary(ru):	Библиотеки, хедеры и утилиты для Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки, хедери та утил╕ти для Secure Sockets Layer
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{version}-%{release}
 Obsoletes:	libopenssl0-devel
 
 %description devel
@@ -153,7 +152,7 @@ Summary(pt_BR):	Bibliotecas estАticas para desenvolvimento com openssl
 Summary(ru):	Статические библиотеки разработчика для OpenSSL
 Summary(uk):	Статичн╕ б╕бл╕отеки програм╕ста для OpenSSL
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Static OpenSSL Toolkit libraries.
@@ -187,7 +186,7 @@ RC4, RSA и SSL. Включает статические библиотеки для разработки
 
 %build
 %{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
-	`grep -r "%{_prefix}/local/bin/perl" . | cut -d":" -f1`
+	`grep -l -r "%{_prefix}/local/bin/perl"`
 
 touch Makefile.*
 
