@@ -31,6 +31,41 @@
  #endif
 --- crypto/asn1/asn1_lib.c.orig	Fri Mar 30 06:42:32 2001
 +++ crypto/asn1/asn1_lib.c	Fri Jul 26 10:43:56 2002
+@@ -124,15 +124,13 @@
+ 		(int)(omax+ *pp));
+ 
+ #endif
+-#if 0
+-	if ((p+ *plength) > (omax+ *pp))
++	if (*plength > (omax - (*pp - p)))
+ 		{
+ 		ASN1err(ASN1_F_ASN1_GET_OBJECT,ASN1_R_TOO_LONG);
+ 		/* Set this so that even if things are not long enough
+ 		 * the values are set correctly */
+ 		ret|=0x80;
+ 		}
+-#endif
+ 	*pp=p;
+ 	return(ret|inf);
+ err:
+@@ -159,6 +157,8 @@
+ 		i= *p&0x7f;
+ 		if (*(p++) & 0x80)
+ 			{
++			if (i > sizeof(long))
++				return 0;
+ 			if (max-- == 0) return(0);
+ 			while (i-- > 0)
+ 				{
+@@ -170,6 +170,8 @@
+ 		else
+ 			ret=i;
+ 		}
++	if (ret < 0)
++		return 0;
+ 	*pp=p;
+ 	*rl=ret;
+ 	return(1);
 @@ -407,7 +407,7 @@
  
  void asn1_add_error(unsigned char *address, int offset)
