@@ -130,9 +130,9 @@ perl util/perlpath.pl %{_bindir}/perl
 ./Configure --openssldir=%{_var}/lib/%{name} threads linux-alpha+bwx-gcc
 %endif
 
-%{__make} OPT_FLAGS="%{?debug:-O -g}%{!?debug:$RPM_OPT_FLAGS} -DSSL_ALLOW_DH"
+%{__make} OPT_FLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS} -DSSL_ALLOW_DH"
 %{__make} INSTALLTOP=%{_prefix} \
-	OPT_FLAGS="%{?debug:-O -g}%{!?debug:$RPM_OPT_FLAGS}"
+	OPT_FLAGS="%{?debug:-O0 -g}%{!?debug:$RPM_OPT_FLAGS}"
 %ifarch alpha
 %{__make} linux-shared
 %endif
