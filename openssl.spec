@@ -1,7 +1,7 @@
 %include	/usr/lib/rpm/macros.perl
-Summary:	Library and toolkit for the "Secure Sockets Layer" (SSL v2/v3)
+Summary:	Toolkit for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary & Utilities
-Summary(fr):	Utilitaires et librairies de communication SSL (Secure Sockets Layer)
+Summary(fr):	Utilitaires de communication SSL (Secure Sockets Layer)
 Name:		openssl
 Version:	0.9.5a
 Release:	3
@@ -17,6 +17,7 @@ BuildRequires:	perl
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Prereq:		fileutils
 Prereq:		sed
+Prereq:		%{name}-libs = %{version}
 Obsoletes:	SSLeay
 Obsoletes:	SSLeay-devel
 Obsoletes:	SSLeay-perl
@@ -52,6 +53,18 @@ OpenSSL est un outiil de gestion des certificats et les librairies
 partagees qui fournit plusieurs protocoles et algorithmes de
 codage/decodage, incluant DES, RC4, RSA et SSL.
 
+%package libs
+Summary:	The OpenSSL shared libraries
+Summary(de):	Secure Sockets Layer Kommunikationslibrary: statische libraries+header                           
+Summary(fr):	Librairies statiques, headers et utilitaires pour communication SSL (Secure Sockets Layer)
+Summary(pl):	Biblioteki dzilelone OpenSSL
+Group:		Libraries
+Group(fr):	Librairies
+Group(pl):	Biblioteki
+
+%description libs
+The OpenSSL shared libraries
+
 %package devel
 Summary:	Development part of OpenSSL library
 Summary(de):	Secure Sockets Layer Kommunikationslibrary: statische libraries+header                           
@@ -60,7 +73,7 @@ Summary(pl):	Czê¶æ bibiloteki OpenSSL przeznaczona dla programistów
 Group:		Development/Libraries
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
-Requires:	%{name} = %{version}
+Requires:	%{name}-libs = %{version}
 
 %description devel
 Development part of OpenSSL library.
@@ -136,9 +149,12 @@ gzip -9nf CHANGES CHANGES.SSLeay LICENSE NEWS README \
 
 %post
 %{_bindir}/c_rehash certs
+
+%post libs
 /sbin/ldconfig
 
-%postun -p /sbin/ldconfig
+%postun libs
+/sbin/ldconfig
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -157,6 +173,8 @@ rm -rf $RPM_BUILD_ROOT
 %{openssldir}/private
 %dir %{_pkglibdir}
 %attr(755,root,root) %{_pkglibdir}/*
+
+%files libs
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
 
 %files devel
