@@ -6,8 +6,9 @@ Name:		openssl
 Version:	0.9.6
 Release:	2
 Group:		Libraries
-Group(pl):	Biblioteki
+Group(de):	Libraries
 Group(fr):	Librairies
+Group(pl):	Biblioteki
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
 Patch0:		%{name}-perl.patch
 Vendor:		The OpenSSL Project
@@ -33,8 +34,8 @@ Apache-style licence, which basically means that you are free to get
 and use it for commercial and non-commercial purposes subject to some
 simple license conditions.
 
-This package contains shared libraries only, install openssl-tools
-if you want to use openssl cmdline tool.
+This package contains shared libraries only, install openssl-tools if
+you want to use openssl cmdline tool.
 
 %description -l de
 Openssl enthält das OpenSSL Zertifikatsmanagementtool und shared
@@ -49,9 +50,9 @@ codage/decodage, incluant DES, RC4, RSA et SSL.
 
 %package tools
 Summary:	OpenSSL command line tool and utilities
-Group:		Utilities
-Group(pl):	Narzêdzia
-Group(fr):	Utilitaires
+Group:		Applications/Communications
+Group(de):	Applikationen/Kommunikation
+Group(pl):	Aplikacje/Komunikacja
 Requires:	%{name} = %{version}
 
 %description tools
@@ -59,9 +60,10 @@ The OpenSSL Toolkit cmdline tool openssl and utility scripts.
 
 %package tools-perl
 Summary:	OpenSSL utilities written in Perl
-Group:		Utilities
-Group(pl):	Narzêdzia
+Group:		Applications/Communications
+Group(de):	Applikationen/Kommunikation
 Group(fr):	Utilitaires
+Group(pl):	Aplikacje/Komunikacja
 Requires:	%{name} = %{version}
 
 %description tools-perl
@@ -73,8 +75,9 @@ Summary(de):	Secure Sockets Layer Kommunikationslibrary: statische libraries+hea
 Summary(fr):	Librairies statiques, headers et utilitaires pour communication SSL
 Summary(pl):	Czê¶æ bibiloteki OpenSSL przeznaczona dla programistów
 Group:		Development/Libraries
-Group(pl):	Programowanie/Biblioteki
+Group(de):	Entwicklung/Libraries
 Group(fr):	Development/Librairies
+Group(pl):	Programowanie/Biblioteki
 Requires:	%{name} = %{version}
 
 %description devel
@@ -87,8 +90,9 @@ Czê¶æ bibiloteki OpenSSL przeznaczona dla programistów.
 Summary:	Static OpenSSL libraries
 Summary(pl):	Statyczne wersje bibliotek z OpenSSL
 Group:		Development/Libraries
-Group(pl):	Programowanie/Biblioteki
+Group(de):	Entwicklung/Libraries
 Group(fr):	Development/Librairies
+Group(pl):	Programowanie/Biblioteki
 Requires:	%{name}-devel = %{version}
 
 %description static
@@ -122,8 +126,9 @@ perl util/perlpath.pl %{_bindir}/perl
 ./Configure --openssldir=%{_var}/lib/%{name} linux-alpha shared
 %endif
 
-%{__make} OPT_FLAGS="$RPM_OPT_FLAGS -DSSL_ALLOW_DH"
-%{__make} INSTALLTOP=%{_prefix} OPT_FLAGS="$RPM_OPT_FLAGS"
+%{__make} OPT_FLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g} -DSSL_ALLOW_DH"
+%{__make} INSTALLTOP=%{_prefix} \
+	OPT_FLAGS="%{!?debug:$RPM_OPT_FLAGS}%{?debug:-O -g}"
 %{__make} rehash
 
 # Conv PODs to man pages. "openssl_" prefix is added to each manpage 
@@ -136,7 +141,7 @@ perl -pi -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openss
 
 for pod in *.pod; do 
     if [ $pod != "openssl.pod" ]; then
-	mv $pod openssl_$pod;
+	mv -f $pod openssl_$pod;
 	pod=openssl_$pod;
     fi
 
@@ -165,7 +170,7 @@ for dir in ssl crypto; do
 	
 	for pod in *.pod; do 
        	    sec=`[ "$pod" = "des_modes.pod" ] && echo 7 || echo 3`;	
-  	    mv $pod openssl_$pod;
+  	    mv -f $pod openssl_$pod;
 	    pod=openssl_$pod;
 	    manpage=`basename $pod .pod`.$sec;
 	    pod2man --section="$sec" --release="$rel" --center=" " $pod > $manpage;
@@ -195,17 +200,14 @@ cp -df 	lib*.so		$RPM_BUILD_ROOT%{_libdir}
 #make install DESTDIR=$RPM_BUILD_ROOT
 #cd ..
 
-mv $RPM_BUILD_ROOT%{_var}/lib/%{name}/openssl.cnf $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
+mv -f $RPM_BUILD_ROOT%{_var}/lib/%{name}/openssl.cnf $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
 ln -s ../../../%{_sysconfdir}/%{name}/openssl.cnf \
 	$RPM_BUILD_ROOT%{_var}/lib/%{name}/%{name}.cnf
 
-mv $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc/*  $RPM_BUILD_ROOT%{_libdir}/%{name}
+mv -f $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc/*  $RPM_BUILD_ROOT%{_libdir}/%{name}
 rm -rf $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc
 
-mv $RPM_BUILD_ROOT%{_bindir}/c_rehash $RPM_BUILD_ROOT%{_libdir}/%{name}
-
-strip $RPM_BUILD_ROOT%{_bindir}/* || :
-strip --strip-unneeded $RPM_BUILD_ROOT%{_libdir}/lib*.so.*.*
+mv -f $RPM_BUILD_ROOT%{_bindir}/c_rehash $RPM_BUILD_ROOT%{_libdir}/%{name}
 
 find $RPM_BUILD_ROOT%{_mandir} -type f | xargs rm -f
 install doc/apps/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
@@ -213,7 +215,7 @@ install doc/apps/*.5 $RPM_BUILD_ROOT%{_mandir}/man5
 install doc/ssl/*.3 doc/crypto/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
 install doc/crypto/*.7 $RPM_BUILD_ROOT%{_mandir}/man7
 
-gzip -9nf {CHANGES,CHANGES.SSLeay,LICENSE,NEWS,README,doc/*.txt} 
+gzip -9nf CHANGES CHANGES.SSLeay LICENSE NEWS README doc/*.txt
 
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
