@@ -320,7 +320,7 @@ install doc/ssl/*.3 doc/crypto/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
 install doc/crypto/*.7 $RPM_BUILD_ROOT%{_mandir}/man7
 install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
 install %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
-
+install fips/openssl_fips_fingerprint $RPM_BUILD_ROOT%{_bindir}
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -346,7 +346,9 @@ rm -rf $RPM_BUILD_ROOT
 %verify(not md5 size mtime) %config(noreplace) %{_datadir}/ssl/ca-bundle.crt
 
 %attr(755,root,root) %{_bindir}/%{name}
+%attr(755,root,root) %{_bindir}/openssl_fips_fingerprint
 %attr(754,root,root) %{_bindir}/ssl-certificate
+
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/CA.sh
 %attr(755,root,root) %{_libdir}/%{name}/c_hash
