@@ -4,7 +4,7 @@ Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
 Summary(fr):	Utilitaires de communication SSL (Secure Sockets Layer)
 Name:		openssl
 Version:	0.9.6
-Release:	5
+Release:	6
 Group:		Libraries
 Group(de):	Libraries
 Group(fr):	Librairies
