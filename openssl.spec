@@ -1,6 +1,7 @@
 Summary: 	Library and toolkit for the "Secure Sockets Layer" (SSL v2/v3)
+Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary & Utilities
 Name: 		openssl
-Version: 	0.9.3
+Version: 	0.9.3a
 Release: 	1
 Group: 		Libraries
 Group(pl):	Biblioteki
@@ -35,8 +36,20 @@ Apache-style licence, which basically means that you are free to get
 and use it for commercial and non-commercial purposes subject to some
 simple license conditions.
 
+%description -l de
+Openssl enthält das OpenSSL Zertifikatsmanagementtool und shared libraries,
+die verschiedene Verschlüsselungs- und Entschlüsselungsalgorithmen und
+-protokolle, wie DES, RC4, RSA und SSL zur Verfügung stellen.                                                 
+
+%description -l fr
+OpenSSL est un outiil de gestion des certificats et les librairies partagees
+qui fournit plusieurs protocoles et algorithmes de codage/decodage, incluant
+DES, RC4, RSA et SSL.
+
 %package devel
 Summary:	Development part of OpenSSL library
+Summary(fr):	Librairies statiques, headers et utilitaires pour communication SSL (Secure Sockets Layer)
+Summary(de):	Secure Sockets Layer Kommunikationslibrary: statische libraries+header                           
 Summary(pl):	Czê¶æ bibiloteki OpenSSL przeznaczona dla programistów
 Group:		Development/Library
 Group(pl):	Programownie/Biblioteki
