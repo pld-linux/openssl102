@@ -112,7 +112,7 @@ mv 	lib*.so		$RPM_BUILD_ROOT%{_libdir}
 
 
 mv $RPM_BUILD_ROOT%{openssldir}/openssl.cnf $RPM_BUILD_ROOT%{_sysconfdir}
-ln -s $RPM_BUILD_ROOT%{_sysconfdir}/openssl.cnf \
+ln -s %{_sysconfdir}/openssl.cnf \
 	$RPM_BUILD_ROOT%{openssldir}/openssl.cnf
 symlinks -cs $RPM_BUILD_ROOT%{openssldir}
 
