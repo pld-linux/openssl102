@@ -2,12 +2,11 @@ Summary: 	Library and toolkit for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary & Utilities
 Name: 		openssl
 Version: 	0.9.4
-Release: 	1
+Release: 	2
 Group: 		Libraries
 Group(pl):	Biblioteki
 Source: 	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-Patch0:		openssl-sslcrypto.patch
-Patch1:		openssl-perl.patch
+Patch:		openssl-perl.patch
 Vendor: 	The OpenSSL Project
 License: 	Apache-style License
 BuildRequires:	symlinks
@@ -76,9 +75,8 @@ Static OpenSSL library.
 Statyczna wersja biblioteki OpenSSL.
 
 %prep
-%setup  -q 
-%patch0 -p1
-%patch1 -p1
+%setup -q 
+%patch -p1
 
 %build
 for i in ` echo Configure Makefile.org `; do
