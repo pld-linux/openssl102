@@ -13,7 +13,7 @@ Vendor: 	The OpenSSL Project
 License: 	Apache-style License
 BuildRequires:	symlinks
 BuildRequires:	perl
-BuildRoot:	/tmp/%{name}-%{version}-root
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	SSLeay
 Obsoletes:	SSLeay-devel
 Obsoletes:	SSLeay-perl
