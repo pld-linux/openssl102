@@ -4,7 +4,7 @@ Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
 Summary(fr):	Utilitaires de communication SSL (Secure Sockets Layer)
 Name:		openssl
 Version:	0.9.6
-Release:	1
+Release:	2
 Group:		Libraries
 Group(pl):	Biblioteki
 Group(fr):	Librairies
@@ -110,8 +110,10 @@ done
 
 perl util/perlpath.pl %{_bindir}/perl
 
-
-%ifarch i386 i486 i586 i686
+%ifarch i386 i486
+./Configure --openssldir=%{_var}/lib/%{name} linux-elf shared 386
+%endif
+%ifarch i586 i686
 ./Configure --openssldir=%{_var}/lib/%{name} linux-elf shared
 %endif
 %ifarch ppc
