@@ -1,12 +1,10 @@
-%define		date	19990520
-%define		time	2130
 Summary: 	Library and toolkit for the "Secure Sockets Layer" (SSL v2/v3)
 Name: 		openssl
 Version: 	0.9.3
-Release: 	0.%{date}
+Release: 	1
 Group: 		Libraries
 Group(pl):	Biblioteki
-Source: 	ftp://ftp.openssl.org/source/%{name}-SNAP-%{date}-%{time}.tar.gz
+Source: 	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
 Patch0:		openssl-sslcrypto.patch
 Patch1:		openssl-perl.patch
 Vendor: 	The OpenSSL Project
@@ -64,7 +62,7 @@ Static OpenSSL library.
 Statyczna wersja biblioteki OpenSSL.
 
 %prep
-%setup  -q -n %{name}-SNAP-%{date}-%{time}
+%setup  -q 
 %patch0 -p1
 %patch1 -p1
 
