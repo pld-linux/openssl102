@@ -109,7 +109,7 @@ make install \
 
 install libRSAglue.a 	$RPM_BUILD_ROOT%{_libdir}
 install lib*.so.*.* 	$RPM_BUILD_ROOT%{_libdir}
-mv 	lib*.so		$RPM_BUILD_ROOT%{_libdir}
+cp -d 	lib*.so		$RPM_BUILD_ROOT%{_libdir}
 
 
 mv $RPM_BUILD_ROOT%{openssldir}/openssl.cnf $RPM_BUILD_ROOT%{_sysconfdir}
