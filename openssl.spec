@@ -12,7 +12,6 @@ Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
 Patch0:		%{name}-perl.patch
 Vendor:		The OpenSSL Project
 License:	Apache-style License
-BuildRequires:	symlinks
 BuildRequires:	perl
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	SSLeay
@@ -188,18 +187,17 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
 	INSTALLTOP=%{_prefix} \
 	INSTALL_PREFIX=$RPM_BUILD_ROOT
 
-install libRSAglue.a 	$RPM_BUILD_ROOT%{_libdir}
+install libRSAglue.a libcrypto.a libssl.a 	$RPM_BUILD_ROOT%{_libdir}
 install lib*.so.*.* 	$RPM_BUILD_ROOT%{_libdir}
-cp -d 	lib*.so		$RPM_BUILD_ROOT%{_libdir}
+cp -df 	lib*.so		$RPM_BUILD_ROOT%{_libdir}
 
 #cd perl
 #make install DESTDIR=$RPM_BUILD_ROOT
 #cd ..
 
 mv $RPM_BUILD_ROOT%{_var}/lib/%{name}/openssl.cnf $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
-ln -s %{_sysconfdir}/%{name}/openssl.cnf \
+ln -s ../../../%{_sysconfdir}/%{name}/openssl.cnf \
 	$RPM_BUILD_ROOT%{_var}/lib/%{name}/%{name}.cnf
-symlinks -cs $RPM_BUILD_ROOT%{_var}/lib/%{name}
 
 mv $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc/*  $RPM_BUILD_ROOT%{_libdir}/%{name}
 rm -rf $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc
@@ -215,8 +213,7 @@ install doc/apps/*.5 $RPM_BUILD_ROOT%{_mandir}/man5
 install doc/ssl/*.3 doc/crypto/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
 install doc/crypto/*.7 $RPM_BUILD_ROOT%{_mandir}/man7
 
-gzip -9nf {CHANGES,CHANGES.SSLeay,LICENSE,NEWS,README,doc/*.txt} \
-	$RPM_BUILD_ROOT%{_mandir}/man?/*
+gzip -9nf {CHANGES,CHANGES.SSLeay,LICENSE,NEWS,README,doc/*.txt} 
 
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
