@@ -209,7 +209,7 @@ ln -sf libcrypto.so.*.* $RPM_BUILD_ROOT%{_libdir}/libcrypto.so
 ln -sf libssl.so.*.* $RPM_BUILD_ROOT%{_libdir}/libssl.so
 
 mv -f $RPM_BUILD_ROOT%{_var}/lib/%{name}/openssl.cnf $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
-ln -s ../../../%{_sysconfdir}/%{name}/openssl.cnf \
+ln -s %{_sysconfdir}/%{name}/openssl.cnf \
 	$RPM_BUILD_ROOT%{_var}/lib/%{name}/%{name}.cnf
 
 mv -f $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc/*  $RPM_BUILD_ROOT%{_libdir}/%{name}
