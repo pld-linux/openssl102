@@ -3,6 +3,7 @@
 %include	/usr/lib/rpm/macros.perl
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
+Summary(pl):	Biblioteki OpenSSL (SSL v2/v3)
 Summary(fr):	Utilitaires de communication SSL (Secure Sockets Layer)
 Name:		openssl
 Version:	0.9.6b
@@ -70,8 +71,13 @@ OpenSSL est un outiil de gestion des certificats et les librairies
 partagees qui fournit plusieurs protocoles et algorithmes de
 codage/decodage, incluant DES, RC4, RSA et SSL.
 
+%description -l pl
+Implementacja protoko³ów kryptograficznych Secure Socket Layer (SSL)
+v2/v3 oraz Transport Layer Security (TLS v1).
+
 %package tools
 Summary:	OpenSSL command line tool and utilities
+Summary(pl):	Zestaw narzêdzi i skryptów
 Group:		Applications/Communications
 Group(de):	Applikationen/Kommunikation
 Group(pl):	Aplikacje/Komunikacja
@@ -80,8 +86,12 @@ Requires:	%{name} = %{version}
 %description tools
 The OpenSSL Toolkit cmdline tool openssl and utility scripts.
 
+%description tools -l pl
+Zestaw narzêdzi i skryptów wywo³ywanych z linii poleceñ.
+
 %package tools-perl
 Summary:	OpenSSL utilities written in Perl
+Summary(pl):	Narzêdzia OpenSSL napisane w perlu
 Group:		Applications/Communications
 Group(de):	Applikationen/Kommunikation
 Group(pl):	Aplikacje/Komunikacja
@@ -89,6 +99,9 @@ Requires:	%{name} = %{version}
 
 %description tools-perl
 OpenSSL Toolkit tools written in Perl.
+
+%description tools-perl -l pl
+Narzêdzia OpenSSL napisane w perlu.
 
 %package devel
 Summary:	Development part of OpenSSL Toolkit libraries
@@ -128,7 +141,7 @@ Requires:	%{name} = %{version}
 %description devel-embed
 Development part of OpenSSL library for embedded applications.
 
-%description -l pl devel-embed
+%description devel-embed -l pl
 Czê¶æ bibiloteki OpenSSL przeznaczona dla programistów aplikacji
 wbudowanych.
 
@@ -152,7 +165,7 @@ Static OpenSSL Toolkit libraries.
 Statyczne wersje bibliotek z OpenSSL.
 
 %prep
-%setup -q 
+%setup -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -197,50 +210,50 @@ done
 %{__make}
 %{__make} rehash
 
-# Conv PODs to man pages. "openssl_" prefix is added to each manpage 
+# Conv PODs to man pages. "openssl_" prefix is added to each manpage
 # to avoid potential conflicts with others packages.
 center="OpenSSL 0.9.6"
 rel="OpenSSL 0.9.6"
 
-cd doc/apps || exit 1 
+cd doc/apps || exit 1
 perl -pi -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
 
-for pod in *.pod; do 
-    if [ $pod != "openssl.pod" ]; then
-	mv -f $pod openssl_$pod;
-	pod=openssl_$pod;
-    fi
+for pod in *.pod; do
+	if [ $pod != "openssl.pod" ]; then
+		mv -f $pod openssl_$pod;
+		pod=openssl_$pod;
+	fi
 
-    sec=1
-    if [ $pod = "openssl_config.pod" ]; then
-	sec=5
-    fi
+	sec=1
+	if [ $pod = "openssl_config.pod" ]; then
+		sec=5
+	fi
 
-    manpage=`basename $pod .pod`.$sec;	    
-    pod2man --section="$sec" --release="$rel" --center="$center" \
-	    $pod > $manpage;
-    echo "$manpage";
+	manpage=`basename $pod .pod`.$sec;
+	pod2man --section="$sec" --release="$rel" --center="$center" \
+		$pod > $manpage;
+	echo "$manpage";
 done
 cd ..
 
 sec=3
-for dir in ssl crypto; do 
+for dir in ssl crypto; do
 	cd $dir || exit 1;
 	if [ $dir = "ssl" ]; then
 		rel="OpenSSL SSL/TLS library"
-	elif [ $dir = "crypto" ]; then 
+	elif [ $dir = "crypto" ]; then
 		rel="OpenSSL cryptographic library"
 	fi
-	
+
 	perl -p -i -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
-	
-	for pod in *.pod; do 
-       	    sec=`[ "$pod" = "des_modes.pod" ] && echo 7 || echo 3`;	
-  	    mv -f $pod openssl_$pod;
-	    pod=openssl_$pod;
-	    manpage=`basename $pod .pod`.$sec;
-	    pod2man --section="$sec" --release="$rel" --center=" " $pod > $manpage;
-	    echo "$manpage";
+
+	for pod in *.pod; do
+		sec=`[ "$pod" = "des_modes.pod" ] && echo 7 || echo 3`;
+		mv -f $pod openssl_$pod;
+		pod=openssl_$pod;
+		manpage=`basename $pod .pod`.$sec;
+		pod2man --section="$sec" --release="$rel" --center=" " $pod > $manpage;
+		echo "$manpage";
 	done
 	cd ..
 done
@@ -252,14 +265,14 @@ done
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
-	   $RPM_BUILD_ROOT%{_mandir}/man{1,3,5,7}
+	$RPM_BUILD_ROOT%{_mandir}/man{1,3,5,7}
 
 %{__make} install \
 	INSTALLTOP=%{_prefix} \
 	INSTALL_PREFIX=$RPM_BUILD_ROOT
 
-install libRSAglue.a libcrypto.a libssl.a 	$RPM_BUILD_ROOT%{_libdir}
-install lib*.so.*.* 	$RPM_BUILD_ROOT%{_libdir}
+install libRSAglue.a libcrypto.a libssl.a $RPM_BUILD_ROOT%{_libdir}
+install lib*.so.*.* $RPM_BUILD_ROOT%{_libdir}
 ln -sf libcrypto.so.*.* $RPM_BUILD_ROOT%{_libdir}/libcrypto.so
 ln -sf libssl.so.*.* $RPM_BUILD_ROOT%{_libdir}/libssl.so
 
@@ -267,7 +280,7 @@ mv -f $RPM_BUILD_ROOT%{_var}/lib/%{name}/openssl.cnf $RPM_BUILD_ROOT%{_sysconfdi
 ln -s %{_sysconfdir}/%{name}/openssl.cnf \
 	$RPM_BUILD_ROOT%{_var}/lib/%{name}/%{name}.cnf
 
-mv -f $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc/*  $RPM_BUILD_ROOT%{_libdir}/%{name}
+mv -f $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc/* $RPM_BUILD_ROOT%{_libdir}/%{name}
 rm -rf $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc
 
 mv -f $RPM_BUILD_ROOT%{_bindir}/c_rehash $RPM_BUILD_ROOT%{_libdir}/%{name}
