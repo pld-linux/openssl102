@@ -3,8 +3,8 @@ Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
 Summary(fr):	Utilitaires de communication SSL (Secure Sockets Layer)
 Name:		openssl
-Version:	0.9.6
-Release:	6
+Version:	0.9.6a
+Release:	1
 Group:		Libraries
 Group(de):	Libraries
 Group(fr):	Librairies
