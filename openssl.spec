@@ -1,11 +1,15 @@
 %include	/usr/lib/rpm/macros.perl
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
-Summary(pl):	Biblioteki OpenSSL (SSL v2/v3)
+Summary(es):	Biblioteca C que suministra algoritmos y protocolos criptogrАficos.
 Summary(fr):	Utilitaires de communication SSL (Secure Sockets Layer)
+Summary(pl):	Biblioteki OpenSSL (SSL v2/v3)
+Summary(pt_BR):	Uma biblioteca C que fornece vАrios algoritmos e protocolos criptogrАficos.
+Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
+Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
-Version:	0.9.6b
-Release:	9
+Version:	0.9.6c
+Release:	1
 License:	Apache-style License
 Vendor:		The OpenSSL Project
 Group:		Libraries
@@ -47,8 +51,11 @@ you want to use openssl cmdline tool.
 %description -l de
 Openssl enthДlt das OpenSSL Zertifikatsmanagementtool und shared
 libraries, die verschiedene VerschlЭsselungs- und
-EntschlЭsselungsalgorithmen und
-- -protokolle, wie DES, RC4, RSA und SSL zur VerfЭgung stellen.
+EntschlЭsselungsalgorithmen und -protokolle, wie DES, RC4, RSA und SSL
+zur VerfЭgung stellen.
+
+%description -l es
+Biblioteca C que suministra algoritmos y protocolos criptogrАficos.
 
 %description -l fr
 OpenSSL est un outiil de gestion des certificats et les librairies
@@ -58,6 +65,21 @@ codage/decodage, incluant DES, RC4, RSA et SSL.
 %description -l pl
 Implementacja protokoЁСw kryptograficznych Secure Socket Layer (SSL)
 v2/v3 oraz Transport Layer Security (TLS v1).
+
+%description -l pt_BR
+Uma biblioteca C que fornece vАrios algoritmos e protocolos
+criptogrАficos, incluindo DES, RC4, RSA e SSL. Inclui bibliotecas
+compartilhadas e utilitАrios.
+
+%description -l ru
+Программа openssl для работы с сертификатами и разделяемые библиотеки,
+которые реализуют множетсво криптографических алгоритмов, включая DES,
+RC4, RSA и SSL.
+
+%description -l uk
+Програма openssl для роботи з сертиф╕катами та б╕бл╕отеки сп╕льного
+користування, що реал╕зують велику к╕льк╕сть криптограф╕чних
+алгоритм╕в, включаючи DES, RC4, RSA та SSL.
 
 %package tools
 Summary:	OpenSSL command line tool and utilities
@@ -86,8 +108,12 @@ NarzЙdzia OpenSSL napisane w perlu.
 %package devel
 Summary:	Development part of OpenSSL Toolkit libraries
 Summary(de):	Secure Sockets Layer Kommunikationslibrary: statische libraries+header
+Summary(es):	Bibliotecas y archivos de inclusiСn para desarrollo OpenSSL
 Summary(fr):	Librairies statiques, headers et utilitaires pour communication SSL
 Summary(pl):	CzЙ╤Ф bibiloteki OpenSSL przeznaczona dla programistСw
+Summary(pt_BR):	Bibliotecas e arquivos de inclusЦo para desenvolvimento OpenSSL
+Summary(ru):	Библиотеки, хедеры и утилиты для Secure Sockets Layer
+Summary(uk):	Б╕бл╕отеки, хедери та утил╕ти для Secure Sockets Layer
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
 Obsoletes:	libopenssl0-devel
@@ -95,12 +121,35 @@ Obsoletes:	libopenssl0-devel
 %description devel
 Development part of OpenSSL library.
 
+%description devel -l es
+Bibliotecas y archivos de inclusiСn para desarrollo OpenSSL
+
 %description devel -l pl
 CzЙ╤Ф bibiloteki OpenSSL przeznaczona dla programistСw.
+
+%description devel -l pt_BR
+Uma biblioteca C que fornece vАrios algoritmos e protocolos
+criptogrАficos, incluindo DES, RC4, RSA e SSL. Inclui bibliotecas e
+arquivos de inclusЦo para desenvolvimento.
+
+%description devel -l ru
+Программа openssl для работы с сертификатами и разделяемые библиотеки,
+которые реализуют множетсво криптографических алгоритмов, включая DES,
+RC4, RSA и SSL. Включает библиотеки и хедеры для разработки приложений
+с использованием SSL.
+
+%description devel -l uk
+Програма openssl для роботи з сертиф╕катами та б╕бл╕отеки сп╕льного
+користування, що реал╕зують велику к╕льк╕сть криптограф╕чних
+алгоритм╕в, включаючи DES, RC4, RSA та SSL. М╕стить б╕бл╕отеки та
+хедери для розробки програм з використанням SSL.
 
 %package static
 Summary:	Static OpenSSL libraries
 Summary(pl):	Statyczne wersje bibliotek z OpenSSL
+Summary(pt_BR):	Bibliotecas estАticas para desenvolvimento com openssl
+Summary(ru):	Статические библиотеки разработчика для OpenSSL
+Summary(uk):	Статичн╕ б╕бл╕отеки програм╕ста для OpenSSL
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}
 
@@ -109,6 +158,21 @@ Static OpenSSL Toolkit libraries.
 
 %description static -l pl
 Statyczne wersje bibliotek z OpenSSL.
+
+%description static -l pt_BR
+Bibliotecas estАticas para desenvolvimento com openssl.
+
+%description static -l ru
+Программа openssl для работы с сертификатами и разделяемые библиотеки,
+которые реализуют множетсво криптографических алгоритмов, включая DES,
+RC4, RSA и SSL. Включает статические библиотеки для разработки
+приложений с использованием OpenSSL.
+
+%description static -l uk
+Програма openssl для роботи з сертиф╕катами та б╕бл╕отеки сп╕льного
+користування, що реал╕зують велику к╕льк╕сть криптограф╕чних
+алгоритм╕в, включаючи DES, RC4, RSA та SSL. М╕стить статичн╕
+б╕бл╕отеки для розробки програм з використанням SSL.
 
 %prep
 %setup -q
