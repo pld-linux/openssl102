@@ -1,0 +1,18 @@
+diff -ur openssl-0.9.2b.old/apps/CA.pl openssl-0.9.2b/apps/CA.pl
+--- openssl-0.9.2b.old/apps/CA.pl	Sat Jan  2 17:02:24 1999
++++ openssl-0.9.2b/apps/CA.pl	Wed Apr 14 12:45:42 1999
+@@ -1,4 +1,4 @@
+-#!/usr/local/bin/perl
++#!/usr/bin/perl
+ #
+ # CA - wrapper around ca to make it easier to use ... basically ca requires
+ #      some setup stuff to be done before you can use it and this makes
+diff -ur openssl-0.9.2b.old/apps/der_chop openssl-0.9.2b/apps/der_chop
+--- openssl-0.9.2b.old/apps/der_chop	Sat Jan  2 17:02:24 1999
++++ openssl-0.9.2b/apps/der_chop	Wed Apr 14 12:45:29 1999
+@@ -1,4 +1,4 @@
+-#!/usr/local/bin/perl
++#!/usr/bin/perl
+ #
+ # der_chop ... this is one total hack that Eric is really not proud of
+ #              so don't look at it and don't ask for support
