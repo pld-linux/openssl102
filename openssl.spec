@@ -249,8 +249,11 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_var}/lib/%{name}
 %dir %{_var}/lib/%{name}/private
 %dir %{_var}/lib/%{name}/certs
+
 %verify(not md5 size mtime) %config(noreplace) %{_sysconfdir}/%{name}/openssl.cnf
 %verify(not md5 size mtime) %config(noreplace) %{_var}/lib/%{name}/openssl.cnf
+%dir %{_datadir}/ssl
+%verify(not md5 size mtime) %config(noreplace)%{_datadir}/ssl/ca-bundle.crt
 
 %attr(755,root,root) %{_bindir}/%{name}
 %dir %{_libdir}/%{name}
@@ -259,9 +262,6 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/c_info
 %attr(755,root,root) %{_libdir}/%{name}/c_issuer
 %attr(755,root,root) %{_libdir}/%{name}/c_name
-
-%dir %{_datadir}/ssl
-%verify(not md5 size mtime) %config(noreplace)%{_datadir}/ssl/ca-bundle.crt
 
 %{_mandir}/man1/openssl.1*
 %{_mandir}/man1/openssl_asn1parse.1*
