@@ -4,7 +4,7 @@ Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary & Utilities
 Summary(fr):	Utilitaires et librairies de communication SSL (Secure Sockets Layer)
 Name:		openssl
 Version:	0.9.5a
-Release:	2
+Release:	3
 Group:		Libraries
 Group(fr):	Librairies
 Group(pl):	Biblioteki
@@ -150,6 +150,7 @@ rm -rf $RPM_BUILD_ROOT
 %doc doc/openssl_button.gif doc/openssl_button.html
 
 %attr(755,root,root) %{_bindir}/*
+%dir %{_sysconfdir}
 %verify(not md5 size mtime) %config(noreplace) %{_sysconfdir}/openssl.cnf
 %verify(not md5 size mtime) %config(noreplace) %{openssldir}/openssl.cnf
 %{openssldir}/certs
