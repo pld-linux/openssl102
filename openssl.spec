@@ -1,12 +1,20 @@
-Name: openssl
-Version: 0.9.2b
-Release: 1
-Source: ftp://ftp.openssl.org/source/openssl-0.9.2b.tar.gz
-Group: Libraries
-Vendor: The OpenSSL Project
-License: Apache-style License
-Summary: Library and toolkit for the "Secure Sockets Layer" (SSL v2/v3)
-Packager: Chris Hamilton <chrish@realminfo.com>
+Summary: 	Library and toolkit for the "Secure Sockets Layer" (SSL v2/v3)
+Name: 		openssl
+Version: 	0.9.2b
+Release: 	2
+Group: 		Libraries
+Group(pl):	Biblioteki
+Source: 	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
+Patch0:		openssl-sslcrypto.patch
+Patch1:		openssl-perl.patch
+Patch2:		openssl-shlib.patch
+Vendor: 	The OpenSSL Project
+License: 	Apache-style License
+Packager: 	PLD Bug tracking <pld@pld.org.pl>
+BuildRoot:	/tmp/%{name}-%{version}-root
+Obsoletes:	SSLeay
+Obsoletes:	SSLeay-devel
+Obsoletes:	SSLeay-perl
 
 %description
 The OpenSSL Project is a collaborative effort to develop a robust,
@@ -24,86 +32,64 @@ and use it for commercial and non-commercial purposes subject to some
 simple license conditions.
 
 %prep
-%setup
-./config
+%setup  -q
+%patch0 -p1
+%patch1 -p1
+%patch2 -p1
 
 %build
-make
+for i in ` echo Configure Makefile.org Makefile.ssl `; do
+        sed -e 's#-m486##g' \
+		-e 's#-O3 -fomit-frame-pointer#%{optflags}#g' \
+		<$i >$i.work
+        mv $i.work $i
+done
+
+perl util/perlpath.pl /usr/bin
+perl util/ssldir.pl /var/lib/ssl
+
+./config
+make INSTALLTOP=/usr OPT_FLAGS="$RPM_OPT_FLAGS"
 make rehash
 
 %install
-make install
+rm -rf $RPM_BUILD_ROOT
+
+install -d $RPM_BUILD_ROOT/{etc,usr/include/ssl,var/lib/ssl/{certs,private}}
+
+make INSTALLTOP=$RPM_BUILD_ROOT/usr install
+
+install libRSAglue.a $RPM_BUILD_ROOT/usr/lib
+
+mv $RPM_BUILD_ROOT/usr/include/*.h $RPM_BUILD_ROOT/usr/include/ssl
+
+mv $RPM_BUILD_ROOT/usr/lib/openssl.cnf $RPM_BUILD_ROOT/etc
+ln -s ../../etc/openssl.cnf $RPM_BUILD_ROOT/usr/lib/openssl.cnf
+
+gzip -9fn CHANGES CHANGES.SSLeay LICENSE NEWS README \
+	doc/*.pod doc/*.txt
+
+%post
+/usr/bin/c_rehash certs
+
+%clean
+#rm -rf $RPM_BUILD_ROOT
 
 %files
-/usr/local/ssl/bin/openssl
-/usr/local/ssl/bin/CA.sh
-/usr/local/ssl/bin/CA.pl
-/usr/local/ssl/bin/der_chop
-/usr/local/ssl/bin/c_hash
-/usr/local/ssl/bin/c_info
-/usr/local/ssl/bin/c_issuer
-/usr/local/ssl/bin/c_name
-/usr/local/ssl/bin/c_rehash
-/usr/local/ssl/lib/openssl.cnf
-/usr/local/ssl/lib/libcrypto.a
-/usr/local/ssl/lib/libssl.a
-/usr/local/ssl/include/crypto.h
-/usr/local/ssl/include/cryptall.h
-/usr/local/ssl/include/tmdiff.h
-/usr/local/ssl/include/opensslv.h
-/usr/local/ssl/include/md2.h
-/usr/local/ssl/include/md5.h
-/usr/local/ssl/include/sha.h
-/usr/local/ssl/include/mdc2.h
-/usr/local/ssl/include/hmac.h
-/usr/local/ssl/include/ripemd.h
-/usr/local/ssl/include/des.h
-/usr/local/ssl/include/rc2.h
-/usr/local/ssl/include/rc4.h
-/usr/local/ssl/include/rc5.h
-/usr/local/ssl/include/idea.h
-/usr/local/ssl/include/blowfish.h
-/usr/local/ssl/include/cast.h
-/usr/local/ssl/include/bn.h
-/usr/local/ssl/include/rsa.h
-/usr/local/ssl/include/dsa.h
-/usr/local/ssl/include/dh.h
-/usr/local/ssl/include/buffer.h
-/usr/local/ssl/include/bio.h
-/usr/local/ssl/include/stack.h
-/usr/local/ssl/include/lhash.h
-/usr/local/ssl/include/rand.h
-/usr/local/ssl/include/err.h
-/usr/local/ssl/include/objects.h
-/usr/local/ssl/include/evp.h
-/usr/local/ssl/include/asn1.h
-/usr/local/ssl/include/asn1_mac.h
-/usr/local/ssl/include/pem.h
-/usr/local/ssl/include/pem2.h
-/usr/local/ssl/include/x509.h
-/usr/local/ssl/include/x509_vfy.h
-/usr/local/ssl/include/x509v3.h
-/usr/local/ssl/include/conf.h
-/usr/local/ssl/include/txt_db.h
-/usr/local/ssl/include/pkcs7.h
-/usr/local/ssl/include/comp.h
-/usr/local/ssl/include/ssl.h
-/usr/local/ssl/include/ssl2.h
-/usr/local/ssl/include/ssl3.h
-/usr/local/ssl/include/ssl23.h
-/usr/local/ssl/include/tls1.h
+%defattr(644,root,root,755)
+%doc {CHANGES,CHANGES.SSLeay,LICENSE,NEWS,README}.gz
+%doc doc/*.pod.gz doc/*.txt.gz
+%doc doc/openssl_button.gif doc/openssl_button.html
 
-%doc CHANGES
-%doc CHANGES.SSLeay
-%doc INSTALL
-%doc INSTALL.W32
-%doc LICENSE
-%doc NEWS
-%doc README
-%doc doc/crypto.pod
-%doc doc/openssl.pod
-%doc doc/openssl.txt
-%doc doc/openssl_button.gif
-%doc doc/openssl_button.html
-%doc doc/ssl.pod
-%doc doc/ssleay.txt
+%attr(755,root,root) /usr/bin/*
+%verify(not md5 size mtime) %config(noreplace) /etc/openssl.cnf
+%verify(not md5 size mtime) %config(noreplace) /usr/lib/openssl.cnf
+/usr/lib/lib*.a
+/usr/include/ssl/*.h
+/var/lib/ssl
+
+%changelog
+* Wed Apr 14 1999 Artur Frysiak <wiget@pld.org.pl>
+  [0.9.2c-2]
+- rewrite for PLD
+TODO: make shared libs and perl subpackage
