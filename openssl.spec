@@ -116,6 +116,9 @@ gzip -9fn CHANGES CHANGES.SSLeay LICENSE NEWS README \
 
 %post
 %{_bindir}/c_rehash certs
+/sbin/ldconfig
+
+%postun -p /sbin/ldconfig
 
 %clean
 rm -rf $RPM_BUILD_ROOT
