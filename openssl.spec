@@ -3,8 +3,8 @@ Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
 Summary(fr):	Utilitaires de communication SSL (Secure Sockets Layer)
 Name:		openssl
-Version:	0.9.5a
-Release:	3
+Version:	0.9.6
+Release:	1
 Group:		Libraries
 Group(pl):	Biblioteki
 Group(fr):	Librairies
@@ -108,18 +108,27 @@ for i in Configure Makefile.org ; do
 	perl -pi -e 's#-O3 -fomit-frame-pointer#%{optflags}#g' $i
 done
 
-perl util/perlpath.pl %{_bindir}
+perl util/perlpath.pl %{_bindir}/perl
 
-./config --openssldir=%{_var}/lib/%{name}
 
-%{__make} OPT_FLAGS="$RPM_OPT_FLAGS" linux-shared
+%ifarch i386 i486 i586 i686
+./Configure --openssldir=%{_var}/lib/%{name} linux-elf shared
+%endif
+%ifarch ppc
+./Configure --openssldir=%{_var}/lib/%{name} linux-ppc shared
+%endif
+%ifarch alpha
+./Configure --openssldir=%{_var}/lib/%{name} linux-alpha shared
+%endif
+
+%{__make} OPT_FLAGS="$RPM_OPT_FLAGS -DSSL_ALLOW_DH"
 %{__make} INSTALLTOP=%{_prefix} OPT_FLAGS="$RPM_OPT_FLAGS"
 %{__make} rehash
 
 # Conv PODs to man pages. "openssl_" prefix is added to each manpage 
 # to avoid potential conflicts with others packages.
-center="OpenSSL 0.9.5a"
-rel="OpenSSL 0.9.5a"
+center="OpenSSL 0.9.6"
+rel="OpenSSL 0.9.6"
 
 cd doc/apps || exit 1 
 perl -pi -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
