@@ -5,7 +5,7 @@ Summary(pl):	Biblioteki OpenSSL (SSL v2/v3)
 Summary(fr):	Utilitaires de communication SSL (Secure Sockets Layer)
 Name:		openssl
 Version:	0.9.6b
-Release:	8
+Release:	9
 License:	Apache-style License
 Vendor:		The OpenSSL Project
 Group:		Libraries
