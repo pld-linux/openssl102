@@ -4,7 +4,7 @@ Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
 Summary(fr):	Utilitaires de communication SSL (Secure Sockets Layer)
 Name:		openssl
 Version:	0.9.6
-Release:	4
+Release:	5
 Group:		Libraries
 Group(de):	Libraries
 Group(fr):	Librairies
@@ -201,7 +201,8 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
 
 install libRSAglue.a libcrypto.a libssl.a 	$RPM_BUILD_ROOT%{_libdir}
 install lib*.so.*.* 	$RPM_BUILD_ROOT%{_libdir}
-cp -df 	lib*.so		$RPM_BUILD_ROOT%{_libdir}
+ln -sf libcrypto.so.*.* $RPM_BUILD_ROOT%{_libdir}/libcrypto.so
+ln -sf libssl.so.*.* $RPM_BUILD_ROOT%{_libdir}/libssl.so
 
 #cd perl
 #make install DESTDIR=$RPM_BUILD_ROOT
@@ -249,7 +250,6 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/CA.sh
 %attr(755,root,root) %{_libdir}/%{name}/c_hash
-%attr(755,root,root) %{_libdir}/%{name}/c_rehash
 %attr(755,root,root) %{_libdir}/%{name}/c_info
 %attr(755,root,root) %{_libdir}/%{name}/c_issuer
 %attr(755,root,root) %{_libdir}/%{name}/c_name
@@ -290,6 +290,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/%{name}/CA.pl
 %attr(755,root,root) %{_libdir}/%{name}/der_chop
+%attr(755,root,root) %{_libdir}/%{name}/c_rehash
 %{_mandir}/man1/openssl_CA.pl.1*
 
 %files devel
