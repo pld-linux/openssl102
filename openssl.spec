@@ -4,7 +4,7 @@ Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
 Summary(fr):	Utilitaires de communication SSL (Secure Sockets Layer)
 Name:		openssl
 Version:	0.9.6b
-Release:	4
+Release:	5
 License:	Apache-style License
 Vendor:		The OpenSSL Project
 Group:		Libraries
@@ -25,6 +25,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 Obsoletes:	SSLeay
 Obsoletes:	SSLeay-devel
 Obsoletes:	SSLeay-perl
+Obsoletes:	libopenssl0
 
 %description
 The OpenSSL Project is a collaborative effort to develop a robust,
@@ -86,6 +87,7 @@ Group(de):	Entwicklung/Libraries
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
 Requires:	%{name} = %{version}
+Obsoletes:	libopenssl0-devel
 
 %description devel
 Development part of OpenSSL library.
