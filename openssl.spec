@@ -97,8 +97,12 @@ Summary(fr):	Librairies statiques, headers et utilitaires pour communication SSL
 Summary(pl):	CzЙ╤Ф bibiloteki OpenSSL przeznaczona dla programistСw
 Group:		Development/Libraries
 Group(de):	Entwicklung/Libraries
+Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
+Group(pt_BR):	Desenvolvimento/Bibliotecas
+Group(ru):	Разработка/Библиотеки
+Group(uk):	Розробка/Б╕бл╕отеки
 Requires:	%{name} = %{version}
 Obsoletes:	libopenssl0-devel
 
@@ -113,8 +117,12 @@ Summary:	Development part of OpenSSL Toolkit embedded libraries
 Summary(pl):	CzЙ╤Ф bibiloteki OpenSSL przeznaczona dla aplikacji wbudowanych
 Group:		Development/Libraries
 Group(de):	Entwicklung/Libraries
+Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
+Group(pt_BR):	Desenvolvimento/Bibliotecas
+Group(ru):	Разработка/Библиотеки
+Group(uk):	Розробка/Б╕бл╕отеки
 Requires:	%{name} = %{version}
 
 %description devel-embed
@@ -129,8 +137,12 @@ Summary:	Static OpenSSL libraries
 Summary(pl):	Statyczne wersje bibliotek z OpenSSL
 Group:		Development/Libraries
 Group(de):	Entwicklung/Libraries
+Group(es):	Desarrollo/Bibliotecas
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
+Group(pt_BR):	Desenvolvimento/Bibliotecas
+Group(ru):	Разработка/Библиотеки
+Group(uk):	Розробка/Б╕бл╕отеки
 Requires:	%{name}-devel = %{version}
 
 %description static
