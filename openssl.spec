@@ -3,8 +3,8 @@ Summary: 	Library and toolkit for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary & Utilities
 Summary(fr):	Utilitaires et librairies de communication SSL (Secure Sockets Layer)
 Name: 		openssl
-Version: 	0.9.5
-Release: 	2
+Version: 	0.9.5a
+Release: 	1
 Group: 		Libraries
 Group(pl):	Biblioteki
 Source: 	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -78,7 +78,7 @@ Statyczna wersja biblioteki OpenSSL.
 
 %prep
 %setup -q 
-%patch -p1 
+%patch -p1
 
 %build
 for i in Configure Makefile.org ; do
