@@ -4,7 +4,7 @@ Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary & Utilities
 Summary(fr):	Utilitaires et librairies de communication SSL (Secure Sockets Layer)
 Name: 		openssl
 Version: 	0.9.5
-Release: 	1
+Release: 	2
 Group: 		Libraries
 Group(pl):	Biblioteki
 Source: 	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -18,7 +18,7 @@ Obsoletes:	SSLeay
 Obsoletes:	SSLeay-devel
 Obsoletes:	SSLeay-perl
 
-%define		openssldir	/var/state/openssl
+%define		openssldir	/var/lib/openssl
 %define		_sysconfdir	/etc/%{name}
 %define		_pkglibdir	%{_libdir}/%{name}
 %define		_pkgincludedir	%{_includedir}/%{name}
