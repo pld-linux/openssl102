@@ -123,7 +123,7 @@ ln -s %{_sysconfdir}/openssl.cnf \
 symlinks -cs $RPM_BUILD_ROOT%{openssldir}
 
 mv $RPM_BUILD_ROOT%{openssldir}/misc/*	$RPM_BUILD_ROOT%{_pkglibdir}
-rm -rf $RPM_BUILD_ROOT
+rm -rf $RPM_BUILD_ROOT%{openssldir}/misc
 
 strip $RPM_BUILD_ROOT%{_bindir}/* || :
 strip --strip-unneeded $RPM_BUILD_ROOT%{_libdir}/lib*.so.*.*
