@@ -20,3 +20,14 @@
  LIBSSL= -L.. -lssl
  
  BNTEST=		bntest
+--- openssl-0.9.6b/crypto/des/des.h.wiget	Fri Apr 19 11:32:16 2002
++++ openssl-0.9.6b/crypto/des/des.h	Fri Apr 19 11:33:28 2002
+@@ -189,7 +189,7 @@
+ 		  des_cblock *iv);
+ char *des_fcrypt(const char *buf,const char *salt, char *ret);
+ char *des_crypt(const char *buf,const char *salt);
+-#if !defined(PERL5) && !defined(__FreeBSD__) && !defined(NeXT)
++#if !defined(PERL5) && !defined(__FreeBSD__) && !defined(NeXT) && !defined(__GLIBC__)
+ char *crypt(const char *buf,const char *salt);
+ #endif
+ void des_ofb_encrypt(const unsigned char *in,unsigned char *out,int numbits,
