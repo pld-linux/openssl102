@@ -4,7 +4,7 @@ Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
 Summary(fr):	Utilitaires de communication SSL (Secure Sockets Layer)
 Name:		openssl
 Version:	0.9.6
-Release:	3
+Release:	4
 Group:		Libraries
 Group(de):	Libraries
 Group(fr):	Librairies
@@ -112,6 +112,7 @@ for i in Configure Makefile.org ; do
         perl -pi -e 's#-m486##g' $i
 	perl -pi -e 's#-O3 -fomit-frame-pointer#%{optflags}#g' $i
 done
+touch Makefile.*
 
 perl util/perlpath.pl %{_bindir}/perl
 
