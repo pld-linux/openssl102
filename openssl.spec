@@ -186,7 +186,7 @@ RC4, RSA и SSL. Включает статические библиотеки для разработки
 
 %build
 %{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
-	`grep -l -r "%{_prefix}/local/bin/perl"`
+	`grep -l -r "%{_prefix}/local/bin/perl" *`
 
 touch Makefile.*
 
