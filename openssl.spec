@@ -1,5 +1,4 @@
 %include	/usr/lib/rpm/macros.perl
-%define		_beta	beta6
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
 Summary(es):	Biblioteca C que suministra algoritmos y protocolos criptogrАficos
@@ -10,10 +9,10 @@ Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.7
-Release:	0.%{_beta}.1
+Release:	0.1
 License:	Apache-style License
 Group:		Libraries
-Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}-%{_beta}.tar.gz
+Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
 Source1:	%{name}-ca-bundle.crt
 Source2:	%{name}.1.pl
 Patch0:		%{name}-alpha-ccc.patch
@@ -172,7 +171,7 @@ RC4, RSA и SSL. Включает статические библиотеки для разработки
 б╕бл╕отеки для розробки програм з використанням SSL.
 
 %prep
-%setup -q -n %{name}-%{version}-%{_beta}
+%setup -q
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
