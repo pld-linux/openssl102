@@ -12,7 +12,6 @@ Name:		openssl
 Version:	0.9.7
 Release:	0.%{_beta}.1
 License:	Apache-style License
-Vendor:		The OpenSSL Project
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}-%{_beta}.tar.gz
 Source1:	%{name}-ca-bundle.crt
@@ -269,7 +268,7 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
 	INSTALLTOP=%{_prefix} \
 	INSTALL_PREFIX=$RPM_BUILD_ROOT
 
-install %{SOURCE1}  $RPM_BUILD_ROOT%{_datadir}/ssl/ca-bundle.crt
+install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/ssl/ca-bundle.crt
 install libRSAglue.a libcrypto.a libssl.a $RPM_BUILD_ROOT%{_libdir}
 install lib*.so.*.* $RPM_BUILD_ROOT%{_libdir}
 ln -sf libcrypto.so.*.* $RPM_BUILD_ROOT%{_libdir}/libcrypto.so
