@@ -4,7 +4,7 @@ Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
 Summary(fr):	Utilitaires de communication SSL (Secure Sockets Layer)
 Name:		openssl
 Version:	0.9.6b
-Release:	2
+Release:	3
 License:	Apache-style License
 Vendor:		The OpenSSL Project
 Group:		Libraries
