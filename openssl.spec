@@ -5,17 +5,19 @@ Summary(pl):	Biblioteki OpenSSL (SSL v2/v3)
 Summary(fr):	Utilitaires de communication SSL (Secure Sockets Layer)
 Name:		openssl
 Version:	0.9.6b
-Release:	7
+Release:	8
 License:	Apache-style License
 Vendor:		The OpenSSL Project
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
+Source1:	%{name}-ca-bundle.crt
 Patch0:		%{name}-alpha-ccc.patch
 # patch1 is only for 0.9.6a version. This version isn't binary
 # compatibile with 0.9.6 but have this same soname.
 Patch1:		%{name}-soname.patch
 Patch2:		%{name}-optflags.patch
 Patch3:		%{name}-nocrypt.patch
+Patch4:		%{name}-globalCA.diff
 BuildRequires:	perl-devel >= 5.6.1
 BuildRequires:	textutils
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -114,6 +116,7 @@ Statyczne wersje bibliotek z OpenSSL.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %build
 for f in ` grep -r "%{_prefix}/local/bin/perl" . | cut -d":" -f1`; do
@@ -142,8 +145,8 @@ export OPTFLAGS
 ./Configure --openssldir=%{_var}/lib/%{name} threads linux-sparcv8 shared
 %endif
 
-%{__make}
-%{__make} rehash
+%{__make} CC="%{__cc}"
+%{__make} rehash CC="%{__cc}"
 
 # Conv PODs to man pages. "openssl_" prefix is added to each manpage
 # to avoid potential conflicts with others packages.
@@ -200,12 +203,13 @@ done
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
-	$RPM_BUILD_ROOT%{_mandir}/man{1,3,5,7}
+	$RPM_BUILD_ROOT{%{_mandir}/man{1,3,5,7},%{_datadir}/ssl}
 
 %{__make} install \
 	INSTALLTOP=%{_prefix} \
 	INSTALL_PREFIX=$RPM_BUILD_ROOT
 
+install %{SOURCE1}  $RPM_BUILD_ROOT%{_datadir}/ssl/ca-bundle.crt
 install libRSAglue.a libcrypto.a libssl.a $RPM_BUILD_ROOT%{_libdir}
 install lib*.so.*.* $RPM_BUILD_ROOT%{_libdir}
 ln -sf libcrypto.so.*.* $RPM_BUILD_ROOT%{_libdir}/libcrypto.so
@@ -237,8 +241,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
-%doc {CHANGES,CHANGES.SSLeay,LICENSE,NEWS,README}.gz
-%doc doc/*.txt.gz doc/openssl_button.gif doc/openssl_button.html
+%doc *.gz doc/*.txt.gz doc/openssl_button.gif doc/openssl_button.html
 
 %files tools
 %defattr(644,root,root,755)
@@ -256,6 +259,9 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/%{name}/c_info
 %attr(755,root,root) %{_libdir}/%{name}/c_issuer
 %attr(755,root,root) %{_libdir}/%{name}/c_name
+
+%dir %{_datadir}/ssl
+%verify(not md5 size mtime) %config(noreplace)%{_datadir}/ssl/ca-bundle.crt
 
 %{_mandir}/man1/openssl.1*
 %{_mandir}/man1/openssl_asn1parse.1*
