@@ -1,16 +1,17 @@
 %include	/usr/lib/rpm/macros.perl
-Summary: 	Library and toolkit for the "Secure Sockets Layer" (SSL v2/v3)
+Summary:	Library and toolkit for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary & Utilities
 Summary(fr):	Utilitaires et librairies de communication SSL (Secure Sockets Layer)
-Name: 		openssl
-Version: 	0.9.5a
-Release: 	1
-Group: 		Libraries
+Name:		openssl
+Version:	0.9.5a
+Release:	1
+Group:		Libraries
+Group(fr):	Librairies
 Group(pl):	Biblioteki
-Source: 	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-Patch:		openssl-perl.patch
-Vendor: 	The OpenSSL Project
-License: 	Apache-style License
+Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
+Patch0:		openssl-perl.patch
+Vendor:		The OpenSSL Project
+License:	Apache-style License
 BuildRequires:	symlinks
 BuildRequires:	perl
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -25,28 +26,28 @@ Obsoletes:	SSLeay-perl
 
 %description
 The OpenSSL Project is a collaborative effort to develop a robust,
-commercial-grade, full-featured, and Open Source toolkit implementing
-the Secure Sockets Layer (SSL v2/v3) and Transport Layer Security (TLS
-v1) protocols with full-strength cryptography world-wide. The project
-is managed by a worldwide community of volunteers that use the
-Internet to communicate, plan, and develop the OpenSSL tookit and its
-related documentation.
-   
-OpenSSL is based on the excellent SSLeay library developed by Eric A.
-Young and Tim J. Hudson. The OpenSSL toolkit is licensed under an
-Apache-style licence, which basically means that you are free to get
-and use it for commercial and non-commercial purposes subject to some
-simple license conditions.
+commercial-grade, full-featured, and Open Source toolkit implementing the
+Secure Sockets Layer (SSL v2/v3) and Transport Layer Security (TLS v1)
+protocols with full-strength cryptography world-wide. The project is
+managed by a worldwide community of volunteers that use the Internet to
+communicate, plan, and develop the OpenSSL tookit and its related
+documentation.
+
+OpenSSL is based on the excellent SSLeay library developed by Eric A. Young
+and Tim J. Hudson. The OpenSSL toolkit is licensed under an Apache-style
+licence, which basically means that you are free to get and use it for
+commercial and non-commercial purposes subject to some simple license
+conditions.
 
 %description -l de
 Openssl enthält das OpenSSL Zertifikatsmanagementtool und shared libraries,
 die verschiedene Verschlüsselungs- und Entschlüsselungsalgorithmen und
--protokolle, wie DES, RC4, RSA und SSL zur Verfügung stellen.                                                 
+- -protokolle, wie DES, RC4, RSA und SSL zur Verfügung stellen.
 
 %description -l fr
-OpenSSL est un outiil de gestion des certificats et les librairies partagees
-qui fournit plusieurs protocoles et algorithmes de codage/decodage, incluant
-DES, RC4, RSA et SSL.
+OpenSSL est un outiil de gestion des certificats et les librairies
+partagees qui fournit plusieurs protocoles et algorithmes de
+codage/decodage, incluant DES, RC4, RSA et SSL.
 
 %package devel
 Summary:	Development part of OpenSSL library
@@ -54,6 +55,7 @@ Summary(de):	Secure Sockets Layer Kommunikationslibrary: statische libraries+hea
 Summary(fr):	Librairies statiques, headers et utilitaires pour communication SSL (Secure Sockets Layer)
 Summary(pl):	Czê¶æ bibiloteki OpenSSL przeznaczona dla programistów
 Group:		Development/Libraries
+Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
 Requires:	%{name} = %{version}
 
@@ -67,6 +69,7 @@ Czê¶æ bibiloteki OpenSSL przeznaczona dla programistów.
 Summary:	Static OpenSSL library
 Summary(pl):	Statyczna wersja biblioteki OpenSSL
 Group:		Development/Libraries
+Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
 Requires:	%{name}-devel = %{version}
 
@@ -120,12 +123,12 @@ ln -s %{_sysconfdir}/openssl.cnf \
 symlinks -cs $RPM_BUILD_ROOT%{openssldir}
 
 mv $RPM_BUILD_ROOT%{openssldir}/misc/*	$RPM_BUILD_ROOT%{_pkglibdir}
-rm -rf $RPM_BUILD_ROOT%{openssldir}/misc
+rm -rf $RPM_BUILD_ROOT
 
 strip $RPM_BUILD_ROOT%{_bindir}/* || :
-strip --strip-unneeded $RPM_BUILD_ROOT%{_libdir}/lib*.so.*.* || :
+strip --strip-unneeded $RPM_BUILD_ROOT%{_libdir}/lib*.so.*.*
 
-gzip -9fn CHANGES CHANGES.SSLeay LICENSE NEWS README \
+gzip -9nf CHANGES CHANGES.SSLeay LICENSE NEWS README \
 	doc/*.txt doc/*/*pod
 
 %post
