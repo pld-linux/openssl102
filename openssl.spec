@@ -59,12 +59,12 @@ install -d $RPM_BUILD_ROOT/{etc,usr/include/ssl,var/state/ssl/{certs,private}}
 
 make INSTALLTOP=$RPM_BUILD_ROOT/usr install
 
-install libRSAglue.a $RPM_BUILD_ROOT/usr/lib
+install libRSAglue.a $RPM_BUILD_ROOT%{_libdir}
 
 mv $RPM_BUILD_ROOT/usr/include/*.h $RPM_BUILD_ROOT/usr/include/ssl
 
-mv $RPM_BUILD_ROOT/usr/lib/openssl.cnf $RPM_BUILD_ROOT/etc
-ln -s ../../etc/openssl.cnf $RPM_BUILD_ROOT/usr/lib/openssl.cnf
+mv $RPM_BUILD_ROOT%{_libdir}/openssl.cnf $RPM_BUILD_ROOT/etc
+ln -s ../../etc/openssl.cnf $RPM_BUILD_ROOT%{_libdir}/openssl.cnf
 
 gzip -9fn CHANGES CHANGES.SSLeay LICENSE NEWS README \
 	doc/*.pod doc/*.txt
@@ -83,8 +83,8 @@ gzip -9fn CHANGES CHANGES.SSLeay LICENSE NEWS README \
 
 %attr(755,root,root) /usr/bin/*
 %verify(not md5 size mtime) %config(noreplace) /etc/openssl.cnf
-%verify(not md5 size mtime) %config(noreplace) /usr/lib/openssl.cnf
-/usr/lib/lib*.a
+%verify(not md5 size mtime) %config(noreplace) %{_libdir}/openssl.cnf
+%{_libdir}/lib*.a
 /usr/include/ssl/*.h
 /var/state/ssl
 
