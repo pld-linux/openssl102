@@ -126,7 +126,7 @@ Development part of OpenSSL library.
 Bibliotecas y archivos de inclusión para desarrollo OpenSSL
 
 %description devel -l pl
-Czê¶æ bibiloteki OpenSSL przeznaczona dla programistów.
+Czê¶æ biblioteki OpenSSL przeznaczona dla programistów.
 
 %description devel -l pt_BR
 Uma biblioteca C que fornece vários algoritmos e protocolos
