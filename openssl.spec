@@ -19,6 +19,7 @@ Patch0:		%{name}-alpha-ccc.patch
 Patch1:		%{name}-optflags.patch
 Patch2:		%{name}-globalCA.diff
 Patch3:		%{name}-parallel_make.patch
+Patch4:		%{name}-sec3.patch
 URL:		http://www.openssl.org/
 BuildRequires:	perl-devel >= 5.6.1
 BuildRequires:	textutils
@@ -178,6 +179,7 @@ RC4, RSA и SSL. Включает статические библиотеки для разработки
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p0
 
 %build
 for f in ` grep -r "%{_prefix}/local/bin/perl" . | cut -d":" -f1`; do
