@@ -1,31 +1,23 @@
 %include	/usr/lib/rpm/macros.perl
-Summary:	Toolkit for the "Secure Sockets Layer" (SSL v2/v3)
-Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary & Utilities
+Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
+Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
 Summary(fr):	Utilitaires de communication SSL (Secure Sockets Layer)
 Name:		openssl
 Version:	0.9.5a
 Release:	3
 Group:		Libraries
-Group(fr):	Librairies
 Group(pl):	Biblioteki
+Group(fr):	Librairies
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-Patch0:		openssl-perl.patch
+Patch0:		%{name}-perl.patch
 Vendor:		The OpenSSL Project
 License:	Apache-style License
 BuildRequires:	symlinks
 BuildRequires:	perl
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-Prereq:		fileutils
-Prereq:		sed
-Prereq:		%{name}-libs = %{version}
 Obsoletes:	SSLeay
 Obsoletes:	SSLeay-devel
 Obsoletes:	SSLeay-perl
-
-%define		openssldir	/var/lib/openssl
-%define		_sysconfdir	/etc/%{name}
-%define		_pkglibdir	%{_libdir}/%{name}
-%define		_pkgincludedir	%{_includedir}/%{name}
 
 %description
 The OpenSSL Project is a collaborative effort to develop a robust,
@@ -42,6 +34,9 @@ Apache-style licence, which basically means that you are free to get
 and use it for commercial and non-commercial purposes subject to some
 simple license conditions.
 
+This package contains shared libraries only, install openssl-tools
+if you want to use openssl cmdline tool.
+
 %description -l de
 Openssl enthält das OpenSSL Zertifikatsmanagementtool und shared
 libraries, die verschiedene Verschlüsselungs- und
@@ -53,27 +48,35 @@ OpenSSL est un outiil de gestion des certificats et les librairies
 partagees qui fournit plusieurs protocoles et algorithmes de
 codage/decodage, incluant DES, RC4, RSA et SSL.
 
-%package libs
-Summary:	The OpenSSL shared libraries
-Summary(de):	Secure Sockets Layer Kommunikationslibrary: statische libraries+header                           
-Summary(fr):	Librairies statiques, headers et utilitaires pour communication SSL (Secure Sockets Layer)
-Summary(pl):	Biblioteki dzilelone OpenSSL
-Group:		Libraries
-Group(fr):	Librairies
-Group(pl):	Biblioteki
+%package tools
+Summary:	OpenSSL command line tool and utilities
+Group:		Utilities
+Group(pl):	Narzêdzia
+Group(fr):	Utilitaires
+Requires:	%{name} = %{version}
 
-%description libs
-The OpenSSL shared libraries
+%description tools
+The OpenSSL Toolkit cmdline tool openssl and utility scripts.
+
+%package tools-perl
+Summary:	OpenSSL utilities written in Perl
+Group:		Utilities
+Group(pl):	Narzêdzia
+Group(fr):	Utilitaires
+Requires:	%{name} = %{version}
+
+%description tools-perl
+OpenSSL Toolkit tools written in Perl
 
 %package devel
-Summary:	Development part of OpenSSL library
-Summary(de):	Secure Sockets Layer Kommunikationslibrary: statische libraries+header                           
-Summary(fr):	Librairies statiques, headers et utilitaires pour communication SSL (Secure Sockets Layer)
+Summary:	Development part of OpenSSL Toolkit libraries
+Summary(de):	Secure Sockets Layer Kommunikationslibrary: statische libraries+header
+Summary(fr):	Librairies statiques, headers et utilitaires pour communication SSL
 Summary(pl):	Czê¶æ bibiloteki OpenSSL przeznaczona dla programistów
 Group:		Development/Libraries
-Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
-Requires:	%{name}-libs = %{version}
+Group(fr):	Development/Librairies
+Requires:	%{name} = %{version}
 
 %description devel
 Development part of OpenSSL library.
@@ -82,18 +85,18 @@ Development part of OpenSSL library.
 Czê¶æ bibiloteki OpenSSL przeznaczona dla programistów.
 
 %package static
-Summary:	Static OpenSSL library
-Summary(pl):	Statyczna wersja biblioteki OpenSSL
+Summary:	Static OpenSSL libraries
+Summary(pl):	Statyczne wersje bibliotek z OpenSSL
 Group:		Development/Libraries
-Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
+Group(fr):	Development/Librairies
 Requires:	%{name}-devel = %{version}
 
 %description static
-Static OpenSSL library.
+Static OpenSSL Toolkit libraries.
 
 %description static -l pl
-Statyczna wersja biblioteki OpenSSL.
+Statyczne wersje bibliotek z OpenSSL.
 
 %prep
 %setup -q 
@@ -107,11 +110,60 @@ done
 
 perl util/perlpath.pl %{_bindir}
 
-./config --openssldir=%{openssldir}
+./config --openssldir=%{_var}/lib/%{name}
 
 %{__make} OPT_FLAGS="$RPM_OPT_FLAGS" linux-shared
 %{__make} INSTALLTOP=%{_prefix} OPT_FLAGS="$RPM_OPT_FLAGS"
 %{__make} rehash
+
+# Conv PODs to man pages. "openssl_" prefix is added to each manpage 
+# to avoid potential conflicts with others packages.
+center="OpenSSL 0.9.5a"
+rel="OpenSSL 0.9.5a"
+
+cd doc/apps || exit 1 
+perl -pi -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
+
+for pod in *.pod; do 
+    if [ $pod != "openssl.pod" ]; then
+	mv $pod openssl_$pod;
+	pod=openssl_$pod;
+    fi
+
+    sec=1
+    if [ $pod = "openssl_config.pod" ]; then
+	sec=5
+    fi
+
+    manpage=`basename $pod .pod`.$sec;	    
+    pod2man --section="$sec" --release="$rel" --center="$center" \
+	    $pod > $manpage;
+    echo "$manpage";
+done
+cd ..
+
+sec=3
+for dir in ssl crypto; do 
+	cd $dir || exit 1;
+	if [ $dir = "ssl" ]; then
+		rel="OpenSSL SSL/TLS library"
+	elif [ $dir = "crypto" ]; then 
+		rel="OpenSSL cryptographic library"
+	fi
+	
+	perl -p -i -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
+	
+	for pod in *.pod; do 
+       	    sec=`[ "$pod" = "des_modes.pod" ] && echo 7 || echo 3`;	
+  	    mv $pod openssl_$pod;
+	    pod=openssl_$pod;
+	    manpage=`basename $pod .pod`.$sec;
+	    pod2man --section="$sec" --release="$rel" --center=" " $pod > $manpage;
+	    echo "$manpage";
+	done
+	cd ..
+done
+
 #cd perl
 #perl Makefile.PL
 #make
@@ -119,7 +171,8 @@ perl util/perlpath.pl %{_bindir}
 %install
 rm -rf $RPM_BUILD_ROOT
 
-install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_pkglibdir}}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
+	   $RPM_BUILD_ROOT%{_mandir}/{man1,man3,man5,man7}
 
 %{__make} install \
 	INSTALLTOP=%{_prefix} \
@@ -133,55 +186,104 @@ cp -d 	lib*.so		$RPM_BUILD_ROOT%{_libdir}
 #make install DESTDIR=$RPM_BUILD_ROOT
 #cd ..
 
-mv $RPM_BUILD_ROOT%{openssldir}/openssl.cnf $RPM_BUILD_ROOT%{_sysconfdir}
-ln -s %{_sysconfdir}/openssl.cnf \
-	$RPM_BUILD_ROOT%{openssldir}/openssl.cnf
-symlinks -cs $RPM_BUILD_ROOT%{openssldir}
+mv $RPM_BUILD_ROOT%{_var}/lib/%{name}/openssl.cnf $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
+ln -s %{_sysconfdir}/%{name}/openssl.cnf \
+	$RPM_BUILD_ROOT%{_var}/lib/%{name}/%{name}.cnf
+symlinks -cs $RPM_BUILD_ROOT%{_var}/lib/%{name}
 
-mv $RPM_BUILD_ROOT%{openssldir}/misc/*	$RPM_BUILD_ROOT%{_pkglibdir}
-rm -rf $RPM_BUILD_ROOT%{openssldir}/misc
+mv $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc/*  $RPM_BUILD_ROOT%{_libdir}/%{name}
+rm -rf $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc
+
+mv $RPM_BUILD_ROOT%{_bindir}/c_rehash $RPM_BUILD_ROOT%{_libdir}/%{name}
 
 strip $RPM_BUILD_ROOT%{_bindir}/* || :
 strip --strip-unneeded $RPM_BUILD_ROOT%{_libdir}/lib*.so.*.*
 
-gzip -9nf CHANGES CHANGES.SSLeay LICENSE NEWS README \
-	doc/*.txt doc/*/*pod
+gzip -9nf doc/apps/*.?
+gzip -9nf doc/ssl/*.?
+gzip -9nf doc/crypto/*.?
 
-%post
-%{_bindir}/c_rehash certs
+find $RPM_BUILD_ROOT%{_mandir} -type f | xargs rm -f
+install doc/apps/*.1.gz $RPM_BUILD_ROOT%{_mandir}/man1
+install doc/apps/*.5.gz $RPM_BUILD_ROOT%{_mandir}/man5
+install doc/ssl/*.3.gz doc/crypto/*.3.gz $RPM_BUILD_ROOT%{_mandir}/man3
+install doc/crypto/*.7.gz $RPM_BUILD_ROOT%{_mandir}/man7
 
-%post libs
-/sbin/ldconfig
+gzip -9nf {CHANGES,CHANGES.SSLeay,LICENSE,NEWS,README,doc/*.txt}
 
-%postun libs
-/sbin/ldconfig
+%post -p /sbin/ldconfig
+%postun -p /sbin/ldconfig
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc {CHANGES,CHANGES.SSLeay,LICENSE,NEWS,README}.gz
-%doc doc/*.txt.gz doc/apps 
-%doc doc/openssl_button.gif doc/openssl_button.html
-
-%attr(755,root,root) %{_bindir}/*
-%dir %{_sysconfdir}
-%verify(not md5 size mtime) %config(noreplace) %{_sysconfdir}/openssl.cnf
-%verify(not md5 size mtime) %config(noreplace) %{openssldir}/openssl.cnf
-%{openssldir}/certs
-%{openssldir}/private
-%dir %{_pkglibdir}
-%attr(755,root,root) %{_pkglibdir}/*
-
-%files libs
 %attr(755,root,root) %{_libdir}/lib*.so.*.*
+%doc {CHANGES,CHANGES.SSLeay,LICENSE,NEWS,README}.gz
+%doc doc/*.txt.gz doc/openssl_button.gif doc/openssl_button.html
+
+%files tools
+%defattr(644,root,root,755)
+%dir %{_sysconfdir}/%{name}
+%dir %{_var}/lib/%{name}
+%dir %{_var}/lib/%{name}/private
+%dir %{_var}/lib/%{name}/certs
+%verify(not md5 size mtime) %config(noreplace) %{_sysconfdir}/%{name}/openssl.cnf
+%verify(not md5 size mtime) %config(noreplace) %{_var}/lib/%{name}/openssl.cnf
+
+%attr(755,root,root) %{_bindir}/%{name}
+%dir %{_libdir}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}/CA.sh
+%attr(755,root,root) %{_libdir}/%{name}/c_hash
+%attr(755,root,root) %{_libdir}/%{name}/c_rehash
+%attr(755,root,root) %{_libdir}/%{name}/c_info
+%attr(755,root,root) %{_libdir}/%{name}/c_issuer
+%attr(755,root,root) %{_libdir}/%{name}/c_name
+
+%{_mandir}/man1/openssl.1.gz
+%{_mandir}/man1/openssl_asn1parse.1.gz
+%{_mandir}/man1/openssl_ca.1.gz
+%{_mandir}/man1/openssl_ciphers.1.gz
+%{_mandir}/man1/openssl_crl.1.gz
+%{_mandir}/man1/openssl_crl2pkcs7.1.gz
+%{_mandir}/man1/openssl_dgst.1.gz
+%{_mandir}/man1/openssl_dhparam.1.gz
+%{_mandir}/man1/openssl_dsa.1.gz
+%{_mandir}/man1/openssl_dsaparam.1.gz
+%{_mandir}/man1/openssl_enc.1.gz
+%{_mandir}/man1/openssl_gendsa.1.gz
+%{_mandir}/man1/openssl_genrsa.1.gz
+%{_mandir}/man1/openssl_nseq.1.gz
+%{_mandir}/man1/openssl_passwd.1.gz
+%{_mandir}/man1/openssl_pkcs12.1.gz
+%{_mandir}/man1/openssl_pkcs7.1.gz
+%{_mandir}/man1/openssl_pkcs8.1.gz
+%{_mandir}/man1/openssl_rand.1.gz
+%{_mandir}/man1/openssl_req.1.gz
+%{_mandir}/man1/openssl_rsa.1.gz
+%{_mandir}/man1/openssl_s_client.1.gz
+%{_mandir}/man1/openssl_s_server.1.gz
+%{_mandir}/man1/openssl_sess_id.1.gz
+%{_mandir}/man1/openssl_smime.1.gz
+%{_mandir}/man1/openssl_speed.1.gz
+%{_mandir}/man1/openssl_spkac.1.gz
+%{_mandir}/man1/openssl_verify.1.gz
+%{_mandir}/man1/openssl_version.1.gz
+%{_mandir}/man1/openssl_x509.1.gz
+%{_mandir}/man5/*.5.gz
+
+%files tools-perl
+%defattr(644,root,root,755)
+%attr(755,root,root) %{_libdir}/%{name}/CA.pl
+%attr(755,root,root) %{_libdir}/%{name}/der_chop
+%{_mandir}/man1/openssl_CA.pl.1.gz
 
 %files devel
 %defattr(644,root,root,755)
-%doc doc/ssl doc/crypto
 %attr(755,root,root) %{_libdir}/lib*.so
-%{_pkgincludedir}
+%{_includedir}/%{name}
+%{_mandir}/man3/*.3.gz
 
 %files static
 %defattr(644,root,root,755)
