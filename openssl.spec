@@ -21,6 +21,7 @@ Patch1:		%{name}-optflags.patch
 Patch2:		%{name}-globalCA.diff
 Patch3:		%{name}-parallel_make.patch
 Patch4:		%{name}-include.patch
+Patch5:         %{name}-makefile.patch
 URL:		http://www.openssl.org/
 BuildRequires:	perl-devel >= 5.6.1
 BuildRequires:	textutils
@@ -181,6 +182,7 @@ RC4, RSA и SSL. Включает статические библиотеки для разработки
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 for f in ` grep -r "%{_prefix}/local/bin/perl" . | cut -d":" -f1`; do
