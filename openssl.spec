@@ -202,7 +202,7 @@ export OPTFLAGS
 %ifarch i586 i686 athlon
 ./Configure --openssldir=%{_var}/lib/%{name} linux-elf shared
 %endif
-%ifarch x86_64 amd64
+%ifarch amd64
 ./Configure --openssldir=%{_var}/lib/%{name} linux-x86_64 shared
 %endif
 %ifarch ppc
