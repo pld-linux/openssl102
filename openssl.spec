@@ -9,7 +9,7 @@ Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.7
-Release:	0.1
+Release:	0.9
 License:	Apache-style License
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -208,8 +208,8 @@ export OPTFLAGS
 
 # Conv PODs to man pages. "openssl_" prefix is added to each manpage
 # to avoid potential conflicts with others packages.
-center="OpenSSL 0.9.6"
-rel="OpenSSL 0.9.6"
+center="OpenSSL 0.9.7"
+rel="OpenSSL 0.9.7"
 
 cd doc/apps || exit 1
 perl -pi -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
@@ -265,10 +265,11 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
 
 %{__make} install \
 	INSTALLTOP=%{_prefix} \
-	INSTALL_PREFIX=$RPM_BUILD_ROOT
+	INSTALL_PREFIX=$RPM_BUILD_ROOT \
+	MANDIR=%{_mandir}
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/ssl/ca-bundle.crt
-install libRSAglue.a libcrypto.a libssl.a $RPM_BUILD_ROOT%{_libdir}
+install libcrypto.a libssl.a $RPM_BUILD_ROOT%{_libdir}
 install lib*.so.*.* $RPM_BUILD_ROOT%{_libdir}
 ln -sf libcrypto.so.*.* $RPM_BUILD_ROOT%{_libdir}/libcrypto.so
 ln -sf libssl.so.*.* $RPM_BUILD_ROOT%{_libdir}/libssl.so
@@ -335,6 +336,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/openssl_gendsa.1*
 %{_mandir}/man1/openssl_genrsa.1*
 %{_mandir}/man1/openssl_nseq.1*
+%{_mandir}/man1/openssl_ocsp.1*
 %{_mandir}/man1/openssl_passwd.1*
 %{_mandir}/man1/openssl_pkcs12.1*
 %{_mandir}/man1/openssl_pkcs7.1*
@@ -366,7 +368,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so
 %{_includedir}/%{name}
-%{_mandir}/man3/*.3*
+%{_libdir}/pkgconfig/openssl.pc
+%{_mandir}/man3/openssl*.3*
 %{_mandir}/man7/*.7*
 
 %files static
