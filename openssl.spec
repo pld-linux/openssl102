@@ -26,6 +26,7 @@ Patch5:		%{name}-ssl-algs.patch
 URL:		http://www.openssl.org/
 BuildRequires:	perl-devel >= 1:5.6.1
 BuildRequires:	rpm-perlprov >= 4.1-13
+BuildRequires:	rpmbuild(macros) >= 1.213
 Obsoletes:	SSLeay
 Obsoletes:	SSLeay-devel
 Obsoletes:	SSLeay-perl
@@ -210,7 +211,7 @@ export OPTFLAGS
 %ifarch alpha
 ./Configure --openssldir=%{_var}/lib/%{name} threads linux-alpha+bwx-gcc shared
 %endif
-%ifarch amd64
+%ifarch %{x8664}
 ./Configure --openssldir=%{_var}/lib/%{name} linux-x86_64 shared
 %endif
 %ifarch ia64
