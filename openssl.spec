@@ -353,10 +353,10 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %dir %{_sysconfdir}/%{name}
 
-%verify(not md5 size mtime) %config(noreplace) %{_sysconfdir}/%{name}/openssl.cnf
-%verify(not md5 size mtime) %config(noreplace) %{_var}/lib/%{name}/openssl.cnf
+%verify(not md5 mtime size) %config(noreplace) %{_sysconfdir}/%{name}/openssl.cnf
+%verify(not md5 mtime size) %config(noreplace) %{_var}/lib/%{name}/openssl.cnf
 %dir %{_datadir}/ssl
-%verify(not md5 size mtime) %config(noreplace) %{_datadir}/ssl/ca-bundle.crt
+%verify(not md5 mtime size) %config(noreplace) %{_datadir}/ssl/ca-bundle.crt
 
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/openssl_fips_fingerprint
