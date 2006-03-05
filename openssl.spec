@@ -8,12 +8,12 @@ Summary(pt_BR):	Uma biblioteca C que fornece vАrios algoritmos e protocolos crip
 Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
-Version:	0.9.7i
+Version:	0.9.8a
 Release:	1
 License:	Apache-style License
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	f69d82b206ff8bff9d0e721f97380b9e
+# Source0-md5:	1d16c727c10185e4d694f87f5e424ee1
 Source1:	%{name}-ca-bundle.crt
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
@@ -22,7 +22,8 @@ Patch1:		%{name}-optflags.patch
 Patch2:		%{name}-globalCA.diff
 Patch3:		%{name}-include.patch
 Patch4:		%{name}-md5-sparcv9.patch
-Patch5:		%{name}-ssl-algs.patch
+# DROP (0.9.8 requires rebuild of apps anyway, SSLeay_add_ssl_algorithms is a macro)
+#Patch5:		%{name}-ssl-algs.patch
 URL:		http://www.openssl.org/
 BuildRequires:	perl-devel >= 1:5.6.1
 BuildRequires:	rpm-perlprov >= 4.1-13
@@ -185,11 +186,6 @@ RC4, RSA и SSL. Включает статические библиотеки для разработки
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
-
-# conflicts with i386-only DES implementation
-# (missing #ifdef OPENSSL_FIPS  ...  #endif)
-:> fips/des/asm/fips-dx86-elf.s
 
 %build
 %{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
@@ -201,34 +197,41 @@ touch Makefile.*
 
 OPTFLAGS="%{rpmcflags}"
 export OPTFLAGS
+./Configure \
+	--openssldir=%{_var}/lib/%{name} \
+	shared threads \
+	enable-mdc2 enable-rc5 \
 %ifarch %{ix86}
 %ifarch i386
 # allow running on 80386 (default code uses bswapl available on i486+)
-./Configure --openssldir=%{_var}/lib/%{name} linux-elf shared 386
+	386 linux-elf
 %else
-./Configure --openssldir=%{_var}/lib/%{name} linux-elf shared
+	linux-elf
 %endif
 %endif
 %ifarch alpha
-./Configure --openssldir=%{_var}/lib/%{name} threads linux-alpha+bwx-gcc shared
+	linux-alpha+bwx-gcc
 %endif
 %ifarch %{x8664}
-./Configure --openssldir=%{_var}/lib/%{name} linux-x86_64 shared
+	linux-x86_64
 %endif
 %ifarch ia64
-./Configure --openssldir=%{_var}/lib/%{name} linux-ia64 shared
+	linux-ia64
 %endif
 %ifarch ppc
-./Configure --openssldir=%{_var}/lib/%{name} linux-ppc shared
+	linux-ppc
+%endif
+%ifarch ppc64
+	linux-ppc64
 %endif
 %ifarch sparc
-./Configure --openssldir=%{_var}/lib/%{name} threads linux-sparcv8 shared
+	linux-sparcv8
 %endif
 %ifarch sparcv9
-./Configure --openssldir=%{_var}/lib/%{name} threads linux-sparcv9 shared
+	linux-sparcv9
 %endif
 %ifarch sparc64
-./Configure --openssldir=%{_var}/lib/%{name} threads linux64-sparcv9 shared
+	linux64-sparcv9
 %endif
 
 %{__make} \
@@ -332,7 +335,7 @@ install doc/ssl/*.3 doc/crypto/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
 install doc/crypto/*.7 $RPM_BUILD_ROOT%{_mandir}/man7
 install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
 install %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
-install fips/openssl_fips_fingerprint $RPM_BUILD_ROOT%{_bindir}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -345,6 +348,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libssl.so.*.*.*
 %doc CHANGES CHANGES.SSLeay LICENSE NEWS README doc/*.txt
 %doc doc/openssl_button.gif doc/openssl_button.html
+%dir %{_libdir}/engines
+%attr(755,root,root) %{_libdir}/engines/*.so
 %dir %{_var}/lib/%{name}
 %dir %{_var}/lib/%{name}/certs
 %dir %{_var}/lib/%{name}/private
@@ -359,7 +364,6 @@ rm -rf $RPM_BUILD_ROOT
 %verify(not md5 mtime size) %config(noreplace) %{_datadir}/ssl/ca-bundle.crt
 
 %attr(755,root,root) %{_bindir}/%{name}
-%attr(755,root,root) %{_bindir}/openssl_fips_fingerprint
 %attr(754,root,root) %{_bindir}/ssl-certificate
 
 %dir %{_libdir}/%{name}
@@ -379,6 +383,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/openssl_dhparam.1*
 %{_mandir}/man1/openssl_dsa.1*
 %{_mandir}/man1/openssl_dsaparam.1*
+%{_mandir}/man1/openssl_ec.1*
+%{_mandir}/man1/openssl_ecparam.1*
 %{_mandir}/man1/openssl_enc.1*
 %{_mandir}/man1/openssl_errstr.1*
 %{_mandir}/man1/openssl_gendsa.1*
@@ -403,6 +409,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/openssl_verify.1*
 %{_mandir}/man1/openssl_version.1*
 %{_mandir}/man1/openssl_x509.1*
+%{_mandir}/man1/openssl_x509v3_config.1*
 %{_mandir}/man5/*.5*
 %lang(pl) %{_mandir}/pl/man1/openssl.1*
 
@@ -417,6 +424,8 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libcrypto.so
 %attr(755,root,root) %{_libdir}/libssl.so
 %{_includedir}/%{name}
+%{_pkgconfigdir}/libcrypto.pc
+%{_pkgconfigdir}/libssl.pc
 %{_pkgconfigdir}/openssl.pc
 %{_mandir}/man3/openssl*.3*
 %{_mandir}/man7/*.7*
