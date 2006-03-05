@@ -22,8 +22,6 @@ Patch1:		%{name}-optflags.patch
 Patch2:		%{name}-globalCA.diff
 Patch3:		%{name}-include.patch
 Patch4:		%{name}-md5-sparcv9.patch
-# DROP (0.9.8 requires rebuild of apps anyway, SSLeay_add_ssl_algorithms is a macro)
-#Patch5:		%{name}-ssl-algs.patch
 URL:		http://www.openssl.org/
 BuildRequires:	perl-devel >= 1:5.6.1
 BuildRequires:	rpm-perlprov >= 4.1-13
