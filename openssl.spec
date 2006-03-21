@@ -9,7 +9,7 @@ Summary(ru):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk):	Б╕бл╕отеки та утил╕ти для з'╓днань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.8a
-Release:	1
+Release:	2
 License:	Apache-style License
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -351,6 +351,8 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{_var}/lib/%{name}
 %dir %{_var}/lib/%{name}/certs
 %dir %{_var}/lib/%{name}/private
+%dir %{_datadir}/ssl
+%verify(not md5 mtime size) %config(noreplace) %{_datadir}/ssl/ca-bundle.crt
 
 %files tools
 %defattr(644,root,root,755)
@@ -358,8 +360,6 @@ rm -rf $RPM_BUILD_ROOT
 
 %verify(not md5 mtime size) %config(noreplace) %{_sysconfdir}/%{name}/openssl.cnf
 %verify(not md5 mtime size) %config(noreplace) %{_var}/lib/%{name}/openssl.cnf
-%dir %{_datadir}/ssl
-%verify(not md5 mtime size) %config(noreplace) %{_datadir}/ssl/ca-bundle.crt
 
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(754,root,root) %{_bindir}/ssl-certificate
