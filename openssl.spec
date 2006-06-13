@@ -1,3 +1,7 @@
+#
+# Conditional build:
+%bcond_with purify	# Compile openssl with \-DPURIFY, usefull when one wants to
+			# use valgrind debugger against openssl-linked programs
 %include	/usr/lib/rpm/macros.perl
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de):	Secure Sockets Layer (SSL)-Kommunikationslibrary
@@ -193,7 +197,7 @@ touch Makefile.*
 
 %{__perl} util/perlpath.pl %{__perl}
 
-OPTFLAGS="%{rpmcflags}"
+OPTFLAGS="%{rpmcflags} %{?with_purify:-DPURIFY}"
 export OPTFLAGS
 ./Configure \
 	--openssldir=%{_var}/lib/%{name} \
