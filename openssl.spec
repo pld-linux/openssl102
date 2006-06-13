@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_with purify	# Compile openssl with \-DPURIFY, usefull when one wants to
+%bcond_with purify	# Compile openssl with \-DPURIFY, useful when one wants to
 			# use valgrind debugger against openssl-linked programs
 %include	/usr/lib/rpm/macros.perl
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
