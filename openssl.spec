@@ -26,6 +26,7 @@ Patch1:		%{name}-optflags.patch
 Patch2:		%{name}-globalCA.diff
 Patch3:		%{name}-include.patch
 Patch4:		%{name}-md5-sparcv9.patch
+Patch5:		%{name}-libvar.patch
 URL:		http://www.openssl.org/
 BuildRequires:	perl-devel >= 1:5.6.1
 BuildRequires:	rpm-perlprov >= 4.1-13
@@ -188,6 +189,7 @@ RC4, RSA и SSL. Включает статические библиотеки для разработки
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %build
 %{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
@@ -201,6 +203,7 @@ OPTFLAGS="%{rpmcflags} %{?with_purify:-DPURIFY}"
 export OPTFLAGS
 ./Configure \
 	--openssldir=%{_var}/lib/%{name} \
+	--lib=%{_lib} \
 	shared threads \
 	enable-mdc2 enable-rc5 \
 %ifarch %{ix86}
@@ -308,12 +311,6 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
 	INSTALLTOP=%{_prefix} \
 	INSTALL_PREFIX=$RPM_BUILD_ROOT \
 	MANDIR=%{_mandir}
-
-if [ "%{_prefix}/lib/pkgconfig" != "%{_pkgconfigdir}" ] ; then
-	mv $RPM_BUILD_ROOT%{_prefix}/lib/pkgconfig/* \
-		$RPM_BUILD_ROOT%{_pkgconfigdir}
-fi
-sed -i -e 's,^libdir=.*,libdir=%{_libdir},' $RPM_BUILD_ROOT%{_pkgconfigdir}/*.pc
 
 install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/ssl/ca-bundle.crt
 install libcrypto.a libssl.a $RPM_BUILD_ROOT%{_libdir}
