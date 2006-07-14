@@ -208,8 +208,8 @@ export OPTFLAGS
 	enable-mdc2 enable-rc5 \
 %ifarch %{ix86}
 %ifarch i386
-# allow running on 80386 (default code uses bswapl available on i486+)
 	386 linux-elf
+# ^- allow running on 80386 (default code uses bswapl available on i486+)
 %else
 	linux-elf
 %endif
