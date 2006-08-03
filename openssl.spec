@@ -200,7 +200,8 @@ touch Makefile.*
 %{__perl} util/perlpath.pl %{__perl}
 
 OPTFLAGS="%{rpmcflags} %{?with_purify:-DPURIFY}"
-export OPTFLAGS
+LDFLAGS="%{rpmldflags}"
+export OPTFLAGS LDFLAGS
 ./Configure \
 	--openssldir=%{_var}/lib/%{name} \
 	--lib=%{_lib} \
