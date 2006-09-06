@@ -240,11 +240,11 @@ export OPTFLAGS LDFLAGS
 	linux64-sparcv9
 %endif
 
-%{__make} \
+%{__make} -j1 \
 	CC="%{__cc}" \
 	INSTALLTOP=%{_prefix}
 
-%{__make} rehash \
+%{__make} -j1 rehash \
 	CC="%{__cc}" \
 	INSTALLTOP=%{_prefix}
 
