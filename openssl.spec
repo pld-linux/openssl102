@@ -28,6 +28,7 @@ Patch2:		%{name}-globalCA.diff
 Patch3:		%{name}-include.patch
 Patch4:		%{name}-md5-sparcv9.patch
 Patch5:		%{name}-libvar.patch
+Patch6:		%{name}-gcc_4_2.patch
 URL:		http://www.openssl.org/
 BuildRequires:	perl-devel >= 1:5.6.1
 BuildRequires:	rpm-perlprov >= 4.1-13
@@ -191,6 +192,7 @@ RC4, RSA и SSL. Включает статические библиотеки для разработки
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 %{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
