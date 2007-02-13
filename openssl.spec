@@ -5,13 +5,13 @@
 #
 %include	/usr/lib/rpm/macros.perl
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
-Summary(de.UTF-8):   Secure Sockets Layer (SSL)-Kommunikationslibrary
-Summary(es.UTF-8):   Biblioteca C que suministra algoritmos y protocolos criptográficos
-Summary(fr.UTF-8):   Utilitaires de communication SSL (Secure Sockets Layer)
-Summary(pl.UTF-8):   Biblioteki OpenSSL (SSL v2/v3)
-Summary(pt_BR.UTF-8):   Uma biblioteca C que fornece vários algoritmos e protocolos criptográficos
-Summary(ru.UTF-8):   Библиотеки и утилиты для соединений через Secure Sockets Layer
-Summary(uk.UTF-8):   Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
+Summary(de.UTF-8):	Secure Sockets Layer (SSL)-Kommunikationslibrary
+Summary(es.UTF-8):	Biblioteca C que suministra algoritmos y protocolos criptográficos
+Summary(fr.UTF-8):	Utilitaires de communication SSL (Secure Sockets Layer)
+Summary(pl.UTF-8):	Biblioteki OpenSSL (SSL v2/v3)
+Summary(pt_BR.UTF-8):	Uma biblioteca C que fornece vários algoritmos e protocolos criptográficos
+Summary(ru.UTF-8):	Библиотеки и утилиты для соединений через Secure Sockets Layer
+Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.8d
 Release:	2
@@ -93,7 +93,7 @@ RC4, RSA и SSL.
 
 %package tools
 Summary:	OpenSSL command line tool and utilities
-Summary(pl.UTF-8):   Zestaw narzędzi i skryptów
+Summary(pl.UTF-8):	Zestaw narzędzi i skryptów
 Group:		Applications/Communications
 Requires:	%{name} = %{version}-%{release}
 
@@ -105,7 +105,7 @@ Zestaw narzędzi i skryptów wywoływanych z linii poleceń.
 
 %package tools-perl
 Summary:	OpenSSL utilities written in Perl
-Summary(pl.UTF-8):   Narzędzia OpenSSL napisane w perlu
+Summary(pl.UTF-8):	Narzędzia OpenSSL napisane w perlu
 Group:		Applications/Communications
 Requires:	%{name} = %{version}-%{release}
 
@@ -117,13 +117,13 @@ Narzędzia OpenSSL napisane w perlu.
 
 %package devel
 Summary:	Development part of OpenSSL Toolkit libraries
-Summary(de.UTF-8):   Secure Sockets Layer Kommunikationslibrary: statische libraries+header
-Summary(es.UTF-8):   Bibliotecas y archivos de inclusión para desarrollo OpenSSL
-Summary(fr.UTF-8):   Librairies statiques, headers et utilitaires pour communication SSL
-Summary(pl.UTF-8):   Część bibiloteki OpenSSL przeznaczona dla programistów
-Summary(pt_BR.UTF-8):   Bibliotecas e arquivos de inclusão para desenvolvimento OpenSSL
-Summary(ru.UTF-8):   Библиотеки, хедеры и утилиты для Secure Sockets Layer
-Summary(uk.UTF-8):   Бібліотеки, хедери та утиліти для Secure Sockets Layer
+Summary(de.UTF-8):	Secure Sockets Layer Kommunikationslibrary: statische libraries+header
+Summary(es.UTF-8):	Bibliotecas y archivos de inclusión para desarrollo OpenSSL
+Summary(fr.UTF-8):	Librairies statiques, headers et utilitaires pour communication SSL
+Summary(pl.UTF-8):	Część bibiloteki OpenSSL przeznaczona dla programistów
+Summary(pt_BR.UTF-8):	Bibliotecas e arquivos de inclusão para desenvolvimento OpenSSL
+Summary(ru.UTF-8):	Библиотеки, хедеры и утилиты для Secure Sockets Layer
+Summary(uk.UTF-8):	Бібліотеки, хедери та утиліти для Secure Sockets Layer
 Group:		Development/Libraries
 Requires:	%{name} = %{version}-%{release}
 Obsoletes:	libopenssl0-devel
@@ -156,10 +156,10 @@ RC4, RSA и SSL. Включает библиотеки и хедеры для р
 
 %package static
 Summary:	Static OpenSSL libraries
-Summary(pl.UTF-8):   Statyczne wersje bibliotek z OpenSSL
-Summary(pt_BR.UTF-8):   Bibliotecas estáticas para desenvolvimento com openssl
-Summary(ru.UTF-8):   Статические библиотеки разработчика для OpenSSL
-Summary(uk.UTF-8):   Статичні бібліотеки програміста для OpenSSL
+Summary(pl.UTF-8):	Statyczne wersje bibliotek z OpenSSL
+Summary(pt_BR.UTF-8):	Bibliotecas estáticas para desenvolvimento com openssl
+Summary(ru.UTF-8):	Статические библиотеки разработчика для OpenSSL
+Summary(uk.UTF-8):	Статичні бібліотеки програміста для OpenSSL
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
