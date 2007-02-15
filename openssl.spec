@@ -30,6 +30,7 @@ Patch4:		%{name}-md5-sparcv9.patch
 Patch5:		%{name}-libvar.patch
 Patch6:		%{name}-gcc_4_2.patch
 URL:		http://www.openssl.org/
+BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.6.1
 BuildRequires:	rpm-perlprov >= 4.1-13
 BuildRequires:	rpmbuild(macros) >= 1.213
@@ -243,11 +244,7 @@ export OPTFLAGS LDFLAGS
 	linux64-sparcv9
 %endif
 
-%{__make} -j1 \
-	CC="%{__cc}" \
-	INSTALLTOP=%{_prefix}
-
-%{__make} -j1 rehash \
+%{__make} -j1 all rehash tests \
 	CC="%{__cc}" \
 	INSTALLTOP=%{_prefix}
 
