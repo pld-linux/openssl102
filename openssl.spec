@@ -14,7 +14,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.8d
-Release:	2
+Release:	3
 License:	Apache-style License
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
