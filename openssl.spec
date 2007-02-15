@@ -1,5 +1,6 @@
 #
 # Conditional build:
+%bcond_without	tests
 %bcond_with purify	# Compile openssl with \-DPURIFY, useful when one wants to
 			# use valgrind debugger against openssl-linked programs
 #
@@ -14,7 +15,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.8d
-Release:	3
+Release:	4
 License:	Apache-style License
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -244,7 +245,7 @@ export OPTFLAGS LDFLAGS
 	linux64-sparcv9
 %endif
 
-%{__make} -j1 all rehash tests \
+%{__make} -j1 all rehash %{?with_tests:tests} \
 	CC="%{__cc}" \
 	INSTALLTOP=%{_prefix}
 
@@ -338,6 +339,8 @@ install %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
 
 rm $RPM_BUILD_ROOT%{_mandir}/man5/x509v3_config.5
 echo ".so openssl_x509v3_config.5" > $RPM_BUILD_ROOT%{_mandir}/man5/x509v3_config.5
+rm $RPM_BUILD_ROOT%{_mandir}/man5/config.5
+echo ".so openssl_config.5" > $RPM_BUILD_ROOT%{_mandir}/man5/config.5
 rm $RPM_BUILD_ROOT%{_mandir}/man7/Modes_of_DES.7
 echo ".so openssl_des_modes.7" > $RPM_BUILD_ROOT%{_mandir}/man7/Modes_of_DES.7
 
