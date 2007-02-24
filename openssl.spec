@@ -1,4 +1,6 @@
-#
+# TODO:
+# - get rid of gcc_4_2 patch and header files crapolla
+
 # Conditional build:
 %bcond_without	tests
 %bcond_with purify	# Compile openssl with \-DPURIFY, useful when one wants to
@@ -15,7 +17,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.8e
-Release:	2
+Release:	3
 License:	Apache-style License
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -194,6 +196,10 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+# XXX: gcc 4.2 hack
+cp crypto/asn1/asn1.h crypto/asn1/asn1.h.X
+cp crypto/ocsp/ocsp.h crypto/ocsp/ocsp.h.X
+cp crypto/pem/pem.h crypto/pem/pem.h.X
 %patch6 -p1
 
 %build
@@ -343,6 +349,11 @@ rm $RPM_BUILD_ROOT%{_mandir}/man5/config.5
 echo ".so openssl_config.5" > $RPM_BUILD_ROOT%{_mandir}/man5/config.5
 rm $RPM_BUILD_ROOT%{_mandir}/man7/Modes_of_DES.7
 echo ".so openssl_des_modes.7" > $RPM_BUILD_ROOT%{_mandir}/man7/Modes_of_DES.7
+
+# XXX: gcc 4.2 hack
+install crypto/asn1/asn1.h.X $RPM_BUILD_ROOT%{_includedir}/%{name}/asn1.h
+install crypto/ocsp/ocsp.h.X $RPM_BUILD_ROOT%{_includedir}/%{name}/ocsp.h
+install crypto/pem/pem.h.X $RPM_BUILD_ROOT%{_includedir}/%{name}/pem.h
 
 %clean
 rm -rf $RPM_BUILD_ROOT
