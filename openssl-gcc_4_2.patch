@@ -41,7 +41,7 @@ I hope someone can come up with a better idea...
  
  /* Used to implement other functions */
  void *ASN1_dup(i2d_of_void *i2d, d2i_of_void *d2i, char *x);
-+static void * __attribute__((unused)) __ASN1_dup=openssl_fcast(ASN1_dup);
++static void * __attribute__((unused)) __ASN1_dup=(void *)openssl_fcast(ASN1_dup);
  #define ASN1_dup_of(type,i2d,d2i,x) \
 -	((type *(*)(I2D_OF(type),D2I_OF(type),type *))openssl_fcast(ASN1_dup))(i2d,d2i,x)
 +	((type *(*)(I2D_OF(type),D2I_OF(type),type *))__ASN1_dup)(i2d,d2i,x)
@@ -53,13 +53,13 @@ I hope someone can come up with a better idea...
  
  #ifndef OPENSSL_NO_FP_API
  void *ASN1_d2i_fp(void *(*xnew)(void), d2i_of_void *d2i, FILE *in, void **x);
-+static void * __attribute__((unused)) __ASN1_d2i_fp=openssl_fcast(ASN1_d2i_fp);
++static void * __attribute__((unused)) __ASN1_d2i_fp=(void *)openssl_fcast(ASN1_d2i_fp);
  #define ASN1_d2i_fp_of(type,xnew,d2i,in,x) \
 -	((type *(*)(type *(*)(void),D2I_OF(type),FILE *,type **))openssl_fcast(ASN1_d2i_fp))(xnew,d2i,in,x)
 +	((type *(*)(type *(*)(void),D2I_OF(type),FILE *,type **))__ASN1_d2i_fp)(xnew,d2i,in,x)
  void *ASN1_item_d2i_fp(const ASN1_ITEM *it, FILE *in, void *x);
  int ASN1_i2d_fp(i2d_of_void *i2d,FILE *out,void *x);
-+static void * __attribute__((unused)) __ASN1_i2d_fp=openssl_fcast(ASN1_i2d_fp);
++static void * __attribute__((unused)) __ASN1_i2d_fp=(void *)openssl_fcast(ASN1_i2d_fp);
  #define ASN1_i2d_fp_of(type,i2d,out,x) \
 -	((int (*)(I2D_OF(type),FILE *,type *))openssl_fcast(ASN1_i2d_fp))(i2d,out,x)
 +	((int (*)(I2D_OF(type),FILE *,type *))__ASN1_i2d_fp)(i2d,out,x)
@@ -73,13 +73,13 @@ I hope someone can come up with a better idea...
  
  #ifndef OPENSSL_NO_BIO
  void *ASN1_d2i_bio(void *(*xnew)(void), d2i_of_void *d2i, BIO *in, void **x);
-+static void * __attribute__((unused)) __ASN1_d2i_bio=openssl_fcast(ASN1_d2i_bio);
++static void * __attribute__((unused)) __ASN1_d2i_bio=(void *)openssl_fcast(ASN1_d2i_bio);
  #define ASN1_d2i_bio_of(type,xnew,d2i,in,x) \
 -	((type *(*)(type *(*)(void),D2I_OF(type),BIO *,type **))openssl_fcast(ASN1_d2i_bio))(xnew,d2i,in,x)
 +	((type *(*)(type *(*)(void),D2I_OF(type),BIO *,type **))__ASN1_d2i_bio)(xnew,d2i,in,x)
  void *ASN1_item_d2i_bio(const ASN1_ITEM *it, BIO *in, void *x);
  int ASN1_i2d_bio(i2d_of_void *i2d,BIO *out, unsigned char *x);
-+static void * __attribute__((unused)) __ASN1_i2d_bio=openssl_fcast(ASN1_i2d_bio);
++static void * __attribute__((unused)) __ASN1_i2d_bio=(void *)openssl_fcast(ASN1_i2d_bio);
  #define ASN1_i2d_bio_of(type,i2d,out,x) \
 -	((int (*)(I2D_OF(type),BIO *,type *))openssl_fcast(ASN1_i2d_bio))(i2d,out,x)
 +	((int (*)(I2D_OF(type),BIO *,type *))__ASN1_i2d_bio)(i2d,out,x)
@@ -93,7 +93,7 @@ I hope someone can come up with a better idea...
  void *ASN1_item_unpack(ASN1_STRING *oct, const ASN1_ITEM *it);
  ASN1_STRING *ASN1_pack_string(void *obj, i2d_of_void *i2d,
  			      ASN1_OCTET_STRING **oct);
-+static void * __attribute__((unused)) __ASN1_pack_string=openssl_fcast(ASN1_pack_string);
++static void * __attribute__((unused)) __ASN1_pack_string=(void *)openssl_fcast(ASN1_pack_string);
  #define ASN1_pack_string_of(type,obj,i2d,oct) \
 -	((ASN1_STRING *(*)(type *,I2D_OF(type),ASN1_OCTET_STRING **))openssl_fcast(ASN1_pack_string))(obj,i2d,oct)
 +	((ASN1_STRING *(*)(type *,I2D_OF(type),ASN1_OCTET_STRING **))__ASN1_pack_string)(obj,i2d,oct)
@@ -106,7 +106,7 @@ I hope someone can come up with a better idea...
  
  ASN1_STRING *ASN1_STRING_encode(ASN1_STRING *s, i2d_of_void *i2d,
  				void *data, STACK_OF(ASN1_OBJECT) *sk);
-+static void * __attribute__((unused)) __ASN1_STRING_encode=openssl_fcast(ASN1_STRING_encode);
++static void * __attribute__((unused)) __ASN1_STRING_encode=(void *)openssl_fcast(ASN1_STRING_encode);
  #define ASN1_STRING_encode_of(type,s,i2d,data,sk) \
 -((ASN1_STRING *(*)(ASN1_STRING *,I2D_OF(type),type *,STACK_OF(ASN1_OBJECT) *))openssl_fcast(ASN1_STRING_encode))(s,i2d,data,sk)
 +((ASN1_STRING *(*)(ASN1_STRING *,I2D_OF(type),type *,STACK_OF(ASN1_OBJECT) *))__ASN1_STRING_encode)(s,i2d,data,sk)
@@ -120,7 +120,7 @@ I hope someone can come up with a better idea...
  type *PEM_read_##name(FILE *fp, type **x, pem_password_cb *cb, void *u)\
  { \
 -return(((type *(*)(D2I_OF(type),char *,FILE *,type **,pem_password_cb *,void *))openssl_fcast(PEM_ASN1_read))(d2i_##asn1, str,fp,x,cb,u)); \
-+static void *__PEM_ASN1_read=openssl_fcast(PEM_ASN1_read); \
++static void *__PEM_ASN1_read=(void *)openssl_fcast(PEM_ASN1_read); \
 +return(((type *(*)(D2I_OF(type),char *,FILE *,type **,pem_password_cb *,void *))__PEM_ASN1_read)(d2i_##asn1, str,fp,x,cb,u)); \
  } 
  
@@ -128,7 +128,7 @@ I hope someone can come up with a better idea...
  int PEM_write_##name(FILE *fp, type *x) \
  { \
 -return(((int (*)(I2D_OF(type),const char *,FILE *,type *, const EVP_CIPHER *,unsigned char *,int, pem_password_cb *,void *))openssl_fcast(PEM_ASN1_write))(i2d_##asn1,str,fp,x,NULL,NULL,0,NULL,NULL)); \
-+static void *__PEM_ASN1_write=openssl_fcast(PEM_ASN1_write); \
++static void *__PEM_ASN1_write=(void *)openssl_fcast(PEM_ASN1_write); \
 +return(((int (*)(I2D_OF(type),const char *,FILE *,type *, const EVP_CIPHER *,unsigned char *,int, pem_password_cb *,void *))__PEM_ASN1_write)(i2d_##asn1,str,fp,x,NULL,NULL,0,NULL,NULL)); \
  }
  
@@ -136,7 +136,7 @@ I hope someone can come up with a better idea...
  int PEM_write_##name(FILE *fp, const type *x) \
  { \
 -return(((int (*)(I2D_OF_const(type),const char *,FILE *, const type *, const EVP_CIPHER *,unsigned char *,int, pem_password_cb *,void *))openssl_fcast(PEM_ASN1_write))(i2d_##asn1,str,fp,x,NULL,NULL,0,NULL,NULL)); \
-+static void *__PEM_ASN1_write=openssl_fcast(PEM_ASN1_write); \
++static void *__PEM_ASN1_write=(void *)openssl_fcast(PEM_ASN1_write); \
 +return(((int (*)(I2D_OF_const(type),const char *,FILE *, const type *, const EVP_CIPHER *,unsigned char *,int, pem_password_cb *,void *))__PEM_ASN1_write)(i2d_##asn1,str,fp,x,NULL,NULL,0,NULL,NULL)); \
  }
  
@@ -146,7 +146,7 @@ I hope someone can come up with a better idea...
  		  void *u) \
  	{ \
 -	return(((int (*)(I2D_OF(type),const char *,FILE *,type *, const EVP_CIPHER *,unsigned char *,int, pem_password_cb *,void *))openssl_fcast(PEM_ASN1_write))(i2d_##asn1,str,fp,x,enc,kstr,klen,cb,u)); \
-+	static void *__PEM_ASN1_write=openssl_fcast(PEM_ASN1_write); \
++	static void *__PEM_ASN1_write=(void *)openssl_fcast(PEM_ASN1_write); \
 +	return(((int (*)(I2D_OF(type),const char *,FILE *,type *, const EVP_CIPHER *,unsigned char *,int, pem_password_cb *,void *))__PEM_ASN1_write)(i2d_##asn1,str,fp,x,enc,kstr,klen,cb,u)); \
  	}
  
@@ -156,7 +156,7 @@ I hope someone can come up with a better idea...
  		  void *u) \
  	{ \
 -	return(((int (*)(I2D_OF_const(type),const char *,FILE *,type *, const EVP_CIPHER *,unsigned char *,int, pem_password_cb *,void *))openssl_fcast(PEM_ASN1_write))(i2d_##asn1,str,fp,x,enc,kstr,klen,cb,u)); \
-+	static void *__PEM_ASN1_write=openssl_fcast(PEM_ASN1_write); \
++	static void *__PEM_ASN1_write=(void *)openssl_fcast(PEM_ASN1_write); \
 +	return(((int (*)(I2D_OF_const(type),const char *,FILE *,type *, const EVP_CIPHER *,unsigned char *,int, pem_password_cb *,void *))__PEM_ASN1_write)(i2d_##asn1,str,fp,x,enc,kstr,klen,cb,u)); \
  	}
  
@@ -166,7 +166,7 @@ I hope someone can come up with a better idea...
  type *PEM_read_bio_##name(BIO *bp, type **x, pem_password_cb *cb, void *u)\
  { \
 -return(((type *(*)(D2I_OF(type),const char *,BIO *,type **,pem_password_cb *,void *))openssl_fcast(PEM_ASN1_read_bio))(d2i_##asn1, str,bp,x,cb,u)); \
-+static void *__PEM_ASN1_read_bio=openssl_fcast(PEM_ASN1_read_bio); \
++static void *__PEM_ASN1_read_bio=(void *)openssl_fcast(PEM_ASN1_read_bio); \
 +return(((type *(*)(D2I_OF(type),const char *,BIO *,type **,pem_password_cb *,void *))__PEM_ASN1_read_bio)(d2i_##asn1, str,bp,x,cb,u)); \
  }
  
@@ -174,7 +174,7 @@ I hope someone can come up with a better idea...
  int PEM_write_bio_##name(BIO *bp, type *x) \
  { \
 -return(((int (*)(I2D_OF(type),const char *,BIO *,type *, const EVP_CIPHER *,unsigned char *,int, pem_password_cb *,void *))openssl_fcast(PEM_ASN1_write_bio))(i2d_##asn1,str,bp,x,NULL,NULL,0,NULL,NULL)); \
-+static void *__PEM_ASN1_write_bio=openssl_fcast(PEM_ASN1_write_bio); \
++static void *__PEM_ASN1_write_bio=(void *)openssl_fcast(PEM_ASN1_write_bio); \
 +return(((int (*)(I2D_OF(type),const char *,BIO *,type *, const EVP_CIPHER *,unsigned char *,int, pem_password_cb *,void *))__PEM_ASN1_write_bio)(i2d_##asn1,str,bp,x,NULL,NULL,0,NULL,NULL)); \
  }
  
@@ -182,7 +182,7 @@ I hope someone can come up with a better idea...
  int PEM_write_bio_##name(BIO *bp, const type *x) \
  { \
 -return(((int (*)(I2D_OF_const(type),const char *,BIO *,const type *, const EVP_CIPHER *,unsigned char *,int, pem_password_cb *,void *))openssl_fcast(PEM_ASN1_write_bio))(i2d_##asn1,str,bp,x,NULL,NULL,0,NULL,NULL)); \
-+static void *__PEM_ASN1_write_bio=openssl_fcast(PEM_ASN1_write_bio); \
++static void *__PEM_ASN1_write_bio=(void *)openssl_fcast(PEM_ASN1_write_bio); \
 +return(((int (*)(I2D_OF_const(type),const char *,BIO *,const type *, const EVP_CIPHER *,unsigned char *,int, pem_password_cb *,void *))__PEM_ASN1_write_bio)(i2d_##asn1,str,bp,x,NULL,NULL,0,NULL,NULL)); \
  }
  
@@ -191,7 +191,7 @@ I hope someone can come up with a better idea...
  	     unsigned char *kstr, int klen, pem_password_cb *cb, void *u) \
  	{ \
 -	return(((int (*)(I2D_OF(type),const char *,BIO *,type *,const EVP_CIPHER *,unsigned char *,int,pem_password_cb *,void *))openssl_fcast(PEM_ASN1_write_bio))(i2d_##asn1,str,bp,x,enc,kstr,klen,cb,u)); \
-+	static void *__PEM_ASN1_write_bio=openssl_fcast(PEM_ASN1_write_bio); \
++	static void *__PEM_ASN1_write_bio=(void *)openssl_fcast(PEM_ASN1_write_bio); \
 +	return(((int (*)(I2D_OF(type),const char *,BIO *,type *,const EVP_CIPHER *,unsigned char *,int,pem_password_cb *,void *))__PEM_ASN1_write_bio)(i2d_##asn1,str,bp,x,enc,kstr,klen,cb,u)); \
  	}
  
@@ -200,7 +200,7 @@ I hope someone can come up with a better idea...
  	     unsigned char *kstr, int klen, pem_password_cb *cb, void *u) \
  	{ \
 -	return(((int (*)(I2D_OF_const(type),const char *,BIO *,type *,const EVP_CIPHER *,unsigned char *,int,pem_password_cb *,void *))openssl_fcast(PEM_ASN1_write_bio))(i2d_##asn1,str,bp,x,enc,kstr,klen,cb,u)); \
-+	static void *__PEM_ASN1_write_bio=openssl_fcast(PEM_ASN1_write_bio); \
++	static void *__PEM_ASN1_write_bio=(void *)openssl_fcast(PEM_ASN1_write_bio); \
 +	return(((int (*)(I2D_OF_const(type),const char *,BIO *,type *,const EVP_CIPHER *,unsigned char *,int,pem_password_cb *,void *))__PEM_ASN1_write_bio)(i2d_##asn1,str,bp,x,enc,kstr,klen,cb,u)); \
  	}
  
@@ -209,14 +209,14 @@ I hope someone can come up with a better idea...
  	     pem_password_cb *cb, void *u);
  void *	PEM_ASN1_read_bio(d2i_of_void *d2i, const char *name, BIO *bp,
  			  void **x, pem_password_cb *cb, void *u);
-+static void * __attribute__((unused)) __PEM_ASN1_read_bio=openssl_fcast(PEM_ASN1_read_bio);
++static void * __attribute__((unused)) __PEM_ASN1_read_bio=(void *)openssl_fcast(PEM_ASN1_read_bio);
  #define PEM_ASN1_read_bio_of(type,d2i,name,bp,x,cb,u) \
 -((type *(*)(D2I_OF(type),const char *,BIO *,type **,pem_password_cb *,void *))openssl_fcast(PEM_ASN1_read_bio))(d2i,name,bp,x,cb,u)
 +((type *(*)(D2I_OF(type),const char *,BIO *,type **,pem_password_cb *,void *))__PEM_ASN1_read_bio)(d2i,name,bp,x,cb,u)
  int	PEM_ASN1_write_bio(i2d_of_void *i2d,const char *name,BIO *bp,char *x,
  			   const EVP_CIPHER *enc,unsigned char *kstr,int klen,
  			   pem_password_cb *cb, void *u);
-+static void * __attribute__((unused)) __PEM_ASN1_write_bio=openssl_fcast(PEM_ASN1_write_bio);
++static void * __attribute__((unused)) __PEM_ASN1_write_bio=(void *)openssl_fcast(PEM_ASN1_write_bio);
  #define PEM_ASN1_write_bio_of(type,i2d,name,bp,x,enc,kstr,klen,cb,u) \
 -	((int (*)(I2D_OF(type),const char *,BIO *,type *, const EVP_CIPHER *,unsigned char *,int, pem_password_cb *,void *))openssl_fcast(PEM_ASN1_write_bio))(i2d,name,bp,x,enc,kstr,klen,cb,u)
 +	((int (*)(I2D_OF(type),const char *,BIO *,type *, const EVP_CIPHER *,unsigned char *,int, pem_password_cb *,void *))__PEM_ASN1_write_bio)(i2d,name,bp,x,enc,kstr,klen,cb,u)
