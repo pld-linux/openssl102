@@ -122,7 +122,7 @@ I hope someone can come up with a better idea...
 -return(((type *(*)(D2I_OF(type),char *,FILE *,type **,pem_password_cb *,void *))openssl_fcast(PEM_ASN1_read))(d2i_##asn1, str,fp,x,cb,u)); \
 +static void *__PEM_ASN1_read=openssl_fcast(PEM_ASN1_read); \
 +return(((type *(*)(D2I_OF(type),char *,FILE *,type **,pem_password_cb *,void *))__PEM_ASN1_read)(d2i_##asn1, str,fp,x,cb,u)); \
- } \
+ } 
  
  #define IMPLEMENT_PEM_write_fp(name, type, str, asn1) \
  int PEM_write_##name(FILE *fp, type *x) \
