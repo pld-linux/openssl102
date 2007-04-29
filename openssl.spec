@@ -17,7 +17,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.8e
-Release:	3
+Release:	4
 License:	Apache-style License
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -333,8 +333,6 @@ ln -s %{_sysconfdir}/%{name}/openssl.cnf \
 mv -f $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc/* $RPM_BUILD_ROOT%{_libdir}/%{name}
 rm -rf $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc
 
-mv -f $RPM_BUILD_ROOT%{_bindir}/c_rehash $RPM_BUILD_ROOT%{_libdir}/%{name}
-
 find $RPM_BUILD_ROOT%{_mandir} -type f | xargs rm -f
 install doc/apps/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
 install doc/apps/*.5 $RPM_BUILD_ROOT%{_mandir}/man5
@@ -434,8 +432,8 @@ rm -rf $RPM_BUILD_ROOT
 
 %files tools-perl
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/c_rehash
 %attr(755,root,root) %{_libdir}/%{name}/CA.pl
-%attr(755,root,root) %{_libdir}/%{name}/c_rehash
 %{_mandir}/man1/openssl_CA.pl.1*
 
 %files devel
