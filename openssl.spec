@@ -17,7 +17,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.8e
-Release:	4
+Release:	5
 License:	Apache-style License
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -32,6 +32,7 @@ Patch3:		%{name}-include.patch
 Patch4:		%{name}-md5-sparcv9.patch
 Patch5:		%{name}-libvar.patch
 Patch6:		%{name}-gcc_4_2.patch
+Patch7:		%{name}-CVE-2007-3108.patch
 URL:		http://www.openssl.org/
 BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.6.1
@@ -201,6 +202,7 @@ cp crypto/asn1/asn1.h crypto/asn1/asn1.h.X
 cp crypto/ocsp/ocsp.h crypto/ocsp/ocsp.h.X
 cp crypto/pem/pem.h crypto/pem/pem.h.X
 %patch6 -p1
+%patch7 -p1
 
 %build
 %{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
