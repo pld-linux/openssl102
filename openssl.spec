@@ -1,5 +1,3 @@
-# TODO:
-# - get rid of gcc_4_2 patch and header files crapolla
 
 # Conditional build:
 %bcond_without	tests
@@ -17,7 +15,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.8f
-Release:	1
+Release:	2
 License:	Apache-style License
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
