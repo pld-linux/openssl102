@@ -15,7 +15,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.8f
-Release:	3
+Release:	4
 License:	Apache-style License
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -330,8 +330,10 @@ rm -rf $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc
 install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
 install %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
 
-rm $RPM_BUILD_ROOT%{_mandir}/man7/des_modes.7
+rm $RPM_BUILD_ROOT%{_mandir}{/man7/des_modes.7,/man5/config.5,/man5/x509v3_config.5}
 echo ".so openssl_des_modes.7" > $RPM_BUILD_ROOT%{_mandir}/man7/des_modes.7
+echo ".so openssl_config.5" > $RPM_BUILD_ROOT%{_mandir}/man5/config.5
+echo ".so openssl_x509v3_config.5" > $RPM_BUILD_ROOT%{_mandir}/man5/x509v3_config.5
 
 %clean
 rm -rf $RPM_BUILD_ROOT
