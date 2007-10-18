@@ -327,18 +327,9 @@ ln -s %{_sysconfdir}/%{name}/openssl.cnf \
 mv -f $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc/* $RPM_BUILD_ROOT%{_libdir}/%{name}
 rm -rf $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc
 
-find $RPM_BUILD_ROOT%{_mandir} -type f | xargs rm -f
-install doc/apps/*.1 $RPM_BUILD_ROOT%{_mandir}/man1
-install doc/apps/*.5 $RPM_BUILD_ROOT%{_mandir}/man5
-install doc/ssl/*.3 doc/crypto/*.3 $RPM_BUILD_ROOT%{_mandir}/man3
-install doc/crypto/*.7 $RPM_BUILD_ROOT%{_mandir}/man7
 install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
 install %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
 
-rm $RPM_BUILD_ROOT%{_mandir}/man5/x509v3_config.5
-echo ".so openssl_x509v3_config.5" > $RPM_BUILD_ROOT%{_mandir}/man5/x509v3_config.5
-rm $RPM_BUILD_ROOT%{_mandir}/man5/config.5
-echo ".so openssl_config.5" > $RPM_BUILD_ROOT%{_mandir}/man5/config.5
 rm $RPM_BUILD_ROOT%{_mandir}/man7/des_modes.7
 echo ".so openssl_des_modes.7" > $RPM_BUILD_ROOT%{_mandir}/man7/des_modes.7
 
@@ -415,7 +406,6 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/openssl_verify.1*
 %{_mandir}/man1/openssl_version.1*
 %{_mandir}/man1/openssl_x509.1*
-%{_mandir}/man1/openssl_x509v3_config.1*
 %{_mandir}/man5/*.5*
 %lang(pl) %{_mandir}/pl/man1/openssl.1*
 
