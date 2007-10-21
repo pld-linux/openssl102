@@ -251,50 +251,15 @@ export OPTFLAGS LDFLAGS
 
 # Conv PODs to man pages. "openssl_" prefix is added to each manpage
 # to avoid potential conflicts with others packages.
-center="OpenSSL 0.9.7"
-rel="OpenSSL 0.9.7"
 
-cd doc/apps || exit 1
-%{__perl} -pi -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
-
-for pod in *.pod; do
-	if [ $pod != "openssl.pod" ]; then
-		mv -f $pod openssl_$pod;
-		pod=openssl_$pod;
-	fi
-
-	sec=1
-	if [ $pod = "openssl_config.pod" ]; then
-		sec=5
-	fi
-
-	manpage=`basename $pod .pod`.$sec;
-	pod2man --section="$sec" --release="$rel" --center="$center" \
-		$pod > $manpage;
-	echo "$manpage";
-done
-cd ..
-
-sec=3
-for dir in ssl crypto; do
+for dir in doc/{apps,ssl,crypto}; do
 	cd $dir || exit 1;
-	if [ $dir = "ssl" ]; then
-		rel="OpenSSL SSL/TLS library"
-	elif [ $dir = "crypto" ]; then
-		rel="OpenSSL cryptographic library"
-	fi
-
 	%{__perl} -pi -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
 
-	for pod in *.pod; do
-		sec=`[ "$pod" = "des_modes.pod" ] && echo 7 || echo 3`;
+	for pod in !(openssl*).pod; do
 		mv -f $pod openssl_$pod;
-		pod=openssl_$pod;
-		manpage=`basename $pod .pod`.$sec;
-		pod2man --section="$sec" --release="$rel" --center=" " $pod > $manpage;
-		echo "$manpage";
 	done
-	cd ..
+	cd ../..
 done
 
 #cd perl
