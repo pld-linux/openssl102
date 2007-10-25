@@ -1,4 +1,4 @@
-
+#
 # Conditional build:
 %bcond_without	tests
 %bcond_with purify	# Compile openssl with \-DPURIFY, useful when one wants to
@@ -260,11 +260,6 @@ for dir in doc/{apps,ssl,crypto}; do
 	cd ../..
 done
 
-#cd perl
-#%%{__perl} Makefile.PL \
-#	INSTALLDIRS=vendor
-#%{__make}
-
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
@@ -293,7 +288,7 @@ rm -rf $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc
 install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
 install %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
 
-rm $RPM_BUILD_ROOT%{_mandir}{/man7/des_modes.7,/man5/config.5,/man5/x509v3_config.5}
+rm $RPM_BUILD_ROOT%{_mandir}/{man7/des_modes.7,man5/config.5,man5/x509v3_config.5}
 echo ".so openssl_des_modes.7" > $RPM_BUILD_ROOT%{_mandir}/man7/des_modes.7
 echo ".so openssl_config.5" > $RPM_BUILD_ROOT%{_mandir}/man5/config.5
 echo ".so openssl_x509v3_config.5" > $RPM_BUILD_ROOT%{_mandir}/man5/x509v3_config.5
