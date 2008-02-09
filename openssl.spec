@@ -16,7 +16,7 @@ Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднан
 Name:		openssl
 Version:	0.9.8g
 Release:	1
-License:	Apache-style License
+License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
 # Source0-md5:	acf70a16359bf3658bdfb74bda1c4419
