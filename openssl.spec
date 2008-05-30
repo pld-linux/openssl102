@@ -1,7 +1,7 @@
 #
 # Conditional build:
-%bcond_without	tests
-%bcond_with purify	# Compile openssl with \-DPURIFY, useful when one wants to
+%bcond_without	tests	# don't perform "make tests"
+%bcond_with	purify	# Compile openssl with \-DPURIFY, useful when one wants to
 			# use valgrind debugger against openssl-linked programs
 #
 %include	/usr/lib/rpm/macros.perl
@@ -14,12 +14,12 @@ Summary(pt_BR.UTF-8):	Uma biblioteca C que fornece vários algoritmos e protocol
 Summary(ru.UTF-8):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
-Version:	0.9.8g
-Release:	2
+Version:	0.9.8h
+Release:	1
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	acf70a16359bf3658bdfb74bda1c4419
+# Source0-md5:	7d3d41dafc76cf2fcb5559963b5783b3
 Source1:	%{name}-ca-bundle.crt
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
@@ -27,8 +27,7 @@ Patch0:		%{name}-alpha-ccc.patch
 Patch1:		%{name}-optflags.patch
 Patch2:		%{name}-globalCA.diff
 Patch3:		%{name}-include.patch
-Patch4:		%{name}-md5-sparcv9.patch
-Patch5:		%{name}-libvar.patch
+Patch4:		%{name}-libvar.patch
 URL:		http://www.openssl.org/
 BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.6.1
@@ -40,8 +39,6 @@ Obsoletes:	SSLeay-devel
 Obsoletes:	SSLeay-perl
 Obsoletes:	libopenssl0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define		specflags	-Wl,-z,noexecstack
 
 %description
 The OpenSSL Project is a collaborative effort to develop a robust,
@@ -194,12 +191,11 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 
-%build
 %{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
 	`grep -l -r "%{_prefix}/local/bin/perl" *`
 
+%build
 touch Makefile.*
 
 %{__perl} util/perlpath.pl %{__perl}
