@@ -15,7 +15,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.8h
-Release:	2
+Release:	3
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -200,8 +200,8 @@ touch Makefile.*
 
 %{__perl} util/perlpath.pl %{__perl}
 
-OPTFLAGS="%{rpmcflags} %{?with_purify:-DPURIFY}"
-LDFLAGS="%{rpmldflags} -Wl,-z,noexecstack"
+OPTFLAGS="-Wa,--noexecstack %{rpmcflags} %{?with_purify:-DPURIFY}"
+LDFLAGS="-Wl,-z,noexecstack %{rpmldflags}"
 export OPTFLAGS LDFLAGS
 ./Configure \
 	--openssldir=%{_var}/lib/%{name} \
