@@ -28,6 +28,8 @@ Patch1:		%{name}-optflags.patch
 Patch2:		%{name}-globalCA.diff
 Patch3:		%{name}-include.patch
 Patch4:		%{name}-libvar.patch
+Patch5:		%{name}-man-namespace.patch
+Patch6:		%{name}-asflag.patch
 URL:		http://www.openssl.org/
 BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.6.1
@@ -191,6 +193,8 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
+%patch6 -p1
 
 %{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
 	`grep -l -r "%{_prefix}/local/bin/perl" *`
@@ -200,9 +204,7 @@ touch Makefile.*
 
 %{__perl} util/perlpath.pl %{__perl}
 
-OPTFLAGS="-Wa,--noexecstack %{rpmcflags} %{?with_purify:-DPURIFY}"
-LDFLAGS="-Wl,-z,noexecstack %{rpmldflags}"
-export OPTFLAGS LDFLAGS
+OPTFLAGS="%{rpmcflags} %{?with_purify:-DPURIFY}" \
 ./Configure \
 	--openssldir=%{_var}/lib/%{name} \
 	--lib=%{_lib} \
@@ -243,10 +245,11 @@ export OPTFLAGS LDFLAGS
 
 %{__make} -j1 all rehash %{?with_tests:tests} \
 	CC="%{__cc}" \
+	ASFLAG='$(CFLAG) -Wa,--noexecstack' \
 	INSTALLTOP=%{_prefix}
 
-# Conv PODs to man pages. "openssl_" prefix is added to each manpage
-# to avoid potential conflicts with others packages.
+# Rename POD sources of man pages. "openssl_" prefix is added to each
+# manpage to avoid potential conflicts with other packages.
 
 for dir in doc/{apps,ssl,crypto}; do
 	cd $dir || exit 1;
@@ -265,7 +268,6 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
 	$RPM_BUILD_ROOT%{_pkgconfigdir}
 
 %{__make} install \
-	CC="%{__cc}" \
 	INSTALLTOP=%{_prefix} \
 	INSTALL_PREFIX=$RPM_BUILD_ROOT \
 	MANDIR=%{_mandir}
@@ -283,13 +285,11 @@ ln -s %{_sysconfdir}/%{name}/openssl.cnf \
 mv -f $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc/* $RPM_BUILD_ROOT%{_libdir}/%{name}
 rm -rf $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc
 
+# not installed as individual utilities (see openssl dgst instead)
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/{md2,md4,md5,mdc2,ripemd160,sha,sha1}.1
+
 install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
 install %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
-
-rm $RPM_BUILD_ROOT%{_mandir}/{man7/des_modes.7,man5/config.5,man5/x509v3_config.5}
-echo ".so openssl_des_modes.7" > $RPM_BUILD_ROOT%{_mandir}/man7/des_modes.7
-echo ".so openssl_config.5" > $RPM_BUILD_ROOT%{_mandir}/man5/config.5
-echo ".so openssl_x509v3_config.5" > $RPM_BUILD_ROOT%{_mandir}/man5/x509v3_config.5
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -364,7 +364,8 @@ rm -rf $RPM_BUILD_ROOT
 %{_mandir}/man1/openssl_verify.1*
 %{_mandir}/man1/openssl_version.1*
 %{_mandir}/man1/openssl_x509.1*
-%{_mandir}/man5/*.5*
+%{_mandir}/man5/openssl_config.5*
+%{_mandir}/man5/openssl_x509v3_config.5*
 %lang(pl) %{_mandir}/pl/man1/openssl.1*
 
 %files tools-perl
@@ -382,7 +383,7 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/libssl.pc
 %{_pkgconfigdir}/openssl.pc
 %{_mandir}/man3/openssl*.3*
-%{_mandir}/man7/*.7*
+%{_mandir}/man7/openssl_des_modes.7*
 
 %files static
 %defattr(644,root,root,755)
