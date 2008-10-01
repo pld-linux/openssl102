@@ -1,3 +1,4 @@
+# TODO: ca-bundle.crt is out of date; switch to ca-certificates completely?
 #
 # Conditional build:
 %bcond_without	tests	# don't perform "make tests"
