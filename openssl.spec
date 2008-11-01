@@ -1,4 +1,3 @@
-# TODO: ca-bundle.crt is out of date; switch to ca-certificates completely?
 #
 # Conditional build:
 %bcond_without	tests	# don't perform "make tests"
@@ -16,12 +15,11 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.8i
-Release:	1
+Release:	2
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
 # Source0-md5:	561e00f18821c74b2b86c8c7786f9d8b
-Source1:	%{name}-ca-bundle.crt
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Patch0:		%{name}-alpha-ccc.patch
@@ -41,6 +39,7 @@ Obsoletes:	SSLeay
 Obsoletes:	SSLeay-devel
 Obsoletes:	SSLeay-perl
 Obsoletes:	libopenssl0
+Requires:	ca-certificates
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -207,7 +206,7 @@ touch Makefile.*
 
 OPTFLAGS="%{rpmcflags} %{?with_purify:-DPURIFY}" \
 ./Configure \
-	--openssldir=%{_var}/lib/%{name} \
+	--openssldir=%{_sysconfdir}/%{name} \
 	--lib=%{_lib} \
 	shared threads \
 	enable-mdc2 enable-rc5 \
@@ -273,18 +272,13 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
 	INSTALL_PREFIX=$RPM_BUILD_ROOT \
 	MANDIR=%{_mandir}
 
-install %{SOURCE1} $RPM_BUILD_ROOT%{_datadir}/ssl/ca-bundle.crt
 install libcrypto.a libssl.a $RPM_BUILD_ROOT%{_libdir}
 install lib*.so.*.* $RPM_BUILD_ROOT%{_libdir}
 ln -sf libcrypto.so.*.* $RPM_BUILD_ROOT%{_libdir}/libcrypto.so
 ln -sf libssl.so.*.* $RPM_BUILD_ROOT%{_libdir}/libssl.so
 
-mv -f $RPM_BUILD_ROOT%{_var}/lib/%{name}/openssl.cnf $RPM_BUILD_ROOT%{_sysconfdir}/%{name}
-ln -s %{_sysconfdir}/%{name}/openssl.cnf \
-	$RPM_BUILD_ROOT%{_var}/lib/%{name}/%{name}.cnf
-
-mv -f $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc/* $RPM_BUILD_ROOT%{_libdir}/%{name}
-rm -rf $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc
+mv -f $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc/* $RPM_BUILD_ROOT%{_libdir}/%{name}
+rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc
 
 # not installed as individual utilities (see openssl dgst instead)
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/{md2,md4,md5,mdc2,ripemd160,sha,sha1}.1
@@ -298,6 +292,19 @@ rm -rf $RPM_BUILD_ROOT
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
+%triggerpostun -- %{name} < 0.9.8i-2
+if [ -d /var/lib/openssl/certs ] ; then
+	mv /var/lib/openssl/certs/* %{_sysconfdir}/%{name}/certs 2>/dev/null || :
+fi
+if [ -d /var/lib/openssl/private ] ; then
+	mv /var/lib/openssl/private/* %{_sysconfdir}/%{name}/private 2>/dev/null || :
+fi
+if [ -d /var/lib/openssl ] ; then
+	for f in /var/lib/openssl/* ; do
+		[ -f "$f" ] && mv "$f" %{_sysconfdir}/%{name} 2>/dev/null || :
+	done
+fi
+
 %files
 %defattr(644,root,root,755)
 %doc CHANGES CHANGES.SSLeay LICENSE NEWS README doc/*.txt
@@ -306,19 +313,14 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libssl.so.*.*.*
 %dir %{_libdir}/engines
 %attr(755,root,root) %{_libdir}/engines/*.so
-%dir %{_var}/lib/%{name}
-%dir %{_var}/lib/%{name}/certs
-%dir %{_var}/lib/%{name}/private
+%dir %{_sysconfdir}/%{name}
+%dir %{_sysconfdir}/%{name}/certs
+%dir %{_sysconfdir}/%{name}/private
 %dir %{_datadir}/ssl
-%config(noreplace) %verify(not md5 mtime size) %{_datadir}/ssl/ca-bundle.crt
 
 %files tools
 %defattr(644,root,root,755)
-%dir %{_sysconfdir}/%{name}
-
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/openssl.cnf
-%config(noreplace) %verify(not md5 mtime size) %{_var}/lib/%{name}/openssl.cnf
-
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(754,root,root) %{_bindir}/ssl-certificate
 
