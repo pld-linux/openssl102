@@ -6,7 +6,7 @@ diff -Nur openssl-0.9.6b/crypto/cryptlib.h openssl-0.9.6b-new/crypto/cryptlib.h
  #define X509_CERT_AREA		OPENSSLDIR
  #define X509_CERT_DIR		OPENSSLDIR "/certs"
 -#define X509_CERT_FILE		OPENSSLDIR "/cert.pem"
-+#define X509_CERT_FILE		"/usr/share/ssl/ca-bundle.crt"
++#define X509_CERT_FILE		OPENSSLDIR "/ca-certificates.crt"
  #define X509_PRIVATE_DIR	OPENSSLDIR "/private"
  #else
  #define X509_CERT_AREA		"SSLROOT:[000000]"
