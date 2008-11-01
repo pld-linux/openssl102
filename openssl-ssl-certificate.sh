@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-CERT=/var/lib/openssl/certs/apache.pem
+CERT=/etc/openssl/certs/apache.pem
 export RANDFILE=/dev/random
 
 if [ "$1" != "--force" -a -f $CERT ]; then
@@ -30,4 +30,4 @@ openssl req $@ -config /etc/openssl/openssl.cnf \
 chmod 600 $CERT
 
 ln -sf $CERT \
-  /var/lib/openssl/`/usr/bin/openssl x509 -noout -hash < $CERT`.0
+  /etc/openssl/certs/`/usr/bin/openssl x509 -noout -hash < $CERT`.0
