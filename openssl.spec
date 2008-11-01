@@ -40,6 +40,7 @@ Obsoletes:	SSLeay-devel
 Obsoletes:	SSLeay-perl
 Obsoletes:	libopenssl0
 Requires:	ca-certificates >= 20080809-1
+Requires:	rpm-whiteout >= 1.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
