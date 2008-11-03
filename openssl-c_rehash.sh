@@ -196,23 +196,27 @@ then
 fi
 
 # determine which directories to process
-# XXX: can't handle directories with spaces in names
-# XXX: ...use \n as dir separator and manipulate IFS?
+old_IFS=$IFS
 if [ ${#} -gt 0 ]
 then
+    IFS=':'
     DIRLIST=${*}
 elif [ -n "${SSL_CERT_DIR}" ]
 then
-    DIRLIST=$( echo ${SSL_CERT_DIR} | tr ':' ' ' )
+    DIRLIST=$SSL_CERT_DIR
 else
     DIRLIST=${DIR}/certs
 fi
+
+IFS=':'
 
 # process directories
 for CERT_DIR in ${DIRLIST}
 do
     if [ -d ${CERT_DIR} -a -w ${CERT_DIR} ]
     then
+        IFS=$old_IFS
         hash_dir ${CERT_DIR}
+        IFS=':'
     fi
 done
