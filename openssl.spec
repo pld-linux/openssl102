@@ -15,13 +15,14 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.8i
-Release:	2
+Release:	3
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
 # Source0-md5:	561e00f18821c74b2b86c8c7786f9d8b
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
+Source4:	%{name}-c_rehash.sh
 Patch0:		%{name}-alpha-ccc.patch
 Patch1:		%{name}-optflags.patch
 Patch2:		%{name}-globalCA.diff
@@ -286,6 +287,7 @@ rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc
 
 install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
 install %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
+install %{SOURCE4} $RPM_BUILD_ROOT%{_bindir}/c_rehash.sh
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -323,6 +325,7 @@ fi
 %defattr(644,root,root,755)
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/openssl.cnf
 %attr(755,root,root) %{_bindir}/%{name}
+%attr(755,root,root) %{_bindir}/c_rehash.sh
 %attr(754,root,root) %{_bindir}/ssl-certificate
 
 %dir %{_libdir}/%{name}
