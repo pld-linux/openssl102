@@ -15,7 +15,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.8i
-Release:	3
+Release:	4
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -30,6 +30,7 @@ Patch3:		%{name}-include.patch
 Patch4:		%{name}-libvar.patch
 Patch5:		%{name}-man-namespace.patch
 Patch6:		%{name}-asflag.patch
+Patch7:		%{name}-ca-certificates.patch
 URL:		http://www.openssl.org/
 BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.6.1
@@ -40,7 +41,7 @@ Obsoletes:	SSLeay
 Obsoletes:	SSLeay-devel
 Obsoletes:	SSLeay-perl
 Obsoletes:	libopenssl0
-Requires:	ca-certificates >= 20080809-1
+Requires:	ca-certificates >= 20080809-4
 Requires:	rpm-whiteout >= 1.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -197,6 +198,7 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%patch7 -p1
 
 %{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
 	`grep -l -r "%{_prefix}/local/bin/perl" *`
