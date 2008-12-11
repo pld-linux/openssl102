@@ -342,13 +342,17 @@ fi
 %attr(755,root,root) %{_libdir}/libssl.so.*.*.*
 %dir %{_libdir}/engines
 %attr(755,root,root) %{_libdir}/engines/*.so
-%dir %{_sysconfdir}/%{name}
-%dir %{_sysconfdir}/%{name}/certs
-%dir %{_sysconfdir}/%{name}/private
 %if "%{pld_release}" == "ti"
 %dir %{_var}/lib/%{name}
 %dir %{_var}/lib/%{name}/certs
 %dir %{_var}/lib/%{name}/private
+%dir %{_sysconfdir}/%{name}
+%attr(755,root,root) %{_sysconfdir}/%{name}/certs
+%attr(755,root,root) %{_sysconfdir}/%{name}/private
+%else
+%dir %{_sysconfdir}/%{name}
+%dir %{_sysconfdir}/%{name}/certs
+%dir %{_sysconfdir}/%{name}/private
 %endif
 %dir %{_datadir}/ssl
 
