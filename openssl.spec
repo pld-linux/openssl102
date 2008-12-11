@@ -15,7 +15,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.8i
-Release:	4
+Release:	5
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -210,7 +210,11 @@ touch Makefile.*
 
 OPTFLAGS="%{rpmcflags} %{?with_purify:-DPURIFY}" \
 ./Configure \
+%if "%{pld_release}" == "ti"
+	--openssldir=%{_var}/lib/%{name} \
+%else
 	--openssldir=%{_sysconfdir}/%{name} \
+%endif
 	--lib=%{_lib} \
 	shared threads \
 	enable-mdc2 enable-rc5 \
@@ -281,8 +285,19 @@ install lib*.so.*.* $RPM_BUILD_ROOT%{_libdir}
 ln -sf libcrypto.so.*.* $RPM_BUILD_ROOT%{_libdir}/libcrypto.so
 ln -sf libssl.so.*.* $RPM_BUILD_ROOT%{_libdir}/libssl.so
 
+%if "%{pld_release}" == "ti"
+ln -sf %{_var}/lib/%{name}/%{name}.cnf \
+	$RPM_BUILD_ROOT%{_sysconfdir}/%{name}/openssl.cnf
+ln -sf %{_var}/lib/%{name}/certs \
+	$RPM_BUILD_ROOT%{_sysconfdir}/%{name}/certs
+ln -sf %{_var}/lib/%{name}/private \
+	$RPM_BUILD_ROOT%{_sysconfdir}/%{name}/private
+mv -f $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc/* $RPM_BUILD_ROOT%{_libdir}/%{name}
+rm -rf $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc
+%else
 mv -f $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc/* $RPM_BUILD_ROOT%{_libdir}/%{name}
 rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc
+%endif
 
 # not installed as individual utilities (see openssl dgst instead)
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/{md2,md4,md5,mdc2,ripemd160,sha,sha1}.1
@@ -297,6 +312,14 @@ rm -rf $RPM_BUILD_ROOT
 %post   -p /sbin/ldconfig
 %postun -p /sbin/ldconfig
 
+%if "%{pld_release}" == "ti"
+%triggerin -- %{name}-tools < 0.9.8i-2
+if [ -L /var/lib/openssl/openssl.cnf ] ; then
+	echo "Saving old configuration as /var/lib/openssl/openssl.cnf.rpmsave"
+	rm /var/lib/openssl/openssl.cnf
+	mv %{_sysconfdir}/%{name}/openssl.cnf /var/lib/openssl/openssl.cnf.rpmsave 2>/dev/null || :
+fi
+%else
 %triggerpostun -- %{name} < 0.9.8i-2
 if [ -d /var/lib/openssl/certs ] ; then
 	mv /var/lib/openssl/certs/* %{_sysconfdir}/%{name}/certs 2>/dev/null || :
@@ -309,6 +332,7 @@ if [ -d /var/lib/openssl ] ; then
 		[ -f "$f" ] && mv "$f" %{_sysconfdir}/%{name} 2>/dev/null || :
 	done
 fi
+%endif
 
 %files
 %defattr(644,root,root,755)
@@ -321,11 +345,21 @@ fi
 %dir %{_sysconfdir}/%{name}
 %dir %{_sysconfdir}/%{name}/certs
 %dir %{_sysconfdir}/%{name}/private
+%if "%{pld_release}" == "ti"
+%dir %{_var}/lib/%{name}
+%dir %{_var}/lib/%{name}/certs
+%dir %{_var}/lib/%{name}/private
+%endif
 %dir %{_datadir}/ssl
 
 %files tools
 %defattr(644,root,root,755)
+%if "%{pld_release}" == "ti"
+%{_sysconfdir}/%{name}/openssl.cnf
+%config(noreplace) %verify(not md5 mtime size) %{_var}/lib/%{name}/openssl.cnf
+%else
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/openssl.cnf
+%endif
 %attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/c_rehash.sh
 %attr(754,root,root) %{_bindir}/ssl-certificate
