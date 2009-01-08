@@ -1,0 +1,13 @@
+--- fips/Makefile.orig	2009-01-08 13:29:36.362699820 +0100
++++ fips/Makefile	2009-01-08 13:30:25.780295482 +0100
+@@ -179,10 +179,6 @@
+ 	chmod 644 $(INSTALL_PREFIX)$(INSTALLTOP)/include/openssl/$$i ); \
+ 	done;
+ 	@target=install; $(RECURSIVE_MAKE)
+-	@cp -p -f fipscanister.o fipscanister.o.sha1 fips_premain.c \
+-		fips_premain.c.sha1 \
+-		$(INSTALL_PREFIX)$(INSTALLTOP)/lib/; \
+-	chmod 0444 $(INSTALL_PREFIX)$(INSTALLTOP)/lib/fips*
+ 
+ lint:
+ 	@target=lint; $(RECURSIVE_MAKE)
