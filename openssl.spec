@@ -31,6 +31,7 @@ Patch4:		%{name}-libvar.patch
 Patch5:		%{name}-man-namespace.patch
 Patch6:		%{name}-asflag.patch
 Patch7:		%{name}-ca-certificates.patch
+Patch8:		%{name}-fips_install.patch
 URL:		http://www.openssl.org/
 BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.6.1
@@ -199,6 +200,7 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p0
 
 %{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
 	`grep -l -r "%{_prefix}/local/bin/perl" *`
