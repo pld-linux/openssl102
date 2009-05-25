@@ -33,6 +33,12 @@ Patch6:		%{name}-asflag.patch
 Patch7:		%{name}-ca-certificates.patch
 Patch8:		%{name}-fips_install.patch
 URL:		http://www.openssl.org/
+# problem with =< 1.0.0beta2
+# Fixes should be in sourcecode
+BuildRequires:	security(CVE-2009-1377)
+BuildRequires:	security(CVE-2009-1378)
+BuildRequires:	security(CVE-2009-1379)
+##
 BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.6.1
 BuildRequires:	rpm-perlprov >= 4.1-13
