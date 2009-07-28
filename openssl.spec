@@ -227,7 +227,7 @@ OPTFLAGS="%{rpmcflags} %{?with_purify:-DPURIFY}" \
 %endif
 	--lib=%{_lib} \
 	shared threads \
-	enable-mdc2 enable-rc5 \
+	enable-mdc2 enable-rc5 enable-tlsext \
 %ifarch %{ix86}
 %ifarch i386
 	386 linux-elf
