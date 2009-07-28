@@ -15,7 +15,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.8k
-Release:	1
+Release:	2
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -32,13 +32,8 @@ Patch5:		%{name}-man-namespace.patch
 Patch6:		%{name}-asflag.patch
 Patch7:		%{name}-ca-certificates.patch
 Patch8:		%{name}-fips_install.patch
+Patch9:		%{name}-CVE-2009-1377-1378-1379.patch
 URL:		http://www.openssl.org/
-# problem with =< 1.0.0beta2
-# Fixes should be in sourcecode
-BuildRequires:	security(CVE-2009-1377)
-BuildRequires:	security(CVE-2009-1378)
-BuildRequires:	security(CVE-2009-1379)
-##
 BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.6.1
 BuildRequires:	rpm-perlprov >= 4.1-13
@@ -207,6 +202,7 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch6 -p1
 %patch7 -p1
 %patch8 -p0
+%patch9 -p1
 
 %{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
 	`grep -l -r "%{_prefix}/local/bin/perl" *`
@@ -227,7 +223,13 @@ OPTFLAGS="%{rpmcflags} %{?with_purify:-DPURIFY}" \
 %endif
 	--lib=%{_lib} \
 	shared threads \
-	enable-mdc2 enable-rc5 enable-tlsext \
+	enable-tlsext \
+	enable-seed \
+	enable-rfc3779 \
+	enable-cms \
+	enable-idea \
+	enable-mdc2 \
+	enable-rc5 \
 %ifarch %{ix86}
 %ifarch i386
 	386 linux-elf
