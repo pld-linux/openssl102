@@ -15,7 +15,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.8k
-Release:	2
+Release:	3
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -33,6 +33,8 @@ Patch6:		%{name}-asflag.patch
 Patch7:		%{name}-ca-certificates.patch
 Patch8:		%{name}-fips_install.patch
 Patch9:		%{name}-CVE-2009-1377-1378-1379.patch
+Patch10:	%{name}-ldflags.patch
+Patch11:	%{name}-parallel-build.patch
 URL:		http://www.openssl.org/
 BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.6.1
@@ -203,6 +205,8 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch7 -p1
 %patch8 -p0
 %patch9 -p1
+%patch10 -p1
+%patch11 -p1
 
 %{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
 	`grep -l -r "%{_prefix}/local/bin/perl" *`
