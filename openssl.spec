@@ -35,6 +35,7 @@ Patch8:		%{name}-fips_install.patch
 Patch9:		%{name}-CVE-2009-1377-1378-1379.patch
 Patch10:	%{name}-ldflags.patch
 Patch11:	%{name}-parallel-build.patch
+Patch12:	%{name}-x86_64-asm.patch
 URL:		http://www.openssl.org/
 BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.6.1
@@ -207,6 +208,7 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
+%patch12 -p1
 
 %{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
 	`grep -l -r "%{_prefix}/local/bin/perl" *`
