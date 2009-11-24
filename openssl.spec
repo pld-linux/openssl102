@@ -15,7 +15,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.8l
-Release:	1
+Release:	2
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -213,7 +213,7 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
 	`grep -l -r "%{_prefix}/local/bin/perl" *`
 
-sed -i -e 's|$prefix/lib/engines|%{_libdir}/engines|g' Configure
+sed -i -e 's|$prefix/lib/engines|/%{_lib}/engines|g' Configure
 
 %build
 touch Makefile.*
@@ -291,6 +291,7 @@ done
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
 	$RPM_BUILD_ROOT{%{_mandir}/{pl/man1,man{1,3,5,7}},%{_datadir}/ssl} \
+	$RPM_BUILD_ROOT/%{_lib}/engines \
 	$RPM_BUILD_ROOT%{_pkgconfigdir}
 
 %{__make} install \
@@ -298,10 +299,10 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
 	INSTALL_PREFIX=$RPM_BUILD_ROOT \
 	MANDIR=%{_mandir}
 
-install libcrypto.a libssl.a $RPM_BUILD_ROOT%{_libdir}
-install lib*.so.*.* $RPM_BUILD_ROOT%{_libdir}
-ln -sf libcrypto.so.*.* $RPM_BUILD_ROOT%{_libdir}/libcrypto.so
-ln -sf libssl.so.*.* $RPM_BUILD_ROOT%{_libdir}/libssl.so
+mv -f $RPM_BUILD_ROOT/%{_libdir}/engines/* $RPM_BUILD_ROOT/%{_lib}/engines
+mv -f $RPM_BUILD_ROOT/%{_libdir}/lib*.so.*.* $RPM_BUILD_ROOT/%{_lib}
+ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libcrypto.*.*) $RPM_BUILD_ROOT%{_libdir}/libcrypto.so
+ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libssl.*.*) $RPM_BUILD_ROOT%{_libdir}/libssl.so
 
 %if "%{pld_release}" == "ti"
 ln -sf %{_var}/lib/%{name}/%{name}.cnf \
@@ -356,10 +357,10 @@ fi
 %defattr(644,root,root,755)
 %doc CHANGES CHANGES.SSLeay LICENSE NEWS README doc/*.txt
 %doc doc/openssl_button.gif doc/openssl_button.html
-%attr(755,root,root) %{_libdir}/libcrypto.so.*.*.*
-%attr(755,root,root) %{_libdir}/libssl.so.*.*.*
-%dir %{_libdir}/engines
-%attr(755,root,root) %{_libdir}/engines/*.so
+%attr(755,root,root) /%{_lib}/libcrypto.so.*.*.*
+%attr(755,root,root) /%{_lib}/libssl.so.*.*.*
+%dir /%{_lib}/engines
+%attr(755,root,root) /%{_lib}/engines/*.so
 %if "%{pld_release}" == "ti"
 %dir %{_var}/lib/%{name}
 %dir %{_var}/lib/%{name}/certs
