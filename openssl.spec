@@ -15,7 +15,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	0.9.8m
-Release:	1
+Release:	2
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -102,6 +102,7 @@ Summary:	OpenSSL command line tool and utilities
 Summary(pl.UTF-8):	Zestaw narzędzi i skryptów
 Group:		Applications/Communications
 Requires:	%{name} = %{version}-%{release}
+Requires:	which
 
 %description tools
 The OpenSSL Toolkit cmdline tool openssl and utility scripts.
