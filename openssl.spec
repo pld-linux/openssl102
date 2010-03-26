@@ -3,7 +3,7 @@
 %bcond_without	tests	# don't perform "make tests"
 %bcond_with	purify	# Compile openssl with \-DPURIFY, useful when one wants to
 			# use valgrind debugger against openssl-linked programs
-#
+
 %include	/usr/lib/rpm/macros.perl
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de.UTF-8):	Secure Sockets Layer (SSL)-Kommunikationslibrary
@@ -14,12 +14,12 @@ Summary(pt_BR.UTF-8):	Uma biblioteca C que fornece vários algoritmos e protocol
 Summary(ru.UTF-8):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
-Version:	0.9.8m
-Release:	2
+Version:	0.9.8n
+Release:	1
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	898bf125370926d5f692a2201124f8ec
+# Source0-md5:	076d8efc3ed93646bd01f04e23c07066
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
@@ -38,12 +38,12 @@ BuildRequires:	perl-devel >= 1:5.6.1
 BuildRequires:	rpm-perlprov >= 4.1-13
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	sed >= 4.0
+Requires:	ca-certificates >= 20080809-4
+Requires:	rpm-whiteout >= 1.7
 Obsoletes:	SSLeay
 Obsoletes:	SSLeay-devel
 Obsoletes:	SSLeay-perl
 Obsoletes:	libopenssl0
-Requires:	ca-certificates >= 20080809-4
-Requires:	rpm-whiteout >= 1.7
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -314,9 +314,9 @@ rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc
 # not installed as individual utilities (see openssl dgst instead)
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/{md2,md4,md5,mdc2,ripemd160,sha,sha1}.1
 
-install %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
-install %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
-install %{SOURCE4} $RPM_BUILD_ROOT%{_bindir}/c_rehash.sh
+cp -a %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
+install -p %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
+install -p %{SOURCE4} $RPM_BUILD_ROOT%{_bindir}/c_rehash.sh
 
 %clean
 rm -rf $RPM_BUILD_ROOT
