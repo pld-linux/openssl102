@@ -1,4 +1,6 @@
 #
+# TODO: consider dropping last optflags.patch hunk and return to SOMAJOR (.so.1) sonames
+#
 # Conditional build:
 %bcond_without	tests	# don't perform "make tests"
 %bcond_with	purify	# Compile openssl with \-DPURIFY, useful when one wants to
@@ -30,8 +32,7 @@ Patch3:		%{name}-include.patch
 Patch4:		%{name}-man-namespace.patch
 Patch5:		%{name}-asflag.patch
 Patch6:		%{name}-ca-certificates.patch
-Patch7:		%{name}-fips_install.patch
-Patch8:		%{name}-ldflags.patch
+Patch7:		%{name}-ldflags.patch
 URL:		http://www.openssl.org/
 BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.6.1
@@ -193,20 +194,19 @@ RC4, RSA и SSL. Включает статические библиотеки д
 
 %prep
 %setup -q
-#%patch0 -p1
-#%patch1 -p1
+%patch0 -p1
+%patch1 -p1
 %patch2 -p1
 %patch3 -p1
-#%patch4 -p1
-#%patch5 -p1
+%patch4 -p1
+%patch5 -p1
 %patch6 -p1
-#%patch7 -p1
-#%patch8 -p1
+%patch7 -p1
 
 %{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
 	`grep -l -r "%{_prefix}/local/bin/perl" *`
 
-sed -i -e 's|$prefix/lib/engines|/%{_lib}/engines|g' Configure
+sed -i -e 's|\$prefix/\$libdir/engines|/%{_lib}/engines|g' Configure
 
 %build
 touch Makefile.*
@@ -293,8 +293,8 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
 	INSTALL_PREFIX=$RPM_BUILD_ROOT \
 	MANDIR=%{_mandir}
 
-mv -f $RPM_BUILD_ROOT/%{_libdir}/engines/* $RPM_BUILD_ROOT/%{_lib}/engines
-mv -f $RPM_BUILD_ROOT/%{_libdir}/lib*.so.*.* $RPM_BUILD_ROOT/%{_lib}
+mv -f $RPM_BUILD_ROOT%{_libdir}/engines/* $RPM_BUILD_ROOT/%{_lib}/engines
+mv -f $RPM_BUILD_ROOT%{_libdir}/lib*.so.*.* $RPM_BUILD_ROOT/%{_lib}
 ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libcrypto.*.*) $RPM_BUILD_ROOT%{_libdir}/libcrypto.so
 ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libssl.*.*) $RPM_BUILD_ROOT%{_libdir}/libssl.so
 
@@ -388,8 +388,8 @@ fi
 %else
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/openssl.cnf
 %endif
-%attr(755,root,root) %{_bindir}/%{name}
 %attr(755,root,root) %{_bindir}/c_rehash.sh
+%attr(755,root,root) %{_bindir}/openssl
 %attr(754,root,root) %{_bindir}/ssl-certificate
 
 %dir %{_libdir}/%{name}
@@ -417,6 +417,7 @@ fi
 %{_mandir}/man1/openssl_*pkey*.1*
 %{_mandir}/man1/openssl_errstr.1*
 %{_mandir}/man1/openssl_gendsa.1*
+%{_mandir}/man1/openssl_genpkey.1*
 %{_mandir}/man1/openssl_genrsa.1*
 %{_mandir}/man1/openssl_nseq.1*
 %{_mandir}/man1/openssl_ocsp.1*
@@ -424,6 +425,9 @@ fi
 %{_mandir}/man1/openssl_pkcs12.1*
 %{_mandir}/man1/openssl_pkcs7.1*
 %{_mandir}/man1/openssl_pkcs8.1*
+%{_mandir}/man1/openssl_pkey.1*
+%{_mandir}/man1/openssl_pkeyparam.1*
+%{_mandir}/man1/openssl_pkeyutl.1*
 %{_mandir}/man1/openssl_rand.1*
 %{_mandir}/man1/openssl_req.1*
 %{_mandir}/man1/openssl_rsa.1*
