@@ -264,7 +264,7 @@ OPTFLAGS="%{rpmcflags} %{?with_purify:-DPURIFY}" \
 
 %{__make} -j1 all rehash %{?with_tests:tests} \
 	CC="%{__cc}" \
-	ASFLAG='$(CFLAG) -Wa,--noexecstack' \
+	ASFLAG='$(CFLAG) -c -Wa,--noexecstack' \
 	INSTALLTOP=%{_prefix}
 
 # Rename POD sources of man pages. "openssl_" prefix is added to each
