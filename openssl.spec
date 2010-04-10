@@ -318,6 +318,15 @@ cp -a %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
 install -p %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
 install -p %{SOURCE4} $RPM_BUILD_ROOT%{_bindir}/c_rehash.sh
 
+for man in $RPM_BUILD_ROOT%{_mandir}/man3/*.3; do
+	b=$(readlink "$man" || :)
+	[ -z "$b" ] && continue
+	# delete manual pages pointing to nowhere
+	[ ! -f "$RPM_BUILD_ROOT%{_mandir}/man3/$b" ] && rm "$man"
+	# delete manual pages pointing to openssl_ prefixed man page
+	echo "$b" | grep -q "^openssl_" && rm "$man"
+done
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -386,6 +395,7 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/c_info
 %attr(755,root,root) %{_libdir}/%{name}/c_issuer
 %attr(755,root,root) %{_libdir}/%{name}/c_name
+%attr(755,root,root) %{_libdir}/%{name}/tsget
 
 %{_mandir}/man1/openssl.1*
 %{_mandir}/man1/openssl_asn1parse.1*
