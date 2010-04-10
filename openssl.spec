@@ -15,7 +15,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	1.0.0
-Release:	0.1
+Release:	1
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -318,13 +318,15 @@ cp -a %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
 install -p %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
 install -p %{SOURCE4} $RPM_BUILD_ROOT%{_bindir}/c_rehash.sh
 
-for man in $RPM_BUILD_ROOT%{_mandir}/man3/*.3; do
-	b=$(readlink "$man" || :)
-	[ -z "$b" ] && continue
-	# delete manual pages pointing to nowhere
-	[ ! -f "$RPM_BUILD_ROOT%{_mandir}/man3/$b" ] && rm "$man"
-	# delete manual pages pointing to openssl_ prefixed man page
-	echo "$b" | grep -q "^openssl_" && rm "$man"
+for mtype in man1 man3 man5 man7; do
+	for man in $RPM_BUILD_ROOT%{_mandir}/${mtype}/*.[0-9]; do
+		b=$(readlink "$man" || :)
+		[ -z "$b" ] && continue
+		# delete manual pages pointing to nowhere
+		[ ! -f "$RPM_BUILD_ROOT%{_mandir}/${mtype}/$b" ] && rm "$man"
+		# delete manual pages pointing to openssl_ prefixed man page
+		echo "$b" | grep -q "^openssl_" && rm "$man"
+	done
 done
 
 %clean
@@ -401,6 +403,7 @@ fi
 %{_mandir}/man1/openssl_asn1parse.1*
 %{_mandir}/man1/openssl_ca.1*
 %{_mandir}/man1/openssl_ciphers.1*
+%{_mandir}/man1/openssl_cms.1*
 %{_mandir}/man1/openssl_crl.1*
 %{_mandir}/man1/openssl_crl2pkcs7.1*
 %{_mandir}/man1/openssl_dgst.1*
@@ -410,6 +413,7 @@ fi
 %{_mandir}/man1/openssl_ec.1*
 %{_mandir}/man1/openssl_ecparam.1*
 %{_mandir}/man1/openssl_enc.1*
+%{_mandir}/man1/openssl_*pkey*.1*
 %{_mandir}/man1/openssl_errstr.1*
 %{_mandir}/man1/openssl_gendsa.1*
 %{_mandir}/man1/openssl_genrsa.1*
@@ -430,6 +434,8 @@ fi
 %{_mandir}/man1/openssl_smime.1*
 %{_mandir}/man1/openssl_speed.1*
 %{_mandir}/man1/openssl_spkac.1*
+%{_mandir}/man1/openssl_ts.1*
+%{_mandir}/man1/openssl_tsget.1*
 %{_mandir}/man1/openssl_verify.1*
 %{_mandir}/man1/openssl_version.1*
 %{_mandir}/man1/openssl_x509.1*
