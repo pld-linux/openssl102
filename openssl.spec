@@ -265,7 +265,7 @@ OPTFLAGS="%{rpmcflags} %{?with_purify:-DPURIFY}" \
 
 %{__make} -j1 all rehash %{?with_tests:tests} \
 	CC="%{__cc}" \
-	ASFLAG='$(CFLAG) -c -Wa,--noexecstack' \
+	ASFLAG='$(CFLAG) -Wa,--noexecstack' \
 	INSTALLTOP=%{_prefix}
 
 # Rename POD sources of man pages. "openssl_" prefix is added to each
@@ -318,17 +318,6 @@ rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc
 cp -a %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
 install -p %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
 install -p %{SOURCE4} $RPM_BUILD_ROOT%{_bindir}/c_rehash.sh
-
-for mtype in man1 man3 man5 man7; do
-	for man in $RPM_BUILD_ROOT%{_mandir}/${mtype}/*.[0-9]; do
-		b=$(readlink "$man" || :)
-		[ -z "$b" ] && continue
-		# delete manual pages pointing to nowhere
-		[ ! -f "$RPM_BUILD_ROOT%{_mandir}/${mtype}/$b" ] && rm "$man"
-		# delete manual pages pointing to openssl_ prefixed man page
-		echo "$b" | grep -q "^openssl_" && rm "$man"
-	done
-done
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -414,7 +403,6 @@ fi
 %{_mandir}/man1/openssl_ec.1*
 %{_mandir}/man1/openssl_ecparam.1*
 %{_mandir}/man1/openssl_enc.1*
-%{_mandir}/man1/openssl_*pkey*.1*
 %{_mandir}/man1/openssl_errstr.1*
 %{_mandir}/man1/openssl_gendsa.1*
 %{_mandir}/man1/openssl_genpkey.1*
