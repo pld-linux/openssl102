@@ -131,14 +131,8 @@ hash_dir()
 
     cd ${1}
 
-    for FILE in *
+    ls -1 * 2>/dev/null | while read FILE
     do
-	# no files in directory at all, no point in continuing
-	if ! [ -f ${FILE} ]
-	then
-	    return 1
-	fi
-
         if echo ${FILE} | grep -q -E '^[[:xdigit:]]{8}\.r?[[:digit:]]+$' \
 	    	&& [ -h "${FILE}" ]
         then
@@ -146,14 +140,8 @@ hash_dir()
         fi
     done
 
-    for FILE in *.pem
+    ls -1 *.pem 2>/dev/null | while read FILE
     do
-	# no pem files so FILE gets set to the unexpanded *.pem
-	if ! [ -f ${FILE} ]
-	then
-	    break
-	fi
-
 	check_file ${FILE}
         local FILE_TYPE=${?}
 	local TYPE_STR=''
