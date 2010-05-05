@@ -31,7 +31,7 @@ check_file()
 
     # make IFS a newline so we can process grep output line by line
     local OLDIFS=${IFS}
-    IFS="\n"
+    IFS=$( printf "\n" )
 
     # XXX: could be more efficient to have two 'grep -m' but is -m portable?
     for LINE in $( grep '^-----BEGIN .*-----' ${1} )
