@@ -31,7 +31,7 @@ check_file()
 
     # make IFS a newline so we can process grep output line by line
     local OLDIFS=${IFS}
-    IFS=$( printf "\n" )
+    IFS="\n"
 
     # XXX: could be more efficient to have two 'grep -m' but is -m portable?
     for LINE in $( grep '^-----BEGIN .*-----' ${1} )
@@ -106,7 +106,7 @@ link_hash()
     do
 	if [ ${FINGERPRINT} = $( fingerprint ${LINKFILE} ${2} ) ]
 	then
-	    printf "WARNING: Skipping duplicate file ${1}\n" >&2
+	    echo "WARNING: Skipping duplicate file ${1}" >&2
 	    return 1
 	fi	
 
@@ -114,7 +114,7 @@ link_hash()
 	LINKFILE=${HASH}.${TAG}${SUFFIX}
     done
 
-    printf "${1} => ${LINKFILE}\n"
+    echo "${1} => ${LINKFILE}"
 
     # assume any system with a POSIX shell will either support symlinks or
     # do something to handle this gracefully
@@ -127,7 +127,7 @@ link_hash()
 # hash_dir create hash links in a given directory
 hash_dir()
 {
-    printf "Doing ${1}\n"
+    echo "Doing ${1}"
 
     cd ${1}
 
@@ -165,7 +165,7 @@ hash_dir()
         then
             TYPE_STR='crl'
         else
-            printf "WARNING: ${FILE} does not contain a certificate or CRL: skipping\n" >&2
+            echo "WARNING: ${FILE} does not contain a certificate or CRL: skipping" >&2
 	    continue
         fi
 
@@ -191,7 +191,7 @@ export PATH
 # confirm existance/executability of ssl command
 if ! [ -x $( which ${SSL_CMD} ) ]
 then
-    printf "${0}: rehashing skipped ('openssl' program not available)\n" >&2
+    echo "${0}: rehashing skipped ('openssl' program not available)" >&2
     exit 0
 fi
 
