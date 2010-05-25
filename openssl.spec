@@ -98,6 +98,28 @@ RC4, RSA и SSL.
 користування, що реалізують велику кількість криптографічних
 алгоритмів, включаючи DES, RC4, RSA та SSL.
 
+%package engines
+Summary:	OpenSSL optional crypto engines
+Group:		Libraries
+Requires:	%{name} = %{version}-%{release}
+
+%description engines
+With OpenSSL 0.9.6, a new component was added to support alternative
+cryptography implementations, most commonly for interfacing with external
+crypto devices (eg. accelerator cards). This component is called ENGINE.
+
+There are currently built-in ENGINE implementations for the following
+crypto devices:
+
+- CryptoSwift
+- Compaq Atalla
+- nCipher CHIL
+- Nuron
+- Broadcom uBSec
+
+In addition, dynamic binding to external ENGINE implementations is now
+provided by a special ENGINE called "dynamic". 
+
 %package tools
 Summary:	OpenSSL command line tool and utilities
 Summary(pl.UTF-8):	Zestaw narzędzi i skryptów
@@ -357,8 +379,6 @@ fi
 %doc doc/openssl_button.gif doc/openssl_button.html
 %attr(755,root,root) /%{_lib}/libcrypto.so.*.*.*
 %attr(755,root,root) /%{_lib}/libssl.so.*.*.*
-%dir /%{_lib}/engines
-%attr(755,root,root) /%{_lib}/engines/*.so
 %if "%{pld_release}" == "ti"
 %dir %{_var}/lib/%{name}
 %dir %{_var}/lib/%{name}/certs
@@ -372,6 +392,10 @@ fi
 %dir %{_sysconfdir}/%{name}/private
 %endif
 %dir %{_datadir}/ssl
+
+%files engines
+%dir /%{_lib}/engines
+%attr(755,root,root) /%{_lib}/engines/*.so
 
 %files tools
 %defattr(644,root,root,755)
