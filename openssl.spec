@@ -100,13 +100,15 @@ RC4, RSA и SSL.
 
 %package engines
 Summary:	OpenSSL optional crypto engines
+Summary(pl.UTF-8):	Opcjonalne silniki kryptograficzne dla OpenSSL-a
 Group:		Libraries
 Requires:	%{name} = %{version}-%{release}
 
 %description engines
 With OpenSSL 0.9.6, a new component was added to support alternative
-cryptography implementations, most commonly for interfacing with external
-crypto devices (eg. accelerator cards). This component is called ENGINE.
+cryptography implementations, most commonly for interfacing with
+external crypto devices (eg. accelerator cards). This component is
+called ENGINE.
 
 There are currently built-in ENGINE implementations for the following
 crypto devices:
@@ -119,6 +121,24 @@ crypto devices:
 
 In addition, dynamic binding to external ENGINE implementations is now
 provided by a special ENGINE called "dynamic". 
+
+%description engines -l pl.UTF-8
+Począwszy od OpenSSL-a 0.9.6 został dodany nowy komponent, mający
+wspierać alternatywne implementacje kryptografii, przeważnie
+współpracujące z zewnętrznymi urządzeniami kryptograficznymi (np.
+kartami akceleratorów). Komponent ten jest nazywany SILNIKIEM
+(ang. ENGINE).
+
+Obecnie istnieją wbudowane implementacje silników dla następujących
+urządzeń kryptograficznych:
+- CryptoSwift
+- Compaq Atalla
+- nCipher CHIL
+- Nuron
+- Broadcom uBSec
+
+Ponadto zapewnione jest dynamiczne wiązanie dla zewnętrznych
+implementacji silników poprzez specjalny silnik o nazwie "dynamic".
 
 %package tools
 Summary:	OpenSSL command line tool and utilities
