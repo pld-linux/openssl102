@@ -304,6 +304,9 @@ OPTFLAGS="%{rpmcflags} %{?with_purify:-DPURIFY}" \
 %ifarch sparc64
 	linux64-sparcv9
 %endif
+%ifarch armv4 armv5 armv5t armv5te armv5tel
+	linux-armv4
+%endif
 
 %{__make} -j1 all rehash %{?with_tests:tests} \
 	CC="%{__cc}" \
