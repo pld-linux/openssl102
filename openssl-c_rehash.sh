@@ -165,9 +165,9 @@ hash_dir()
 # choose the name of an ssl application
 if [ -n "${OPENSSL}" ]
 then
-    SSL_CMD=${OPENSSL}
+    SSL_CMD=$(which ${OPENSSL} 2>/dev/null)
 else
-    SSL_CMD=openssl
+    SSL_CMD=/usr/bin/openssl
     OPENSSL=${SSL_CMD}
     export OPENSSL
 fi
@@ -177,7 +177,7 @@ PATH=${PATH}:${DIR}/bin
 export PATH
 
 # confirm existance/executability of ssl command
-if ! [ -x $( which ${SSL_CMD} ) ]
+if ! [ -x ${SSL_CMD} ]
 then
     echo "${0}: rehashing skipped ('openssl' program not available)" >&2
     exit 0
