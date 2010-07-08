@@ -169,7 +169,7 @@ then
 else
     SSL_CMD=openssl
     OPENSSL=${SSL_CMD}
-    export ${OPENSSL}
+    export OPENSSL
 fi
 
 # fix paths
