@@ -17,7 +17,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	1.0.0d
-Release:	1
+Release:	2
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -263,10 +263,13 @@ OPTFLAGS="%{rpmcflags} %{rpmcppflags} %{?with_purify:-DPURIFY}" \
 	--openssldir=%{_sysconfdir}/%{name} \
 %endif
 	--libdir=%{_lib} \
-	shared threads \
+	shared \
+	threads \
+	zlib \
 	enable-tlsext \
 	enable-seed \
 	enable-rfc3779 \
+	enable-camelia \
 	enable-cms \
 	enable-idea \
 	enable-mdc2 \
