@@ -17,7 +17,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	1.0.0d
-Release:	2
+Release:	3
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -363,7 +363,7 @@ rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc
 # not installed as individual utilities (see openssl dgst instead)
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/{md2,md4,md5,mdc2,ripemd160,sha,sha1}.1
 
-cp -a %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
+cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
 install -p %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
 install -p %{SOURCE4} $RPM_BUILD_ROOT%{_bindir}/c_rehash.sh
 
@@ -441,7 +441,6 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/c_info
 %attr(755,root,root) %{_libdir}/%{name}/c_issuer
 %attr(755,root,root) %{_libdir}/%{name}/c_name
-%attr(755,root,root) %{_libdir}/%{name}/tsget
 
 %{_mandir}/man1/openssl.1*
 %{_mandir}/man1/openssl_asn1parse.1*
@@ -494,6 +493,7 @@ fi
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/c_rehash
 %attr(755,root,root) %{_libdir}/%{name}/CA.pl
+%attr(755,root,root) %{_libdir}/%{name}/tsget
 %{_mandir}/man1/openssl_CA.pl.1*
 
 %files devel
