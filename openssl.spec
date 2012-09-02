@@ -386,6 +386,10 @@ if [ -L /var/lib/openssl/openssl.cnf ] ; then
 fi
 %else
 %triggerpostun -- %{name} < 0.9.8i-2
+# don't do anything on --downgrade
+if [ $1 -le 1 ]; then
+	exit 0
+fi
 if [ -d /var/lib/openssl/certs ] ; then
 	mv /var/lib/openssl/certs/* %{_sysconfdir}/%{name}/certs 2>/dev/null || :
 fi
@@ -396,6 +400,8 @@ if [ -d /var/lib/openssl ] ; then
 	for f in /var/lib/openssl/* ; do
 		[ -f "$f" ] && mv "$f" %{_sysconfdir}/%{name} 2>/dev/null || :
 	done
+	rmdir /var/lib/openssl/* 2>/dev/null || :
+	rmdir /var/lib/openssl 2>/dev/null || :
 fi
 %endif
 
