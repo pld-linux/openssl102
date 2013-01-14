@@ -245,9 +245,6 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch6 -p1
 %patch7 -p1
 
-%{__perl} -pi -e 's#%{_prefix}/local/bin/perl#%{__perl}#g' \
-	`grep -l -r "%{_prefix}/local/bin/perl" *`
-
 sed -i -e 's|\$prefix/\$libdir/engines|/%{_lib}/engines|g' Configure
 
 %build
@@ -256,7 +253,8 @@ touch Makefile.*
 %{__perl} util/perlpath.pl %{__perl}
 
 OPTFLAGS="%{rpmcflags} %{rpmcppflags} %{?with_purify:-DPURIFY}" \
-./Configure \
+PERL="%{__perl}" \
+%{__perl} ./Configure \
 %if "%{pld_release}" == "ti"
 	--openssldir=%{_var}/lib/%{name} \
 %else
@@ -515,4 +513,5 @@ fi
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/lib*.a
+%{_libdir}/libcrypto.a
+%{_libdir}/libssl.a
