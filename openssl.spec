@@ -255,11 +255,7 @@ touch Makefile.*
 OPTFLAGS="%{rpmcflags} %{rpmcppflags} %{?with_purify:-DPURIFY}" \
 PERL="%{__perl}" \
 %{__perl} ./Configure \
-%if "%{pld_release}" == "ti"
-	--openssldir=%{_var}/lib/%{name} \
-%else
 	--openssldir=%{_sysconfdir}/%{name} \
-%endif
 	--libdir=%{_lib} \
 	shared \
 	threads \
@@ -344,19 +340,8 @@ mv -f $RPM_BUILD_ROOT%{_libdir}/lib*.so.*.* $RPM_BUILD_ROOT/%{_lib}
 ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libcrypto.*.*) $RPM_BUILD_ROOT%{_libdir}/libcrypto.so
 ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libssl.*.*) $RPM_BUILD_ROOT%{_libdir}/libssl.so
 
-%if "%{pld_release}" == "ti"
-ln -sf %{_var}/lib/%{name}/%{name}.cnf \
-	$RPM_BUILD_ROOT%{_sysconfdir}/%{name}/openssl.cnf
-ln -sf %{_var}/lib/%{name}/certs \
-	$RPM_BUILD_ROOT%{_sysconfdir}/%{name}/certs
-ln -sf %{_var}/lib/%{name}/private \
-	$RPM_BUILD_ROOT%{_sysconfdir}/%{name}/private
-mv -f $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc/* $RPM_BUILD_ROOT%{_libdir}/%{name}
-rm -rf $RPM_BUILD_ROOT%{_var}/lib/%{name}/misc
-%else
 mv -f $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc/* $RPM_BUILD_ROOT%{_libdir}/%{name}
 rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc
-%endif
 
 # not installed as individual utilities (see openssl dgst instead)
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/{md2,md4,md5,mdc2,ripemd160,sha,sha1}.1
@@ -375,14 +360,6 @@ rm -rf $RPM_BUILD_ROOT
 # the hashing format has changed in 1.0.0
 [ ! -x %{_sbindir}/update-ca-certificates ] || %{_sbindir}/update-ca-certificates --fresh || :
 
-%if "%{pld_release}" == "ti"
-%triggerin -- %{name}-tools < 0.9.8i-2
-if [ -L /var/lib/openssl/openssl.cnf ] ; then
-	echo "Saving old configuration as /var/lib/openssl/openssl.cnf.rpmsave"
-	rm /var/lib/openssl/openssl.cnf
-	mv %{_sysconfdir}/%{name}/openssl.cnf /var/lib/openssl/openssl.cnf.rpmsave 2>/dev/null || :
-fi
-%else
 %triggerpostun -- %{name} < 0.9.8i-2
 # don't do anything on --downgrade
 if [ $1 -le 1 ]; then
@@ -401,7 +378,6 @@ if [ -d /var/lib/openssl ] ; then
 	rmdir /var/lib/openssl/* 2>/dev/null || :
 	rmdir /var/lib/openssl 2>/dev/null || :
 fi
-%endif
 
 %files
 %defattr(644,root,root,755)
@@ -409,18 +385,9 @@ fi
 %doc doc/openssl_button.gif doc/openssl_button.html
 %attr(755,root,root) /%{_lib}/libcrypto.so.*.*.*
 %attr(755,root,root) /%{_lib}/libssl.so.*.*.*
-%if "%{pld_release}" == "ti"
-%dir %{_var}/lib/%{name}
-%dir %{_var}/lib/%{name}/certs
-%dir %{_var}/lib/%{name}/private
-%dir %{_sysconfdir}/%{name}
-%attr(755,root,root) %{_sysconfdir}/%{name}/certs
-%attr(755,root,root) %{_sysconfdir}/%{name}/private
-%else
 %dir %{_sysconfdir}/%{name}
 %dir %{_sysconfdir}/%{name}/certs
 %dir %{_sysconfdir}/%{name}/private
-%endif
 %dir %{_datadir}/ssl
 
 %files engines
@@ -429,12 +396,7 @@ fi
 
 %files tools
 %defattr(644,root,root,755)
-%if "%{pld_release}" == "ti"
-%{_sysconfdir}/%{name}/openssl.cnf
-%config(noreplace) %verify(not md5 mtime size) %{_var}/lib/%{name}/openssl.cnf
-%else
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/openssl.cnf
-%endif
 %attr(755,root,root) %{_bindir}/c_rehash.sh
 %attr(755,root,root) %{_bindir}/openssl
 %attr(754,root,root) %{_bindir}/ssl-certificate
