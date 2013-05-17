@@ -17,7 +17,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	1.0.1e
-Release:	1
+Release:	2
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -33,6 +33,16 @@ Patch4:		%{name}-man-namespace.patch
 Patch5:		%{name}-asflag.patch
 Patch6:		%{name}-ca-certificates.patch
 Patch7:		%{name}-ldflags.patch
+
+# from debian
+Patch10:	aesni-mac.patch
+Patch11:	cpuid.patch
+Patch12:	default_bits.patch
+Patch13:	dtls_version.patch
+Patch14:	get_certificate.patch
+Patch15:	pic.patch
+Patch16:	stddef.patch
+
 URL:		http://www.openssl.org/
 BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.6.1
@@ -244,6 +254,14 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
+%patch14 -p1
+%patch15 -p1
+%patch16 -p1
 
 sed -i -e 's|\$prefix/\$libdir/engines|/%{_lib}/engines|g' Configure
 
