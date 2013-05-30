@@ -17,7 +17,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	1.0.1e
-Release:	2
+Release:	3
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -55,6 +55,9 @@ Obsoletes:	SSLeay
 Obsoletes:	SSLeay-devel
 Obsoletes:	SSLeay-perl
 Obsoletes:	libopenssl0
+Conflicts:	neon < 0.29.6-8
+Conflicts:	openssh-clients < 2:6.2p2-3
+Conflicts:	openssh-server < 2:6.2p2-3
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -130,14 +133,14 @@ crypto devices:
 - Broadcom uBSec
 
 In addition, dynamic binding to external ENGINE implementations is now
-provided by a special ENGINE called "dynamic". 
+provided by a special ENGINE called "dynamic".
 
 %description engines -l pl.UTF-8
 Począwszy od OpenSSL-a 0.9.6 został dodany nowy komponent, mający
 wspierać alternatywne implementacje kryptografii, przeważnie
 współpracujące z zewnętrznymi urządzeniami kryptograficznymi (np.
-kartami akceleratorów). Komponent ten jest nazywany SILNIKIEM
-(ang. ENGINE).
+kartami akceleratorów). Komponent ten jest nazywany SILNIKIEM (ang.
+ENGINE).
 
 Obecnie istnieją wbudowane implementacje silników dla następujących
 urządzeń kryptograficznych:
@@ -409,6 +412,7 @@ fi
 %dir %{_datadir}/ssl
 
 %files engines
+%defattr(644,root,root,755)
 %dir /%{_lib}/engines
 %attr(755,root,root) /%{_lib}/engines/*.so
 
