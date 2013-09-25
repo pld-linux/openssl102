@@ -17,7 +17,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	1.0.1e
-Release:	3
+Release:	4
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -408,7 +408,7 @@ fi
 %attr(755,root,root) /%{_lib}/libssl.so.*.*.*
 %dir %{_sysconfdir}/%{name}
 %dir %{_sysconfdir}/%{name}/certs
-%dir %{_sysconfdir}/%{name}/private
+%dir %attr(700,root,root) %{_sysconfdir}/%{name}/private
 %dir %{_datadir}/ssl
 
 %files engines
