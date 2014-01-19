@@ -16,12 +16,12 @@ Summary(pt_BR.UTF-8):	Uma biblioteca C que fornece vários algoritmos e protocol
 Summary(ru.UTF-8):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
-Version:	1.0.1e
-Release:	3
+Version:	1.0.1f
+Release:	1
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	66bf6f10f060d561929de96f9dfe5b8c
+# Source0-md5:	f26b09c028a0541cab33da697d522b25
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
@@ -33,15 +33,13 @@ Patch4:		%{name}-man-namespace.patch
 Patch5:		%{name}-asflag.patch
 Patch6:		%{name}-ca-certificates.patch
 Patch7:		%{name}-ldflags.patch
+Patch8:		%{name}-find.patch
+Patch9:		%{name}-pod.patch
 
 # from debian
-Patch10:	aesni-mac.patch
-Patch11:	cpuid.patch
-Patch12:	default_bits.patch
-Patch13:	dtls_version.patch
-Patch14:	get_certificate.patch
-Patch15:	pic.patch
-Patch16:	stddef.patch
+Patch10:	default_bits.patch
+Patch11:	pic.patch
+Patch12:	stddef.patch
 
 URL:		http://www.openssl.org/
 BuildRequires:	bc
@@ -257,14 +255,12 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch5 -p1
 %patch6 -p1
 %patch7 -p1
+%patch8 -p1
+%patch9 -p1
 
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
-%patch13 -p1
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
 
 sed -i -e 's|\$prefix/\$libdir/engines|/%{_lib}/engines|g' Configure
 
