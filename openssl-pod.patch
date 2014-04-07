@@ -414,18 +414,6 @@ diff -urN openssl-1.0.1f.org/doc/ssl/SSL_set_session.pod openssl-1.0.1f/doc/ssl/
  
  The operation succeeded.
  
-diff -urN openssl-1.0.1f.org/doc/ssl/SSL_set_shutdown.pod openssl-1.0.1f/doc/ssl/SSL_set_shutdown.pod
---- openssl-1.0.1f.org/doc/ssl/SSL_set_shutdown.pod	2014-01-06 14:47:42.000000000 +0100
-+++ openssl-1.0.1f/doc/ssl/SSL_set_shutdown.pod	2014-01-19 01:10:11.469309522 +0100
-@@ -24,7 +24,7 @@
- 
- =over 4
- 
--=item 0
-+=item C<0>
- 
- No shutdown setting, yet.
- 
 diff -urN openssl-1.0.1f.org/doc/ssl/SSL_shutdown.pod openssl-1.0.1f/doc/ssl/SSL_shutdown.pod
 --- openssl-1.0.1f.org/doc/ssl/SSL_shutdown.pod	2014-01-06 14:47:42.000000000 +0100
 +++ openssl-1.0.1f/doc/ssl/SSL_shutdown.pod	2014-01-19 01:10:11.469309522 +0100
