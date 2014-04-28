@@ -41,6 +41,9 @@ Patch10:	default_bits.patch
 Patch11:	pic.patch
 Patch12:	stddef.patch
 
+# from upstream
+Patch13:	%{name}-fix_use_after_free.patch
+
 URL:		http://www.openssl.org/
 BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.6.1
@@ -261,6 +264,8 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+
+%patch13 -p1
 
 sed -i -e 's|\$prefix/\$libdir/engines|/%{_lib}/engines|g' Configure
 
