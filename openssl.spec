@@ -16,12 +16,12 @@ Summary(pt_BR.UTF-8):	Uma biblioteca C que fornece vários algoritmos e protocol
 Summary(ru.UTF-8):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
-Version:	1.0.1g
-Release:	2
+Version:	1.0.1h
+Release:	1
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	de62b43dfcd858e66a74bee1c834e959
+# Source0-md5:	8d6d684a9430d5cc98a62a5d8fbda8cf
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
@@ -34,15 +34,11 @@ Patch5:		%{name}-asflag.patch
 Patch6:		%{name}-ca-certificates.patch
 Patch7:		%{name}-ldflags.patch
 Patch8:		%{name}-find.patch
-Patch9:		%{name}-pod.patch
 
 # from debian
 Patch10:	default_bits.patch
 Patch11:	pic.patch
 Patch12:	stddef.patch
-
-# from upstream
-Patch13:	%{name}-fix_use_after_free.patch
 
 URL:		http://www.openssl.org/
 BuildRequires:	bc
@@ -259,13 +255,10 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
 
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
-
-%patch13 -p1
 
 sed -i -e 's|\$prefix/\$libdir/engines|/%{_lib}/engines|g' Configure
 
