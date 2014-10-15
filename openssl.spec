@@ -16,12 +16,12 @@ Summary(pt_BR.UTF-8):	Uma biblioteca C que fornece vários algoritmos e protocol
 Summary(ru.UTF-8):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
-Version:	1.0.1i
-Release:	2
+Version:	1.0.1j
+Release:	1
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	c8dc151a671b9b92ff3e4c118b174972
+# Source0-md5:	f7175c9cd3c39bb1907ac8bba9df8ed3
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
@@ -34,7 +34,6 @@ Patch5:		%{name}-asflag.patch
 Patch6:		%{name}-ca-certificates.patch
 Patch7:		%{name}-ldflags.patch
 Patch8:		%{name}-find.patch
-Patch9:		%{name}-CVE-2014-3566.patch
 # from debian
 Patch10:	default_bits.patch
 Patch11:	pic.patch
@@ -254,7 +253,6 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
