@@ -17,7 +17,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	1.0.1i
-Release:	1
+Release:	2
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -34,6 +34,7 @@ Patch5:		%{name}-asflag.patch
 Patch6:		%{name}-ca-certificates.patch
 Patch7:		%{name}-ldflags.patch
 Patch8:		%{name}-find.patch
+Patch9:		%{name}-CVE-2014-3566.patch
 # from debian
 Patch10:	default_bits.patch
 Patch11:	pic.patch
@@ -253,6 +254,7 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
