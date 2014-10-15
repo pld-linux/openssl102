@@ -1,5 +1,12 @@
 # TODO
 # - consider dropping last optflags.patch hunk and return to SOMAJOR (.so.1) sonames
+# - unpackaged:
+#%{_mandir}/man1/dss1.1
+#%{_mandir}/man1/openssl_c_rehash.1*
+#%{_mandir}/man1/sha224.1
+#%{_mandir}/man1/sha256.1
+#%{_mandir}/man1/sha384.1
+#%{_mandir}/man1/sha512.1
 #
 # Conditional build:
 %bcond_without	tests	# don't perform "make tests"
