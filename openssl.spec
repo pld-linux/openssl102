@@ -1,12 +1,5 @@
 # TODO
 # - consider dropping last optflags.patch hunk and return to SOMAJOR (.so.1) sonames
-# - unpackaged:
-#%{_mandir}/man1/dss1.1
-#%{_mandir}/man1/openssl_c_rehash.1*
-#%{_mandir}/man1/sha224.1
-#%{_mandir}/man1/sha256.1
-#%{_mandir}/man1/sha384.1
-#%{_mandir}/man1/sha512.1
 #
 # Conditional build:
 %bcond_without	tests	# don't perform "make tests"
@@ -363,7 +356,7 @@ mv -f $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc/* $RPM_BUILD_ROOT%{_libdir}/%{n
 rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc
 
 # not installed as individual utilities (see openssl dgst instead)
-%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/{md2,md4,md5,mdc2,ripemd160,sha,sha1}.1
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/{dss1,md2,md4,md5,mdc2,ripemd160,sha,sha1,sha224,sha256,sha384,sha512}.1
 
 cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
 install -p %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
@@ -481,6 +474,7 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/CA.pl
 %attr(755,root,root) %{_libdir}/%{name}/tsget
 %{_mandir}/man1/openssl_CA.pl.1*
+%{_mandir}/man1/openssl_c_rehash.1*
 
 %files devel
 %defattr(644,root,root,755)
