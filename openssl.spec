@@ -17,7 +17,7 @@ Summary(ru.UTF-8):	Библиотеки и утилиты для соедине�
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
 Version:	1.0.1j
-Release:	1
+Release:	2
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -271,16 +271,21 @@ PERL="%{__perl}" \
 	--libdir=%{_lib} \
 	shared \
 	threads \
-	zlib \
-	enable-tlsext \
-	enable-seed \
-	enable-rfc3779 \
+	no-ssl2 \
+	no-ssl3 \
+	no-zlib \
 	enable-camelia \
 	enable-cms \
 	enable-idea \
-	enable-mdc2 \
 	enable-md2 \
+	enable-mdc2 \
 	enable-rc5 \
+	enable-rfc3779 \
+	enable-seed \
+	enable-tlsext \
+%ifarch %{x8664}
+	enable-ec_nistp_64_gcc_128 \
+%endif
 %ifarch %{ix86}
 %ifarch i386
 	386 linux-elf
