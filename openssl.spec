@@ -3,9 +3,9 @@
 #
 # Conditional build:
 %bcond_without	tests	# don't perform "make tests"
-%bcond_with	zlib	# zlib: note - enables CVE-2012-4929 vulnerability
-%bcond_with	sslv2	# SSLv2: note - many flaws http://en.wikipedia.org/wiki/Transport_Layer_Security#SSL_2.0
-%bcond_with	sslv3	# SSLv3: note - enables  CVE-2014-3566 vulnerability
+%bcond_without	zlib	# zlib: note - enables CVE-2012-4929 vulnerability
+%bcond_without	sslv2	# SSLv2: note - many flaws http://en.wikipedia.org/wiki/Transport_Layer_Security#SSL_2.0
+%bcond_without	sslv3	# SSLv3: note - enables  CVE-2014-3566 vulnerability
 %bcond_with	purify	# Compile openssl with \-DPURIFY, useful when one wants to
 			# use valgrind debugger against openssl-linked programs
 
