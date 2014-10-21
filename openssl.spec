@@ -274,8 +274,8 @@ PERL="%{__perl}" \
 	--libdir=%{_lib} \
 	shared \
 	threads \
-	%{!?with_sslv2:no-}ssl2 \
-	%{!?with_sslv3:no-}ssl3 \
+	%{!?with_sslv2:no-ssl2} \
+	%{!?with_sslv3:no-ssl3} \
 	%{!?with_zlib:no-}zlib \
 	enable-camelia \
 	enable-cms \
