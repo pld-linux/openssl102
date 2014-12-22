@@ -41,6 +41,7 @@ Patch8:		%{name}-find.patch
 Patch10:	default_bits.patch
 Patch11:	pic.patch
 Patch12:	stddef.patch
+Patch13:	openssl_fix_for_x32.patch
 URL:		http://www.openssl.org/
 BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.6.1
@@ -259,6 +260,7 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
+%patch13 -p1
 
 sed -i -e 's|\$prefix/\$libdir/engines|/%{_lib}/engines|g' Configure
 
@@ -302,6 +304,9 @@ PERL="%{__perl}" \
 %endif
 %ifarch %{x8664}
 	linux-x86_64
+%endif
+%ifarch x32
+	linux-x32
 %endif
 %ifarch ia64
 	linux-ia64
