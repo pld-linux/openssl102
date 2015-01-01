@@ -37,11 +37,11 @@ Patch5:		%{name}-asflag.patch
 Patch6:		%{name}-ca-certificates.patch
 Patch7:		%{name}-ldflags.patch
 Patch8:		%{name}-find.patch
-# from debian
+Patch9:		gcc-E-asm.patch
 Patch10:	default_bits.patch
 Patch11:	pic.patch
 Patch12:	stddef.patch
-Patch13:	openssl_fix_for_x32.patch
+Patch13:	%{name}_fix_for_x32.patch
 URL:		http://www.openssl.org/
 BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.6.1
@@ -259,6 +259,7 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%patch9 -p1
 %patch10 -p1
 %patch11 -p1
 %patch12 -p1
