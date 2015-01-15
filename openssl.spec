@@ -19,12 +19,12 @@ Summary(pt_BR.UTF-8):	Uma biblioteca C que fornece vários algoritmos e protocol
 Summary(ru.UTF-8):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
-Version:	1.0.1k
+Version:	1.0.1l
 Release:	1
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	d4f002bd22a56881340105028842ae1f
+# Source0-md5:	cdb22925fc9bc97ccbf1e007661f2aa6
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
