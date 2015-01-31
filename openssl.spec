@@ -19,29 +19,26 @@ Summary(pt_BR.UTF-8):	Uma biblioteca C que fornece vários algoritmos e protocol
 Summary(ru.UTF-8):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
-Version:	1.0.1l
+Version:	1.0.2
 Release:	1
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	cdb22925fc9bc97ccbf1e007661f2aa6
+# Source0-md5:	38373013fc85c790aabf8837969c5eba
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
 Patch0:		%{name}-alpha-ccc.patch
 Patch1:		%{name}-optflags.patch
-Patch2:		%{name}-globalCA.diff
-Patch3:		%{name}-include.patch
-Patch4:		%{name}-man-namespace.patch
-Patch5:		%{name}-asflag.patch
-Patch6:		%{name}-ca-certificates.patch
-Patch7:		%{name}-ldflags.patch
-Patch8:		%{name}-find.patch
-Patch9:		gcc-E-asm.patch
-Patch10:	default_bits.patch
-Patch11:	pic.patch
-Patch12:	stddef.patch
-Patch13:	%{name}_fix_for_x32.patch
+Patch2:		%{name}-include.patch
+Patch3:		%{name}-man-namespace.patch
+Patch4:		%{name}-asflag.patch
+Patch5:		%{name}-ca-certificates.patch
+Patch6:		%{name}-ldflags.patch
+Patch7:		%{name}-find.patch
+Patch8:		pic.patch
+Patch9:		stddef.patch
+Patch10:	%{name}_fix_for_x32.patch
 URL:		http://www.openssl.org/
 BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.6.1
@@ -261,9 +258,6 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch8 -p1
 %patch9 -p1
 %patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
 
 sed -i -e 's|\$prefix/\$libdir/engines|/%{_lib}/engines|g' Configure
 
