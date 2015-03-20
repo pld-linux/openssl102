@@ -37,7 +37,6 @@ Patch5:		%{name}-ca-certificates.patch
 Patch6:		%{name}-ldflags.patch
 Patch7:		%{name}-find.patch
 Patch8:		pic.patch
-Patch9:		stddef.patch
 Patch10:	%{name}_fix_for_x32.patch
 URL:		http://www.openssl.org/
 BuildRequires:	bc
@@ -256,7 +255,6 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
-%patch9 -p1
 %patch10 -p1
 
 sed -i -e 's|\$prefix/\$libdir/engines|/%{_lib}/engines|g' Configure
