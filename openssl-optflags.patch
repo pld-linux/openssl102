@@ -1,4 +1,8 @@
-diff -ruN openssl-1.0.2a.orig/Configure openssl-1.0.2a/Configure
+Remove -f/-m/-O flags which would conflict with RPM_OPT_FLAGS or cause code
+built on a i686/ev6/sparcv9 to not run on a i386/ev5/sparcv7 and so on.
+
+...add $ENV{OPTFLAGS} instead
+
 --- openssl-1.0.2a.orig/Configure	2015-03-19 14:30:36.000000000 +0100
 +++ openssl-1.0.2a/Configure	2015-03-20 14:52:48.785578415 +0100
 @@ -168,8 +168,8 @@
