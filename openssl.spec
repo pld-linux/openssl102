@@ -6,7 +6,7 @@
 %bcond_without	zlib	# zlib: note - enables CVE-2012-4929 vulnerability
 %bcond_without	sslv2	# SSLv2: note - many flaws http://en.wikipedia.org/wiki/Transport_Layer_Security#SSL_2.0
 %bcond_without	sslv3	# SSLv3: note - enables  CVE-2014-3566 vulnerability
-%bcond_with	purify	# Compile openssl with \-DPURIFY, useful when one wants to
+%bcond_with	purify	# Compile openssl with "-DPURIFY", useful when one wants to
 			# use valgrind debugger against openssl-linked programs
 
 %include	/usr/lib/rpm/macros.perl
@@ -19,6 +19,9 @@ Summary(pt_BR.UTF-8):	Uma biblioteca C que fornece vários algoritmos e protocol
 Summary(ru.UTF-8):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
 Name:		openssl
+# 1.0.2 will be LTS release
+# Version 1.0.2 will be supported until 2019-12-31.
+# https://www.openssl.org/about/releasestrat.html
 Version:	1.0.2d
 Release:	1
 License:	Apache-like
