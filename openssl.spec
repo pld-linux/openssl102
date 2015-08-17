@@ -23,7 +23,7 @@ Name:		openssl
 # Version 1.0.2 will be supported until 2019-12-31.
 # https://www.openssl.org/about/releasestrat.html
 Version:	1.0.2d
-Release:	1
+Release:	2
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
@@ -53,7 +53,9 @@ Obsoletes:	SSLeay
 Obsoletes:	SSLeay-devel
 Obsoletes:	SSLeay-perl
 Obsoletes:	libopenssl0
-%if "%{pld_release}" != "ac"
+%if "%{pld_release}" == "ac"
+Conflicts:	openssh-server < 2:5.8p1-9
+%else
 Conflicts:	neon < 0.29.6-8
 Conflicts:	openssh-clients < 2:6.2p2-3
 Conflicts:	openssh-server < 2:6.2p2-3
