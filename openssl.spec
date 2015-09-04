@@ -54,6 +54,7 @@ Obsoletes:	SSLeay-devel
 Obsoletes:	SSLeay-perl
 Obsoletes:	libopenssl0
 %if "%{pld_release}" == "ac"
+Conflicts:	neon < 0.26.3-3
 Conflicts:	ntpd < 4.2.4p8-10
 Conflicts:	openssh-clients < 2:5.8p1-9
 Conflicts:	openssh-server < 2:5.8p1-9
