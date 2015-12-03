@@ -272,6 +272,9 @@ sed -i -e 's|\$prefix/\$libdir/engines|/%{_lib}/engines|g' Configure
 # https://github.com/openssl/openssl/issues/491
 ln -s . test/openssl-1.0.2e
 
+# also pod2man missing
+# https://github.com/openssl/openssl/issues/490
+
 %build
 touch Makefile.*
 
