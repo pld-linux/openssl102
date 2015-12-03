@@ -268,10 +268,6 @@ RC4, RSA и SSL. Включает статические библиотеки д
 
 sed -i -e 's|\$prefix/\$libdir/engines|/%{_lib}/engines|g' Configure
 
-# fix packaging error
-# https://github.com/openssl/openssl/issues/491
-ln -s . test/openssl-1.0.2e
-
 %build
 touch Makefile.*
 
