@@ -1,5 +1,6 @@
 # TODO
 # - consider dropping last optflags.patch hunk and return to SOMAJOR (.so.1) sonames
+# - find a way to simplify (drop) openssl-optflags.patch, it's pain to update here in pld
 #
 # Conditional build:
 %bcond_without	tests	# don't perform "make tests"
@@ -22,12 +23,12 @@ Name:		openssl
 # 1.0.2 will be LTS release
 # Version 1.0.2 will be supported until 2019-12-31.
 # https://www.openssl.org/about/releasestrat.html
-Version:	1.0.2d
-Release:	5
+Version:	1.0.2e
+Release:	1
 License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	38dd619b2e77cbac69b99f52a053d25a
+# Source0-md5:	2218c1a6f807f7206c11eb3ee3a5ec80
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
