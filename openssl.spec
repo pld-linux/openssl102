@@ -421,7 +421,7 @@ fi
 %files
 %defattr(644,root,root,755)
 %doc CHANGES CHANGES.SSLeay LICENSE NEWS README doc/*.txt
-%doc doc/openssl_button.gif doc/openssl_button.html
+#%doc doc/openssl_button.gif doc/openssl_button.html
 %attr(755,root,root) /%{_lib}/libcrypto.so.*.*.*
 %attr(755,root,root) /%{_lib}/libssl.so.*.*.*
 %dir %{_sysconfdir}/%{name}
