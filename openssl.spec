@@ -29,6 +29,8 @@ License:	Apache-like
 Group:		Libraries
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
 # Source0-md5:	2218c1a6f807f7206c11eb3ee3a5ec80
+Source1:	https://raw.githubusercontent.com/openssl/openssl/OpenSSL_1_0_2-stable/util/pod2mantest
+# Source1-md5:	0811d285202cebe91003771475802b4f
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
@@ -274,6 +276,7 @@ ln -s . test/openssl-1.0.2e
 
 # also pod2man missing
 # https://github.com/openssl/openssl/issues/490
+install -p %{SOURCE1} util
 
 %build
 touch Makefile.*
