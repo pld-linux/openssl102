@@ -428,7 +428,7 @@ fi
 %attr(755,root,root) /%{_lib}/libssl.so.*.*.*
 %dir %{_sysconfdir}/%{name}
 %dir %{_sysconfdir}/%{name}/certs
-%dir %{_sysconfdir}/%{name}/private
+%dir %attr(700,root,root) %{_sysconfdir}/%{name}/private
 %dir %{_datadir}/ssl
 
 %files engines
