@@ -9,6 +9,7 @@
 %bcond_without	sslv3	# SSLv3: note - enables  CVE-2014-3566 vulnerability
 %bcond_with	purify	# Compile openssl with "-DPURIFY", useful when one wants to
 			# use valgrind debugger against openssl-linked programs
+%bcond_with	snap	# use GitHub snapshot to build branch release
 
 %include	/usr/lib/rpm/macros.perl
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
@@ -23,12 +24,16 @@ Name:		openssl
 # 1.0.2 will be LTS release
 # Version 1.0.2 will be supported until 2019-12-31.
 # https://www.openssl.org/about/releasestrat.html
-Version:	1.0.2e
+Version:	1.0.2f
 Release:	1
 License:	Apache-like
 Group:		Libraries
+%if %{without snap}
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	5262bfa25b60ed9de9f28d5d52d77fc5
+# Source0-md5:	b3bf73f507172be9292ea2a8c28b659d
+%else
+Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_0_2-stable.tar.gz
+%endif
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
@@ -254,7 +259,12 @@ RC4, RSA и SSL. Включает статические библиотеки д
 бібліотеки для розробки програм з використанням SSL.
 
 %prep
+%if %{with snap}
+%setup -qcT -a1
+mv %{name}-OpenSSL_1_0_2-stable/* .
+%else
 %setup -q
+%endif
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -333,6 +343,9 @@ PERL="%{__perl}" \
 %ifarch armv4 armv5 armv5t armv5te armv5tel
 	linux-armv4
 %endif
+
+v=$(awk -F= '/^VERSION/{print $2}' Makefile)
+test "$v" = %{version}%{?with_snap:-dev}
 
 %{__make} -j1 all rehash %{?with_tests:tests} \
 	CC="%{__cc}" \
