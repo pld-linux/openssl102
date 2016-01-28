@@ -25,15 +25,15 @@ Name:		openssl
 # Version 1.0.2 will be supported until 2019-12-31.
 # https://www.openssl.org/about/releasestrat.html
 Version:	1.0.2f
-Release:	0.1
+Release:	1
 License:	Apache-like
 Group:		Libraries
 %if %{without snap}
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
+# Source0-md5:	b3bf73f507172be9292ea2a8c28b659d
 %else
 Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_0_2-stable.tar.gz
 %endif
-# Source0-md5:	5262bfa25b60ed9de9f28d5d52d77fc5
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
 Source4:	%{name}-c_rehash.sh
