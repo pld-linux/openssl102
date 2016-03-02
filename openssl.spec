@@ -25,7 +25,7 @@ Name:		openssl
 # Version 1.0.2 will be supported until 2019-12-31.
 # https://www.openssl.org/about/releasestrat.html
 Version:	1.0.2g
-Release:	2
+Release:	3
 License:	Apache-like
 Group:		Libraries
 %if %{without snap}
@@ -65,6 +65,7 @@ Conflicts:	ntpd < 4.2.4p8-10
 Conflicts:	openssh-clients < 2:5.8p1-9
 Conflicts:	openssh-server < 2:5.8p1-9
 %else
+Conflicts:	apache-mod_ssl < 2.2.31-4
 Conflicts:	neon < 0.29.6-8
 Conflicts:	openssh-clients < 2:6.2p2-3
 Conflicts:	openssh-server < 2:6.2p2-3
