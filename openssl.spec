@@ -25,7 +25,7 @@ Name:		openssl
 # Version 1.0.2 will be supported until 2019-12-31.
 # https://www.openssl.org/about/releasestrat.html
 Version:	1.0.2g
-Release:	1
+Release:	2
 License:	Apache-like
 Group:		Libraries
 %if %{without snap}
@@ -68,6 +68,7 @@ Conflicts:	openssh-server < 2:5.8p1-9
 Conflicts:	neon < 0.29.6-8
 Conflicts:	openssh-clients < 2:6.2p2-3
 Conflicts:	openssh-server < 2:6.2p2-3
+Conflicts:	ruby-modules < 1:2.0.0.648-2
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
