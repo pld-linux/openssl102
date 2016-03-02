@@ -24,15 +24,15 @@ Name:		openssl
 # 1.0.2 will be LTS release
 # Version 1.0.2 will be supported until 2019-12-31.
 # https://www.openssl.org/about/releasestrat.html
-Version:	1.0.2f
-Release:	2
+Version:	1.0.2g
+Release:	1
 License:	Apache-like
 Group:		Libraries
 %if %{without snap}
 Source0:	ftp://ftp.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	b3bf73f507172be9292ea2a8c28b659d
+# Source0-md5:	f3c710c045cdee5fd114feb69feba7aa
 %else
-Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_0_2-stable.tar.gz
+Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_0_2-stable/%{name}-%{version}-dev.tar.gz
 %endif
 Source2:	%{name}.1.pl
 Source3:	%{name}-ssl-certificate.sh
@@ -274,7 +274,9 @@ mv %{name}-OpenSSL_1_0_2-stable/* .
 %patch6 -p1
 %patch7 -p1
 %patch8 -p1
+%ifarch x32
 %patch10 -p1
+%endif
 
 sed -i -e 's|\$prefix/\$libdir/engines|/%{_lib}/engines|g' Configure
 
