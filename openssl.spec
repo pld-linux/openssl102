@@ -71,6 +71,7 @@ Conflicts:	openssh-clients < 2:6.2p2-3
 Conflicts:	openssh-server < 2:6.2p2-3
 Conflicts:	php53-common < 4:5.3.29-26
 Conflicts:	php55-common < 4:5.5.31-2
+Conflicts:	php56-common < 4:5.6.17-2
 Conflicts:	ruby-modules < 1:2.0.0.648-2
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
