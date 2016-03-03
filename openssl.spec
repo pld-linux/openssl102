@@ -69,6 +69,7 @@ Conflicts:	apache-mod_ssl < 1:2.2.31-4
 Conflicts:	neon < 0.29.6-8
 Conflicts:	openssh-clients < 2:6.2p2-3
 Conflicts:	openssh-server < 2:6.2p2-3
+Conflicts:	php53-common < 4:5.3.29-26
 Conflicts:	ruby-modules < 1:2.0.0.648-2
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
