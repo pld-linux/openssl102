@@ -71,6 +71,7 @@ Conflicts:	openssh-clients < 2:6.2p2-3
 Conflicts:	openssh-server < 2:6.2p2-3
 Conflicts:	php52-common < 4:5.2.17-20130717.17
 Conflicts:	php53-common < 4:5.3.29-27
+Conflicts:	php54-common < 4:5.4.45-5
 Conflicts:	php55-common < 4:5.5.32-2
 Conflicts:	php56-common < 4:5.6.18-3
 Conflicts:	ruby-modules < 1:2.0.0.648-2
