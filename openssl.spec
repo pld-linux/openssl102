@@ -66,6 +66,7 @@ Conflicts:	openssh-clients < 2:5.8p1-9
 Conflicts:	openssh-server < 2:5.8p1-9
 %else
 Conflicts:	apache-mod_ssl < 1:2.2.31-4
+Conflicts:	curl-libs < 7.47.1-2
 Conflicts:	neon < 0.29.6-8
 Conflicts:	openssh-clients < 2:6.2p2-3
 Conflicts:	openssh-server < 2:6.2p2-3
