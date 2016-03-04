@@ -65,6 +65,7 @@ Conflicts:	ntpd < 4.2.4p8-10
 Conflicts:	openssh-clients < 2:5.8p1-9
 Conflicts:	openssh-server < 2:5.8p1-9
 %else
+Conflicts:	QtNetwork < 4.8.7-8
 Conflicts:	apache-mod_ssl < 1:2.2.31-4
 Conflicts:	curl-libs < 7.47.1-2
 Conflicts:	neon < 0.29.6-8
