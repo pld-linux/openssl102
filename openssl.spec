@@ -25,7 +25,7 @@ Name:		openssl
 # Version 1.0.2 will be supported until 2019-12-31.
 # https://www.openssl.org/about/releasestrat.html
 Version:	1.0.2g
-Release:	5
+Release:	6
 License:	Apache-like
 Group:		Libraries
 %if %{without snap}
@@ -76,6 +76,7 @@ Conflicts:	php54-common < 4:5.4.45-5
 Conflicts:	php55-common < 4:5.5.32-2
 Conflicts:	php56-common < 4:5.6.18-3
 Conflicts:	python-modules < 1:2.7.10-8
+Conflicts:	python3-modules < 1:3.5.0-9
 Conflicts:	ruby-modules < 1:2.0.0.648-2
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
