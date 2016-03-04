@@ -75,6 +75,7 @@ Conflicts:	php53-common < 4:5.3.29-27
 Conflicts:	php54-common < 4:5.4.45-5
 Conflicts:	php55-common < 4:5.5.32-2
 Conflicts:	php56-common < 4:5.6.18-3
+Conflicts:	python-modules < 1:2.7.10-8
 Conflicts:	ruby-modules < 1:2.0.0.648-2
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
