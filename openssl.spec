@@ -1,6 +1,7 @@
 # TODO
 # - consider dropping last optflags.patch hunk and return to SOMAJOR (.so.1) sonames
 # - find a way to simplify (drop) openssl-optflags.patch, it's pain to update here in pld
+# - make with sslv2 bcond work (or drop) after 1.0.2g
 #
 # Conditional build:
 %bcond_without	tests	# don't perform "make tests"
