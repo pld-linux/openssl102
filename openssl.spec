@@ -25,7 +25,7 @@ Name:		openssl
 # Version 1.0.2 will be supported until 2019-12-31.
 # https://www.openssl.org/about/releasestrat.html
 Version:	1.0.2g
-Release:	6
+Release:	7
 License:	Apache-like
 Group:		Libraries
 %if %{without snap}
