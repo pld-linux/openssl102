@@ -25,7 +25,7 @@ Name:		openssl
 # Version 1.0.2 will be supported until 2019-12-31.
 # https://www.openssl.org/about/releasestrat.html
 Version:	1.0.2g
-Release:	7
+Release:	8
 License:	Apache-like
 Group:		Libraries
 %if %{without snap}
@@ -65,20 +65,9 @@ Conflicts:	ntpd < 4.2.4p8-10
 Conflicts:	openssh-clients < 2:5.8p1-9
 Conflicts:	openssh-server < 2:5.8p1-9
 %else
-Conflicts:	QtNetwork < 4.8.7-8
-Conflicts:	apache-mod_ssl < 1:2.2.31-4
-Conflicts:	curl-libs < 7.47.1-2
 Conflicts:	neon < 0.29.6-8
 Conflicts:	openssh-clients < 2:6.2p2-3
 Conflicts:	openssh-server < 2:6.2p2-3
-Conflicts:	php52-common < 4:5.2.17-20130717.17
-Conflicts:	php53-common < 4:5.3.29-27
-Conflicts:	php54-common < 4:5.4.45-5
-Conflicts:	php55-common < 4:5.5.32-2
-Conflicts:	php56-common < 4:5.6.18-3
-Conflicts:	python-modules < 1:2.7.10-8
-Conflicts:	python3-modules < 1:3.5.0-9
-Conflicts:	ruby-modules < 1:2.0.0.648-2
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
