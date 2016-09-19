@@ -1,15 +1,14 @@
-diff -ruN openssl-1.0.2.orig/Makefile.org openssl-1.0.2/Makefile.org
---- openssl-1.0.2.orig/Makefile.org	2015-01-22 15:58:06.000000000 +0100
-+++ openssl-1.0.2/Makefile.org	2015-01-27 16:04:30.564519915 +0100
-@@ -360,7 +360,7 @@
+--- openssl-1.0.2i/Makefile.org~	2016-09-19 18:24:29.000000000 +0300
++++ openssl-1.0.2i/Makefile.org	2016-09-19 18:24:58.456803714 +0300
+@@ -367,7 +367,7 @@
  	@ ( echo 'prefix=$(INSTALLTOP)'; \
  	    echo 'exec_prefix=$${prefix}'; \
  	    echo 'libdir=$${exec_prefix}/$(LIBDIR)'; \
 -	    echo 'includedir=$${prefix}/include'; \
 +	    echo 'includedir=$${prefix}/include/openssl'; \
+ 	    echo 'enginesdir=$${libdir}/engines'; \
  	    echo ''; \
  	    echo 'Name: OpenSSL-libcrypto'; \
- 	    echo 'Description: OpenSSL cryptography library'; \
 @@ -374,7 +374,7 @@
  	@ ( echo 'prefix=$(INSTALLTOP)'; \
  	    echo 'exec_prefix=$${prefix}'; \
