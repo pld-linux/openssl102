@@ -30,7 +30,7 @@ License:	Apache-like
 Group:		Libraries
 %if %{without snap}
 Source0:	https://www.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	9392e65072ce4b614c1392eefc1f23d0
+# Source0-md5:	678374e63f8df456a697d3e5e5a931fb
 %else
 Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_0_2-stable/%{name}-%{version}-dev.tar.gz
 %endif
