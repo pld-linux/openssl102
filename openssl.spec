@@ -50,9 +50,11 @@ Patch10:	%{name}_fix_for_x32.patch
 URL:		http://www.openssl.org/
 BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.6.1
+BuildRequires:	pkgconfig
 BuildRequires:	rpm-perlprov >= 4.1-13
 BuildRequires:	rpmbuild(macros) >= 1.213
 BuildRequires:	sed >= 4.0
+BuildRequires:	zlib-devel
 Requires:	ca-certificates >= 20120623-1.1
 Requires:	rpm-whiteout >= 1.7
 Obsoletes:	SSLeay
