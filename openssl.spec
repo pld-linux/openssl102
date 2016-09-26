@@ -24,13 +24,13 @@ Name:		openssl
 # 1.0.2 will be LTS release
 # Version 1.0.2 will be supported until 2019-12-31.
 # https://www.openssl.org/about/releasestrat.html
-Version:	1.0.2i
+Version:	1.0.2j
 Release:	1
 License:	Apache-like
 Group:		Libraries
 %if %{without snap}
 Source0:	https://www.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	678374e63f8df456a697d3e5e5a931fb
+# Source0-md5:	96322138f0b69e61b7212bc53d5e912b
 %else
 Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_0_2-stable/%{name}-%{version}-dev.tar.gz
 %endif
