@@ -365,7 +365,7 @@ for dir in doc/{apps,ssl,crypto}; do
 	%{__perl} -pi -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
 
 	for pod in !(openssl*).pod; do
-		mv -f $pod openssl_$pod;
+		%{__mv} $pod openssl_$pod;
 	done
 	cd ../..
 done
@@ -382,13 +382,13 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir}/%{name},%{_libdir}/%{name}} \
 	INSTALL_PREFIX=$RPM_BUILD_ROOT \
 	MANDIR=%{_mandir}
 
-mv -f $RPM_BUILD_ROOT%{_libdir}/engines/* $RPM_BUILD_ROOT/%{_lib}/engines
-mv -f $RPM_BUILD_ROOT%{_libdir}/lib*.so.*.* $RPM_BUILD_ROOT/%{_lib}
+%{__mv} $RPM_BUILD_ROOT%{_libdir}/engines/* $RPM_BUILD_ROOT/%{_lib}/engines
+%{__mv} $RPM_BUILD_ROOT%{_libdir}/lib*.so.*.* $RPM_BUILD_ROOT/%{_lib}
 ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libcrypto.*.*) $RPM_BUILD_ROOT%{_libdir}/libcrypto.so
 ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libssl.*.*) $RPM_BUILD_ROOT%{_libdir}/libssl.so
 
-mv -f $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc/* $RPM_BUILD_ROOT%{_libdir}/%{name}
-rm -rf $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc
+%{__mv} $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc/* $RPM_BUILD_ROOT%{_libdir}/%{name}
+%{__rm} -r $RPM_BUILD_ROOT%{_sysconfdir}/%{name}/misc
 
 # not installed as individual utilities (see openssl dgst instead)
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/{dss1,md2,md4,md5,mdc2,ripemd160,sha,sha1,sha224,sha256,sha384,sha512}.1
@@ -456,48 +456,48 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/c_name
 
 %{_mandir}/man1/openssl.1*
-%{_mandir}/man1/openssl_asn1parse.1*
-%{_mandir}/man1/openssl_ca.1*
-%{_mandir}/man1/openssl_ciphers.1*
-%{_mandir}/man1/openssl_cms.1*
-%{_mandir}/man1/openssl_crl.1*
-%{_mandir}/man1/openssl_crl2pkcs7.1*
-%{_mandir}/man1/openssl_dgst.1*
-%{_mandir}/man1/openssl_dhparam.1*
-%{_mandir}/man1/openssl_dsa.1*
-%{_mandir}/man1/openssl_dsaparam.1*
-%{_mandir}/man1/openssl_ec.1*
-%{_mandir}/man1/openssl_ecparam.1*
-%{_mandir}/man1/openssl_enc.1*
-%{_mandir}/man1/openssl_errstr.1*
-%{_mandir}/man1/openssl_gendsa.1*
-%{_mandir}/man1/openssl_genpkey.1*
-%{_mandir}/man1/openssl_genrsa.1*
-%{_mandir}/man1/openssl_nseq.1*
-%{_mandir}/man1/openssl_ocsp.1*
-%{_mandir}/man1/openssl_passwd.1*
-%{_mandir}/man1/openssl_pkcs12.1*
-%{_mandir}/man1/openssl_pkcs7.1*
-%{_mandir}/man1/openssl_pkcs8.1*
-%{_mandir}/man1/openssl_pkey.1*
-%{_mandir}/man1/openssl_pkeyparam.1*
-%{_mandir}/man1/openssl_pkeyutl.1*
-%{_mandir}/man1/openssl_rand.1*
-%{_mandir}/man1/openssl_req.1*
-%{_mandir}/man1/openssl_rsa.1*
-%{_mandir}/man1/openssl_rsautl.1*
-%{_mandir}/man1/openssl_s_client.1*
-%{_mandir}/man1/openssl_s_server.1*
-%{_mandir}/man1/openssl_s_time.1*
-%{_mandir}/man1/openssl_sess_id.1*
-%{_mandir}/man1/openssl_smime.1*
-%{_mandir}/man1/openssl_speed.1*
-%{_mandir}/man1/openssl_spkac.1*
-%{_mandir}/man1/openssl_ts.1*
-%{_mandir}/man1/openssl_tsget.1*
-%{_mandir}/man1/openssl_verify.1*
-%{_mandir}/man1/openssl_version.1*
-%{_mandir}/man1/openssl_x509.1*
+%{_mandir}/man1/openssl[-_]asn1parse.1*
+%{_mandir}/man1/openssl[-_]ca.1*
+%{_mandir}/man1/openssl[-_]ciphers.1*
+%{_mandir}/man1/openssl[-_]cms.1*
+%{_mandir}/man1/openssl[-_]crl.1*
+%{_mandir}/man1/openssl[-_]crl2pkcs7.1*
+%{_mandir}/man1/openssl[-_]dgst.1*
+%{_mandir}/man1/openssl[-_]dhparam.1*
+%{_mandir}/man1/openssl[-_]dsa.1*
+%{_mandir}/man1/openssl[-_]dsaparam.1*
+%{_mandir}/man1/openssl[-_]ec.1*
+%{_mandir}/man1/openssl[-_]ecparam.1*
+%{_mandir}/man1/openssl[-_]enc.1*
+%{_mandir}/man1/openssl[-_]errstr.1*
+%{_mandir}/man1/openssl[-_]gendsa.1*
+%{_mandir}/man1/openssl[-_]genpkey.1*
+%{_mandir}/man1/openssl[-_]genrsa.1*
+%{_mandir}/man1/openssl[-_]nseq.1*
+%{_mandir}/man1/openssl[-_]ocsp.1*
+%{_mandir}/man1/openssl[-_]passwd.1*
+%{_mandir}/man1/openssl[-_]pkcs12.1*
+%{_mandir}/man1/openssl[-_]pkcs7.1*
+%{_mandir}/man1/openssl[-_]pkcs8.1*
+%{_mandir}/man1/openssl[-_]pkey.1*
+%{_mandir}/man1/openssl[-_]pkeyparam.1*
+%{_mandir}/man1/openssl[-_]pkeyutl.1*
+%{_mandir}/man1/openssl[-_]rand.1*
+%{_mandir}/man1/openssl[-_]req.1*
+%{_mandir}/man1/openssl[-_]rsa.1*
+%{_mandir}/man1/openssl[-_]rsautl.1*
+%{_mandir}/man1/openssl[-_]s_client.1*
+%{_mandir}/man1/openssl[-_]s_server.1*
+%{_mandir}/man1/openssl[-_]s_time.1*
+%{_mandir}/man1/openssl[-_]sess_id.1*
+%{_mandir}/man1/openssl[-_]smime.1*
+%{_mandir}/man1/openssl[-_]speed.1*
+%{_mandir}/man1/openssl[-_]spkac.1*
+%{_mandir}/man1/openssl[-_]ts.1*
+%{_mandir}/man1/openssl[-_]tsget.1*
+%{_mandir}/man1/openssl[-_]verify.1*
+%{_mandir}/man1/openssl[-_]version.1*
+%{_mandir}/man1/openssl[-_]x509.1*
 %{_mandir}/man5/openssl_config.5*
 %{_mandir}/man5/openssl_x509v3_config.5*
 %lang(pl) %{_mandir}/pl/man1/openssl.1*
