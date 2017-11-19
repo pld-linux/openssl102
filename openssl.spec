@@ -357,15 +357,15 @@ test "$v" = %{version}%{?with_snap:-dev}
 	ASFLAG='$(CFLAG) -Wa,--noexecstack' \
 	INSTALLTOP=%{_prefix}
 
-# Rename POD sources of man pages. "openssl_" prefix is added to each
+# Rename POD sources of man pages. "openssl-" prefix is added to each
 # manpage to avoid potential conflicts with other packages.
 
 for dir in doc/{apps,ssl,crypto}; do
 	cd $dir || exit 1;
-	%{__perl} -pi -e 's/(\W)((?<!openssl_)\w+)(\(\d\))/$1openssl_$2$3/g; s/openssl_openssl/openssl/g;' *.pod;
+	%{__perl} -pi -e 's/(\W)((?<!openssl-)\w+)(\(\d\))/$1openssl-$2$3/g; s/openssl-openssl/openssl/g;' *.pod;
 
 	for pod in !(openssl*).pod; do
-		%{__mv} $pod openssl_$pod;
+		%{__mv} $pod openssl-$pod;
 	done
 	cd ../..
 done
@@ -456,50 +456,50 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/c_name
 
 %{_mandir}/man1/openssl.1*
-%{_mandir}/man1/openssl[-_]asn1parse.1*
-%{_mandir}/man1/openssl[-_]ca.1*
-%{_mandir}/man1/openssl[-_]ciphers.1*
-%{_mandir}/man1/openssl[-_]cms.1*
-%{_mandir}/man1/openssl[-_]crl.1*
-%{_mandir}/man1/openssl[-_]crl2pkcs7.1*
-%{_mandir}/man1/openssl[-_]dgst.1*
-%{_mandir}/man1/openssl[-_]dhparam.1*
-%{_mandir}/man1/openssl[-_]dsa.1*
-%{_mandir}/man1/openssl[-_]dsaparam.1*
-%{_mandir}/man1/openssl[-_]ec.1*
-%{_mandir}/man1/openssl[-_]ecparam.1*
-%{_mandir}/man1/openssl[-_]enc.1*
-%{_mandir}/man1/openssl[-_]errstr.1*
-%{_mandir}/man1/openssl[-_]gendsa.1*
-%{_mandir}/man1/openssl[-_]genpkey.1*
-%{_mandir}/man1/openssl[-_]genrsa.1*
-%{_mandir}/man1/openssl[-_]nseq.1*
-%{_mandir}/man1/openssl[-_]ocsp.1*
-%{_mandir}/man1/openssl[-_]passwd.1*
-%{_mandir}/man1/openssl[-_]pkcs12.1*
-%{_mandir}/man1/openssl[-_]pkcs7.1*
-%{_mandir}/man1/openssl[-_]pkcs8.1*
-%{_mandir}/man1/openssl[-_]pkey.1*
-%{_mandir}/man1/openssl[-_]pkeyparam.1*
-%{_mandir}/man1/openssl[-_]pkeyutl.1*
-%{_mandir}/man1/openssl[-_]rand.1*
-%{_mandir}/man1/openssl[-_]req.1*
-%{_mandir}/man1/openssl[-_]rsa.1*
-%{_mandir}/man1/openssl[-_]rsautl.1*
-%{_mandir}/man1/openssl[-_]s_client.1*
-%{_mandir}/man1/openssl[-_]s_server.1*
-%{_mandir}/man1/openssl[-_]s_time.1*
-%{_mandir}/man1/openssl[-_]sess_id.1*
-%{_mandir}/man1/openssl[-_]smime.1*
-%{_mandir}/man1/openssl[-_]speed.1*
-%{_mandir}/man1/openssl[-_]spkac.1*
-%{_mandir}/man1/openssl[-_]ts.1*
-%{_mandir}/man1/openssl[-_]tsget.1*
-%{_mandir}/man1/openssl[-_]verify.1*
-%{_mandir}/man1/openssl[-_]version.1*
-%{_mandir}/man1/openssl[-_]x509.1*
-%{_mandir}/man5/openssl_config.5*
-%{_mandir}/man5/openssl_x509v3_config.5*
+%{_mandir}/man1/openssl-asn1parse.1*
+%{_mandir}/man1/openssl-ca.1*
+%{_mandir}/man1/openssl-ciphers.1*
+%{_mandir}/man1/openssl-cms.1*
+%{_mandir}/man1/openssl-crl.1*
+%{_mandir}/man1/openssl-crl2pkcs7.1*
+%{_mandir}/man1/openssl-dgst.1*
+%{_mandir}/man1/openssl-dhparam.1*
+%{_mandir}/man1/openssl-dsa.1*
+%{_mandir}/man1/openssl-dsaparam.1*
+%{_mandir}/man1/openssl-ec.1*
+%{_mandir}/man1/openssl-ecparam.1*
+%{_mandir}/man1/openssl-enc.1*
+%{_mandir}/man1/openssl-errstr.1*
+%{_mandir}/man1/openssl-gendsa.1*
+%{_mandir}/man1/openssl-genpkey.1*
+%{_mandir}/man1/openssl-genrsa.1*
+%{_mandir}/man1/openssl-nseq.1*
+%{_mandir}/man1/openssl-ocsp.1*
+%{_mandir}/man1/openssl-passwd.1*
+%{_mandir}/man1/openssl-pkcs12.1*
+%{_mandir}/man1/openssl-pkcs7.1*
+%{_mandir}/man1/openssl-pkcs8.1*
+%{_mandir}/man1/openssl-pkey.1*
+%{_mandir}/man1/openssl-pkeyparam.1*
+%{_mandir}/man1/openssl-pkeyutl.1*
+%{_mandir}/man1/openssl-rand.1*
+%{_mandir}/man1/openssl-req.1*
+%{_mandir}/man1/openssl-rsa.1*
+%{_mandir}/man1/openssl-rsautl.1*
+%{_mandir}/man1/openssl-s_client.1*
+%{_mandir}/man1/openssl-s_server.1*
+%{_mandir}/man1/openssl-s_time.1*
+%{_mandir}/man1/openssl-sess_id.1*
+%{_mandir}/man1/openssl-smime.1*
+%{_mandir}/man1/openssl-speed.1*
+%{_mandir}/man1/openssl-spkac.1*
+%{_mandir}/man1/openssl-ts.1*
+%{_mandir}/man1/openssl-tsget.1*
+%{_mandir}/man1/openssl-verify.1*
+%{_mandir}/man1/openssl-version.1*
+%{_mandir}/man1/openssl-x509.1*
+%{_mandir}/man5/openssl-config.5*
+%{_mandir}/man5/openssl-x509v3_config.5*
 %lang(pl) %{_mandir}/pl/man1/openssl.1*
 
 %files tools-perl
@@ -507,8 +507,8 @@ fi
 %attr(755,root,root) %{_bindir}/c_rehash
 %attr(755,root,root) %{_libdir}/%{name}/CA.pl
 %attr(755,root,root) %{_libdir}/%{name}/tsget
-%{_mandir}/man1/openssl_CA.pl.1*
-%{_mandir}/man1/openssl_c_rehash.1*
+%{_mandir}/man1/openssl-CA.pl.1*
+%{_mandir}/man1/openssl-c_rehash.1*
 
 %files devel
 %defattr(644,root,root,755)
@@ -518,8 +518,8 @@ fi
 %{_pkgconfigdir}/libcrypto.pc
 %{_pkgconfigdir}/libssl.pc
 %{_pkgconfigdir}/openssl.pc
-%{_mandir}/man3/openssl*.3*
-%{_mandir}/man7/openssl_des_modes.7*
+%{_mandir}/man3/openssl-*.3*
+%{_mandir}/man7/openssl-des_modes.7*
 
 %files static
 %defattr(644,root,root,755)
