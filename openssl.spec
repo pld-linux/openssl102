@@ -24,13 +24,13 @@ Name:		openssl
 # 1.0.2 will be LTS release
 # Version 1.0.2 will be supported until 2019-12-31.
 # https://www.openssl.org/about/releasestrat.html
-Version:	1.0.2m
+Version:	1.0.2n
 Release:	1
 License:	Apache-like
 Group:		Libraries
 %if %{without snap}
 Source0:	https://www.openssl.org/source/%{name}-%{version}.tar.gz
-# Source0-md5:	10e9e37f492094b9ef296f68f24a7666
+# Source0-md5:	13bdc1b1d1ff39b6fd42a255e74676a4
 %else
 Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_0_2-stable/%{name}-%{version}-dev.tar.gz
 # Source1-md5:	6b846f8a4f55f5ddfa1e0d335241840a
@@ -286,7 +286,7 @@ sed -i -e 's|\$prefix/\$libdir/engines|/%{_lib}/engines|g' Configure
 %build
 touch Makefile.*
 
-PERL5LIB=$(pwd) %{__perl} util/perlpath.pl %{__perl}
+%{__perl} util/perlpath.pl %{__perl}
 
 OPTFLAGS="%{rpmcflags} %{rpmcppflags} %{?with_purify:-DPURIFY}" \
 PERL="%{__perl}" \
