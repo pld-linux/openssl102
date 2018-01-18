@@ -5,7 +5,7 @@
  			>  $(INSTALL_PREFIX)$(MANDIR)/man$$sec/$$fn.$${sec}$(MANSUFFIX); \
  		$(PERL) util/extract-names.pl < $$i | \
 -			(grep -v $$filecase "^$$fn\$$"; true) | \
-+			(grep -v $$filecase "^$${fn#openssl-}\$$"; true) | \
++			(grep -v -E $$filecase "^$${fn}|$${fn#openssl-}\$$"; true) | \
  			(grep -v "[	]"; true) | \
  			(cd $(INSTALL_PREFIX)$(MANDIR)/man$$sec/; \
  			 while read n; do \
