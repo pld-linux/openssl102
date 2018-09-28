@@ -5,7 +5,7 @@
  			>  $(INSTALL_PREFIX)$(MANDIR)/man$$sec/$$fn.$${sec}$(MANSUFFIX); \
  		$(PERL) util/extract-names.pl < $$i | \
 -			(grep -v $$filecase "^$$fn\$$"; true) | \
-+			(grep -v -E $$filecase "^$${fn}|$${fn#openssl-}\$$"; true) | \
++			(grep -v -E $$filecase "^$${fn}|$${fn#openssl102-}\$$"; true) | \
  			(grep -v "[	]"; true) | \
  			(cd $(INSTALL_PREFIX)$(MANDIR)/man$$sec/; \
  			 while read n; do \
@@ -14,12 +14,12 @@
  			>  $(INSTALL_PREFIX)$(MANDIR)/man$$sec/$$fn.$${sec}$(MANSUFFIX); \
  		$(PERL) util/extract-names.pl < $$i | \
 -			(grep -v $$filecase "^$$fn\$$"; true) | \
-+			(grep -v -E $$filecase "^$${fn#openssl-}\$$"; true) | \
++			(grep -v -E $$filecase "^$${fn#openssl102-}\$$"; true) | \
  			(grep -v "[	]"; true) | \
  			(cd $(INSTALL_PREFIX)$(MANDIR)/man$$sec/; \
  			 while read n; do \
 -				PLATFORM=$(PLATFORM) $$here/util/point.sh $$fn.$${sec}$(MANSUFFIX) "$$n".$${sec}$(MANSUFFIX); \
-+				PLATFORM=$(PLATFORM) $$here/util/point.sh $$fn.$${sec}$(MANSUFFIX) openssl-"$$n".$${sec}$(MANSUFFIX); \
++				PLATFORM=$(PLATFORM) $$here/util/point.sh $$fn.$${sec}$(MANSUFFIX) openssl102-"$$n".$${sec}$(MANSUFFIX); \
  			 done); \
  	done
  

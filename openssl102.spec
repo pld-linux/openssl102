@@ -11,6 +11,8 @@
 			# use valgrind debugger against openssl-linked programs
 %bcond_with	snap	# use GitHub snapshot to build branch release
 
+%define		orgname	openssl
+
 %include	/usr/lib/rpm/macros.perl
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de.UTF-8):	Secure Sockets Layer (SSL)-Kommunikationslibrary
@@ -20,7 +22,7 @@ Summary(pl.UTF-8):	Biblioteki OpenSSL (SSL v2/v3)
 Summary(pt_BR.UTF-8):	Uma biblioteca C que fornece vários algoritmos e protocolos criptográficos
 Summary(ru.UTF-8):	Библиотеки и утилиты для соединений через Secure Sockets Layer
 Summary(uk.UTF-8):	Бібліотеки та утиліти для з'єднань через Secure Sockets Layer
-Name:		openssl
+Name:		openssl102
 # 1.0.2 will be LTS release
 # Version 1.0.2 will be supported until 2019-12-31.
 # https://www.openssl.org/about/releasestrat.html
@@ -29,25 +31,25 @@ Release:	1
 License:	Apache-like
 Group:		Libraries
 %if %{without snap}
-Source0:	https://www.openssl.org/source/%{name}-%{version}.tar.gz
+Source0:	https://www.openssl.org/source/%{orgname}-%{version}.tar.gz
 # Source0-md5:	ac5eb30bf5798aa14b1ae6d0e7da58df
 %else
-Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_0_2-stable/%{name}-%{version}-dev.tar.gz
+Source1:	https://github.com/openssl/openssl/archive/OpenSSL_1_0_2-stable/%{orgname}-%{version}-dev.tar.gz
 # Source1-md5:	6b846f8a4f55f5ddfa1e0d335241840a
 %endif
-Source2:	%{name}.1.pl
-Source3:	%{name}-ssl-certificate.sh
-Source4:	%{name}-c_rehash.sh
-Patch0:		%{name}-alpha-ccc.patch
-Patch1:		%{name}-optflags.patch
-Patch2:		%{name}-include.patch
-Patch3:		%{name}-man-namespace.patch
-Patch4:		%{name}-asflag.patch
-Patch5:		%{name}-ca-certificates.patch
-Patch6:		%{name}-ldflags.patch
-Patch7:		%{name}-find.patch
+Source2:	%{orgname}.1.pl
+Source3:	%{orgname}-ssl-certificate.sh
+Source4:	%{orgname}-c_rehash.sh
+Patch0:		%{orgname}-alpha-ccc.patch
+Patch1:		%{orgname}-optflags.patch
+Patch2:		%{orgname}-include.patch
+Patch3:		%{orgname}-man-namespace.patch
+Patch4:		%{orgname}-asflag.patch
+Patch5:		%{orgname}-ca-certificates.patch
+Patch6:		%{orgname}-ldflags.patch
+Patch7:		%{orgname}-find.patch
 Patch8:		pic.patch
-Patch10:	%{name}_fix_for_x32.patch
+Patch10:	%{orgname}_fix_for_x32.patch
 URL:		http://www.openssl.org/
 BuildRequires:	bc
 BuildRequires:	perl-devel >= 1:5.6.1
@@ -264,9 +266,9 @@ RC4, RSA и SSL. Включает статические библиотеки д
 %prep
 %if %{with snap}
 %setup -qcT -a1
-mv %{name}-OpenSSL_1_0_2-stable/* .
+mv %{orgname}-OpenSSL_1_0_2-stable/* .
 %else
-%setup -q
+%setup -q -n %{orgname}-%{version}
 %endif
 %patch0 -p1
 %patch1 -p1
@@ -362,10 +364,10 @@ test "$v" = %{version}%{?with_snap:-dev}
 
 for dir in doc/{apps,ssl,crypto}; do
 	cd $dir || exit 1;
-	%{__perl} -pi -e 's/(\W)((?<!openssl-)\w+)(\(\d\))/$1openssl-$2$3/g; s/openssl-openssl/openssl/g;' *.pod;
+	%{__perl} -pi -e 's/(\W)((?<!openssl-)\w+)(\(\d\))/$1openssl102-$2$3/g; s/openssl102-openssl/openssl102/g;' *.pod;
 
 	for pod in !(openssl*).pod; do
-		%{__mv} $pod openssl-$pod;
+		%{__mv} $pod openssl102-$pod;
 	done
 	cd ../..
 done
@@ -393,9 +395,15 @@ ln -sf /%{_lib}/$(basename $RPM_BUILD_ROOT/%{_lib}/libssl.*.*) $RPM_BUILD_ROOT%{
 # not installed as individual utilities (see openssl dgst instead)
 %{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/{dss1,md2,md4,md5,mdc2,ripemd160,sha,sha1,sha224,sha256,sha384,sha512}.1
 
-cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl.1
-install -p %{SOURCE3} $RPM_BUILD_ROOT%{_bindir}/ssl-certificate
-install -p %{SOURCE4} $RPM_BUILD_ROOT%{_bindir}/c_rehash.sh
+cp -p %{SOURCE2} $RPM_BUILD_ROOT%{_mandir}/pl/man1/openssl102.1
+
+%{__mv} $RPM_BUILD_ROOT%{_bindir}/openssl{,102}
+%{__mv} $RPM_BUILD_ROOT%{_mandir}/man1/openssl{,102}.1
+%{__mv} $RPM_BUILD_ROOT%{_includedir}/openssl{,102}
+%{__mv} $RPM_BUILD_ROOT%{_pkgconfigdir}/openssl{,102}.pc
+
+# c_rehash is a script, no need for its second copy
+%{__rm} $RPM_BUILD_ROOT%{_bindir}/c_rehash $RPM_BUILD_ROOT%{_mandir}/man1/openssl102-c_rehash.1*
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -444,9 +452,7 @@ fi
 %files tools
 %defattr(644,root,root,755)
 %config(noreplace) %verify(not md5 mtime size) %{_sysconfdir}/%{name}/openssl.cnf
-%attr(755,root,root) %{_bindir}/c_rehash.sh
-%attr(755,root,root) %{_bindir}/openssl
-%attr(754,root,root) %{_bindir}/ssl-certificate
+%attr(755,root,root) %{_bindir}/openssl102
 
 %dir %{_libdir}/%{name}
 %attr(755,root,root) %{_libdir}/%{name}/CA.sh
@@ -455,60 +461,58 @@ fi
 %attr(755,root,root) %{_libdir}/%{name}/c_issuer
 %attr(755,root,root) %{_libdir}/%{name}/c_name
 
-%{_mandir}/man1/openssl.1*
-%{_mandir}/man1/openssl-asn1parse.1*
-%{_mandir}/man1/openssl-ca.1*
-%{_mandir}/man1/openssl-ciphers.1*
-%{_mandir}/man1/openssl-cms.1*
-%{_mandir}/man1/openssl-crl.1*
-%{_mandir}/man1/openssl-crl2pkcs7.1*
-%{_mandir}/man1/openssl-dgst.1*
-%{_mandir}/man1/openssl-dhparam.1*
-%{_mandir}/man1/openssl-dsa.1*
-%{_mandir}/man1/openssl-dsaparam.1*
-%{_mandir}/man1/openssl-ec.1*
-%{_mandir}/man1/openssl-ecparam.1*
-%{_mandir}/man1/openssl-enc.1*
-%{_mandir}/man1/openssl-errstr.1*
-%{_mandir}/man1/openssl-gendsa.1*
-%{_mandir}/man1/openssl-genpkey.1*
-%{_mandir}/man1/openssl-genrsa.1*
-%{_mandir}/man1/openssl-nseq.1*
-%{_mandir}/man1/openssl-ocsp.1*
-%{_mandir}/man1/openssl-passwd.1*
-%{_mandir}/man1/openssl-pkcs12.1*
-%{_mandir}/man1/openssl-pkcs7.1*
-%{_mandir}/man1/openssl-pkcs8.1*
-%{_mandir}/man1/openssl-pkey.1*
-%{_mandir}/man1/openssl-pkeyparam.1*
-%{_mandir}/man1/openssl-pkeyutl.1*
-%{_mandir}/man1/openssl-rand.1*
-%{_mandir}/man1/openssl-req.1*
-%{_mandir}/man1/openssl-rsa.1*
-%{_mandir}/man1/openssl-rsautl.1*
-%{_mandir}/man1/openssl-s_client.1*
-%{_mandir}/man1/openssl-s_server.1*
-%{_mandir}/man1/openssl-s_time.1*
-%{_mandir}/man1/openssl-sess_id.1*
-%{_mandir}/man1/openssl-smime.1*
-%{_mandir}/man1/openssl-speed.1*
-%{_mandir}/man1/openssl-spkac.1*
-%{_mandir}/man1/openssl-ts.1*
-%{_mandir}/man1/openssl-tsget.1*
-%{_mandir}/man1/openssl-verify.1*
-%{_mandir}/man1/openssl-version.1*
-%{_mandir}/man1/openssl-x509.1*
-%{_mandir}/man5/openssl-config.5*
-%{_mandir}/man5/openssl-x509v3_config.5*
-%lang(pl) %{_mandir}/pl/man1/openssl.1*
+%{_mandir}/man1/%{name}.1*
+%{_mandir}/man1/%{name}-asn1parse.1*
+%{_mandir}/man1/%{name}-ca.1*
+%{_mandir}/man1/%{name}-ciphers.1*
+%{_mandir}/man1/%{name}-cms.1*
+%{_mandir}/man1/%{name}-crl.1*
+%{_mandir}/man1/%{name}-crl2pkcs7.1*
+%{_mandir}/man1/%{name}-dgst.1*
+%{_mandir}/man1/%{name}-dhparam.1*
+%{_mandir}/man1/%{name}-dsa.1*
+%{_mandir}/man1/%{name}-dsaparam.1*
+%{_mandir}/man1/%{name}-ec.1*
+%{_mandir}/man1/%{name}-ecparam.1*
+%{_mandir}/man1/%{name}-enc.1*
+%{_mandir}/man1/%{name}-errstr.1*
+%{_mandir}/man1/%{name}-gendsa.1*
+%{_mandir}/man1/%{name}-genpkey.1*
+%{_mandir}/man1/%{name}-genrsa.1*
+%{_mandir}/man1/%{name}-nseq.1*
+%{_mandir}/man1/%{name}-ocsp.1*
+%{_mandir}/man1/%{name}-passwd.1*
+%{_mandir}/man1/%{name}-pkcs12.1*
+%{_mandir}/man1/%{name}-pkcs7.1*
+%{_mandir}/man1/%{name}-pkcs8.1*
+%{_mandir}/man1/%{name}-pkey.1*
+%{_mandir}/man1/%{name}-pkeyparam.1*
+%{_mandir}/man1/%{name}-pkeyutl.1*
+%{_mandir}/man1/%{name}-rand.1*
+%{_mandir}/man1/%{name}-req.1*
+%{_mandir}/man1/%{name}-rsa.1*
+%{_mandir}/man1/%{name}-rsautl.1*
+%{_mandir}/man1/%{name}-s_client.1*
+%{_mandir}/man1/%{name}-s_server.1*
+%{_mandir}/man1/%{name}-s_time.1*
+%{_mandir}/man1/%{name}-sess_id.1*
+%{_mandir}/man1/%{name}-smime.1*
+%{_mandir}/man1/%{name}-speed.1*
+%{_mandir}/man1/%{name}-spkac.1*
+%{_mandir}/man1/%{name}-ts.1*
+%{_mandir}/man1/%{name}-tsget.1*
+%{_mandir}/man1/%{name}-verify.1*
+%{_mandir}/man1/%{name}-version.1*
+%{_mandir}/man1/%{name}-x509.1*
+%{_mandir}/man5/%{name}-config.5*
+%{_mandir}/man5/%{name}-x509v3_config.5*
+%lang(pl) %{_mandir}/pl/man1/%{name}.1*
 
 %files tools-perl
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/c_rehash
 %attr(755,root,root) %{_libdir}/%{name}/CA.pl
 %attr(755,root,root) %{_libdir}/%{name}/tsget
-%{_mandir}/man1/openssl-CA.pl.1*
-%{_mandir}/man1/openssl-c_rehash.1*
+%{_mandir}/man1/openssl102-CA.pl.1*
 
 %files devel
 %defattr(644,root,root,755)
@@ -517,9 +521,9 @@ fi
 %{_includedir}/%{name}
 %{_pkgconfigdir}/libcrypto.pc
 %{_pkgconfigdir}/libssl.pc
-%{_pkgconfigdir}/openssl.pc
-%{_mandir}/man3/openssl-*.3*
-%{_mandir}/man7/openssl-des_modes.7*
+%{_pkgconfigdir}/openssl102.pc
+%{_mandir}/man3/openssl102-*.3*
+%{_mandir}/man7/openssl102-des_modes.7*
 
 %files static
 %defattr(644,root,root,755)
