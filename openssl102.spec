@@ -13,7 +13,6 @@
 
 %define		orgname	openssl
 
-%include	/usr/lib/rpm/macros.perl
 Summary:	OpenSSL Toolkit libraries for the "Secure Sockets Layer" (SSL v2/v3)
 Summary(de.UTF-8):	Secure Sockets Layer (SSL)-Kommunikationslibrary
 Summary(es.UTF-8):	Biblioteca C que suministra algoritmos y protocolos criptográficos
